@@ -7,6 +7,8 @@ import (
     "strings"
     "encoding/json"
     "time"
+    "log"
+    "os"
     
     "github.com/go-redis/redis/v8"
     "github.com/joho/godotenv"
@@ -14,7 +16,6 @@ import (
 
 // Global variables for Redis Database
 var (
-    ctx = context.Background()
     rdb *redis.Client
 )
 
@@ -114,6 +115,7 @@ func validateUserAPIKey(apiKey string) bool {
     return false
 }
 
+// Handler for Newsfeed API Endpoint
 func newsFeedHandler(httpHandler http.ResponseWriter, request *http.Request) {
 
     // Extract page number from URL
@@ -132,50 +134,24 @@ func newsFeedHandler(httpHandler http.ResponseWriter, request *http.Request) {
 
     // Example response
     fmt.Fprintf(httpHandler, "News feed for page %d", page)
-}
 
-func registerHandler(httpHandler http.ResponseWriter, request *http.Request) {
-    
-}
-
-func deregisterHandler(httpHandler http.ResponseWriter, request *http.Request) {
-
+    // News would be fetched through Redis Server
 }
 
 // Middleware for validating API Keys (Admin and User)
-func apiKeyMiddleware(next http.HandlerFunc, privilege string) http.HandlerFunc {
+func apiKeyMiddleware(next http.HandlerFunc) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         
-        // If middleware is for admin operations (register and deregister)
-        if privilege == "admin" {
-            apiKey = r.Header.Get("Admin-API-Key")
-            if apiKey == "" {
-                deliverJsonError(w, "Admin API Key is missing", http.StatusUnauthorized)
-                return
-            }
-
-            if !validateAdminAPIKey(apiKey) {
-                deliverJsonError(w, "Invalid Admin APi Key", http.StatusUnauthorized)
-                return
-            }
-
-        // If middleware is for user operations (get newsfeed)
-        } else if privilege == "user" { 
-            apiKey := r.Header.Get("User-API-Key")
-            if apiKey == "" {
-                deliverJsonError(w, "User API key is missing", http.StatusUnauthorized)
-                return
-            }
-
-            if !validateUserAPIKey(apiKey) {
-                deliverJsonError(w, "Invalid User API key", http.StatusUnauthorized)
-                return
-            }
-        } else {
-            logMessage("Invalid privilege provided", "red")
+        apiKey := r.Header.Get("X-API-Key")
+        if apiKey == "" {
+            deliverJsonError(w, "User API key is missing", http.StatusUnauthorized)
             return
         }
 
+        if !validateUserAPIKey(apiKey) {
+            deliverJsonError(w, "Invalid User API key", http.StatusUnauthorized)
+            return
+        }
         next.ServeHTTP(w, r)
     }
 }
@@ -201,12 +177,6 @@ func main() {
 func setupRoutes() {
     versionPrefix := "/api/v1"    
     
-    // Registering new USER_API to provide access to the api server - Admin Privilege
-    http.HandleFunc(versionPrefix + "/register", apiKeyMiddleware(registerHandler, "admin"))
-
-    // Deregistering existing USER_API to stop providing acess to the api server - Admin Privilege
-    http.HandleFunc(versionPrefix + "/deregister", apiKeyMiddleware(deregisterHandler, "admin")) 
-
     // Endpoint for news feed with pagination, returns JSON data with newsfeed - User Privilege
-    http.HandleFunc(versionPrefix + "/newsfeed/page", apiKeyMiddleware(newsFeedHandler, "user"))
+    http.HandleFunc(versionPrefix + "/newsfeed/page", apiKeyMiddleware(newsFeedHandler))
 }
