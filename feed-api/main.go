@@ -10,6 +10,7 @@ import (
     "log"
     "os"
     "context"
+    "sync"
     
     "github.com/go-redis/redis/v8"
     "github.com/joho/godotenv"
@@ -17,11 +18,16 @@ import (
     "firebase.google.com/go"
 	"google.golang.org/api/option"
 	"cloud.google.com/go/firestore"
+
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 // Global variables for Redis Database
 var (
     rdb *redis.Client
+    firebaseClient *firestore.Client
+    once sync.Once
 )
 
 // Init Function - For initial configurations and setting up Redis Database
@@ -41,23 +47,56 @@ func init() {
     if err != nil {
         log.Printf("Warning: Error loading .env file: %v", err)
     }
+
+    // User API Caching Redis Server
+    redisInit("USERAPI-CACHING-API-KEY", "USERAPI-CACHING-DB", "USERAPI-CACHING-PASSWORD")
+
+    // Fresh News Caching Redis Server
+    redisInit("NEWS-CACHING-API-KEY", "NEWS-CACHING-DB", "NEWS-CACHING-PASSWORD")
+
+    firebaseClient := initializeFirebase("../secrets/stockic-b6c89-firebase-adminsdk-wr64l-cb6a7b150d.json")
+
+    go func() {
+		<-context.Background().Done()
+		firebaseClient.Close()
+	}()
+}
+
+func initializeFirebase(credentialsPath string) *firestore.Client {
+
+	once.Do(func() {
+		opt := option.WithCredentialsFile(credentialsPath)
+		app, err := firebase.NewApp(context.Background(), nil, opt)
+		if err != nil {
+			log.Fatalf("Failed to initialize Firebase app: %v", err)
+		}
+
+		client, err := app.Firestore(context.Background())
+		if err != nil {
+			log.Fatalf("Failed to create Firestore client: %v", err)
+		}
+
+		firebaseClient = client
+	})
+
+	return firebaseClient
 }
 
 func redisInit(redisAddress string, redisDB string, redisPassword string) {
 
-    address := os.Getenv("REDIS_ADDRESS")
+    address := os.Getenv(redisAddress)
     if address == "" {
         address = "localhost:6379"
     }
 
-    dbStr := os.Getenv("REDIS_DB")
+    dbStr := os.Getenv(redisDB)
     db, err := strconv.Atoi(dbStr)
     if err != nil {
         db = 0
-        log.Printf("Warning: Invalid REDIS_DB value, using default: 0")
+        logMessage("Warning: Invalid REDIS_DB value, using default: 0", "red")
     }
 
-    password := os.Getenv("REDIS_PASSWORD")
+    password := os.Getenv(redisPassword)
 
     rdb = redis.NewClient(&redis.Options{
         Addr:     address,
@@ -67,49 +106,33 @@ func redisInit(redisAddress string, redisDB string, redisPassword string) {
 
     _, err = rdb.Ping(rdb.Context()).Result()
     if err != nil {
-        log.Fatalf("Failed to connect to Redis: %v", err)
+        logMessage("Failed to connect to Redis", "red", err)
     }
 
     logMessage("Redis client initialized successfully", "green")
 
 }
 
-func initializeFirebase(credFile string) *firestore.Client {
-
-	// credFile := "path/to/your-service-account-file.json"
-
-	opt := option.WithCredentialsFile(credFile)
-	app, err := firebase.NewApp(context.Background(), nil, opt)
-	if err != nil {
-		logMessage("Failed to initialize Firebase app: %v", err)
-	}
-
-	client, err := app.Firestore(context.Background())
-	if err != nil {
-		log.Fatalf("Failed to create Firestore client: %v", err)
-	}
-
-	return client
-}
-
-// Check if a given string is JSON
-func isValidJSON(str string) bool {
-    var js json.RawMessage
-    return json.Unmarshal([]byte(str), &js) == nil
-}
-
 // Logs messages on the console with color
-func logMessage(message, color string) {
+func logMessage(message, color string, errs ...error) {
+
+    var err error
+	if len(errs) > 0 {
+		err = errs[0]
+	} else {
+		err = nil
+	}
+
 	timestamp := time.Now().Format("2006-01-02 15:04:05")
     
-    log.Printf("[WIPER-LOG] [%s] %s", timestamp, message)
+    log.Printf("[WIPER-LOG] [%s] %s ERROR: %v", timestamp, message, err)
 
     if color == "red" {
-        fmt.Printf("\033[31m [%s] %s \033[0m \n", timestamp, message)
+        fmt.Printf("\033[31m [%s] %s \033[0m ERROR: %v\n", timestamp, message, err)
     } else if color == "green" {
-        fmt.Printf("\033[32m [%s] %s \033[0m \n", timestamp, message)
+        fmt.Printf("\033[32m [%s] %s \033[0m ERROR: %v\n", timestamp, message, err)
     } else {
-        fmt.Printf("\033[31m [%s] %s \033[0m \n", timestamp, message)
+        fmt.Printf("\033[31m [%s] %s \033[0m ERROR: %v\n", timestamp, message, err)
     }
 
 }
@@ -130,36 +153,65 @@ func deliverJsonError(httpHandler http.ResponseWriter, message string, statusCod
 
 }
 
-// Validate User API Key - From Database
-func validateUserAPIKey(apiKey string) bool {
-    return false
+func validateUserAPIKey(apiKey string) (bool, bool) {
+
+	docRef := firebaseClient.Collection("users").Doc(apiKey)
+	docSnapshot, err := docRef.Get(context.Background())
+	if err != nil {
+		if status.Code(err) == codes.NotFound {
+			return false, false
+		}
+		log.Fatalf("Failed to get document: %v", err)
+	}
+
+	if !docSnapshot.Exists() {
+		return false, false
+	}
+
+	premiumStatus, ok := docSnapshot.Data()["premium-status"].(bool)
+	if !ok {
+		return true, false
+	}
+
+	return true, premiumStatus
 }
 
 // Middleware for validating API Keys (Admin and User)
 func apiKeyMiddleware(next http.HandlerFunc) http.HandlerFunc {
-    return func(w http.ResponseWriter, r *http.Request) {
+    return func(httpHandler http.ResponseWriter, request *http.Request) {
         
-        apiKey := r.Header.Get("X-API-Key")
+        apiKey := request.Header.Get("X-API-Key")
         if apiKey == "" {
-            deliverJsonError(w, "User API key is missing", http.StatusUnauthorized)
+            deliverJsonError(httpHandler, "User API key is missing", http.StatusUnauthorized)
             return
         }
 
-        if !validateUserAPIKey(apiKey) {
-            deliverJsonError(w, "Invalid User API key", http.StatusUnauthorized)
+        var userExists, isPremium = validateUserAPIKey(apiKey)
+        if !userExists {
+            deliverJsonError(httpHandler, "User doesn't exist", http.StatusUnauthorized)
             return
         }
-        next.ServeHTTP(w, r)
+
+        if !isPremium {
+            deliverJsonError(httpHandler, "User is not premium", http.StatusUnauthorized)
+            return
+        }
+
+        // User exists and is premium
+        next.ServeHTTP(httpHandler, request)
     }
 }
 
-// Validate Admin API Key
-func validateAdminAPIKey(apiKey string) bool {
-    validKey := os.Getenv("ADMIN_API_KEY")
-    return apiKey == validKey
-}
-
 func main() {
+
+    client := initializeFirebase("../secrets/stockic-b6c89-firebase-adminsdk-wr64l-cb6a7b150d.json")
+
+	defer func() {
+		if err := client.Close(); err != nil {
+			log.Fatalf("Failed to close Firestore client: %v", err)
+		}
+	}()
+
     setupRoutes()
 
     port := ":80"
@@ -225,7 +277,7 @@ func discoverHandler(httpHandler http.ResponseWriter, request *http.Request) {
         return
     }
 
-    categoryStr := pathParts[4]
+    // categoryStr := pathParts[4]
     pageStr := pathParts[5]
     page, err := strconv.Atoi(pageStr)
     if err != nil || page < 1 {
@@ -256,5 +308,4 @@ func detailHandler(httpHandler http.ResponseWriter, request *http.Request) {
 
     // Example response
     fmt.Fprintf(httpHandler, "News feed for page %d", newsID)
-
 }
