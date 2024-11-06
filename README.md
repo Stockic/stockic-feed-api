@@ -13,6 +13,10 @@ The News Feed Endpoint API, namely API, is exposed to the internet and is access
 
 The feed-curator stores data in a Redis database, which is accessible by API to the server's users. The feed-curator collects and summarizes the data in batch routines as configured and stores it in Redis. Both the API and the feed-curator are independent of each other. 
 
+## System Design and Architecture
+
+![image](https://github.com/user-attachments/assets/3c39a65c-83f9-4774-9882-9bf033a8095a)
+
 ## API Endpoints (under development)
 
 ⚠️ Note: The API is still under development and might change regarding endpoint URLs and request-response format. Ensure you update your app according to the changes to prevent it from breaking. Once the first release is developed, stable releases will be made. 
@@ -72,3 +76,5 @@ As per the UI design, the third picture shows detailed information about the new
 Endpoint: `/api/<version>/detail/<news-id>`
 Method: `GET`
 Header: `X-API-Key`
+
+⚠️ Note: Responses are not mentioned here since they are under design. It would be updated shortly. 
