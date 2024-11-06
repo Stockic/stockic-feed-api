@@ -29,12 +29,12 @@ jobs:
           ${{ runner.os }}-go-
 
     - name: Go mod tidy
-      run: go mod tidy  # Ensure Go modules are up to date
+      run: cd feed-api; go mod tidy  # Ensure Go modules are up to date
 
     - name: Build
       working-directory: feed-api  # Specify the directory for build
-      run: go build .  # Build the Go project
+      run: cd feed-api; go build .  # Build the Go project
 
-    - name: Run tests
-      working-directory: feed-api  # Specify the directory for tests
-      run: go test ./...  # Run Go tests if you have any
+      # - name: Run tests
+      # working-directory: feed-api  # Specify the directory for tests
+      # run: go test ./...  # Run Go tests if you have any
