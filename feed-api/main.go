@@ -9,9 +9,14 @@ import (
     "time"
     "log"
     "os"
+    "context"
     
     "github.com/go-redis/redis/v8"
     "github.com/joho/godotenv"
+
+    "firebase.google.com/go"
+	"google.golang.org/api/option"
+	"cloud.google.com/go/firestore"
 )
 
 // Global variables for Redis Database
@@ -67,6 +72,24 @@ func redisInit(redisAddress string, redisDB string, redisPassword string) {
 
     logMessage("Redis client initialized successfully", "green")
 
+}
+
+func initializeFirebase(credFile string) *firestore.Client {
+
+	// credFile := "path/to/your-service-account-file.json"
+
+	opt := option.WithCredentialsFile(credFile)
+	app, err := firebase.NewApp(context.Background(), nil, opt)
+	if err != nil {
+		logMessage("Failed to initialize Firebase app: %v", err)
+	}
+
+	client, err := app.Firestore(context.Background())
+	if err != nil {
+		log.Fatalf("Failed to create Firestore client: %v", err)
+	}
+
+	return client
 }
 
 // Check if a given string is JSON
