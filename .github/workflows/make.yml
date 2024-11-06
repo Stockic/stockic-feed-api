@@ -1,0 +1,54 @@
+name: Makefile Build and Test
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest  # Using Ubuntu for the environment
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Checkout the code from the repository
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.23'  # Set the Go version to use
+
+      - name: Install dependencies
+        run: |
+          make deps  # Install Go dependencies using the Makefile
+
+      - name: Build using Makefile
+        run: |
+          make  # Run the Makefile to build the binaries
+
+      - name: Verify feed-api binary exists
+        run: |
+          if [ ! -f build/feed-api ]; then
+            echo "feed-api binary not found!";
+            exit 1;
+          else
+            echo "feed-api binary found!";
+          fi
+
+      - name: Verify feed-curator binary exists
+        run: |
+          if [ ! -f build/feed-curator ]; then
+            echo "feed-curator binary not found!";
+            exit 1;
+          else
+            echo "feed-curator binary found!";
+          fi
+
+      - name: Run tests for feed-api
+        run: |
+          make test-feed-api 
+
+      - name: Run tests for feed-curator
+        run: |
+          make test-feed-curator
