@@ -36,27 +36,23 @@ func init() {
     if err != nil {
         log.Printf("Warning: Error loading .env file: %v", err)
     }
-    
-    // Load API key from .env file 
-    if os.Getenv("ADMIN_API_KEY") == "" {
-        log.Fatal("ADMIN_API_KEY is not set in the environment")
-    }
+}
 
-    // Extracting Redis configuration from environment variables and setting it up
-    password := os.Getenv("REDIS_PASSWORD")
+func redisInit(redisAddress string, redisDB string, redisPassword string) {
+
+    address := os.Getenv("REDIS_ADDRESS")
+    if address == "" {
+        address = "localhost:6379"
+    }
 
     dbStr := os.Getenv("REDIS_DB")
     db, err := strconv.Atoi(dbStr)
     if err != nil {
-        // Default Value
-        db = 0          
+        db = 0
         log.Printf("Warning: Invalid REDIS_DB value, using default: 0")
     }
 
-    address := os.Getenv("REDIS_ADDRESS")
-    if address == "" {
-        address = "localhost:6379" // local database default value  
-    }
+    password := os.Getenv("REDIS_PASSWORD")
 
     rdb = redis.NewClient(&redis.Options{
         Addr:     address,
@@ -70,6 +66,7 @@ func init() {
     }
 
     logMessage("Redis client initialized successfully", "green")
+
 }
 
 // Check if a given string is JSON
@@ -115,29 +112,6 @@ func validateUserAPIKey(apiKey string) bool {
     return false
 }
 
-// Handler for Newsfeed API Endpoint
-func newsFeedHandler(httpHandler http.ResponseWriter, request *http.Request) {
-
-    // Extract page number from URL
-    pathParts := strings.Split(request.URL.Path, "/")
-    if len(pathParts) < 5 {
-        http.Error(httpHandler, "Invalid URL", http.StatusBadRequest)
-        return
-    }
-
-    pageStr := pathParts[4]
-    page, err := strconv.Atoi(pageStr)
-    if err != nil || page < 1 {
-        http.Error(httpHandler, "Invalid page number", http.StatusBadRequest)
-        return
-    }
-
-    // Example response
-    fmt.Fprintf(httpHandler, "News feed for page %d", page)
-
-    // News would be fetched through Redis Server
-}
-
 // Middleware for validating API Keys (Admin and User)
 func apiKeyMiddleware(next http.HandlerFunc) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
@@ -177,6 +151,87 @@ func main() {
 func setupRoutes() {
     versionPrefix := "/api/v1"    
     
-    // Endpoint for news feed with pagination, returns JSON data with newsfeed - User Privilege
-    http.HandleFunc(versionPrefix + "/newsfeed/page", apiKeyMiddleware(newsFeedHandler))
+    // Geolocation specific headlines endpoint
+    // /api/<version>/headlines
+    http.HandleFunc(versionPrefix + "/headlines", apiKeyMiddleware(headlinesHandler))
+
+    // Geolocation specific pagenated newsfeed endpoint
+    // /api/<version>/newsfeed/<page-number>
+    http.HandleFunc(versionPrefix + "/newsfeed", apiKeyMiddleware(newsFeedHandler))
+
+    // Category specific pagenated newsfeed endpoint
+    // /api/<version>/discover/<category>/<page-number>
+    http.HandleFunc(versionPrefix + "/discover", apiKeyMiddleware(discoverHandler))
+
+    // Internal ID based detailed newsfeed endpoint
+    // /api/<version>/detail/<news-id>
+    http.HandleFunc(versionPrefix + "/detail", apiKeyMiddleware(detailHandler))
+}
+
+func headlinesHandler(httpHandler http.ResponseWriter, request *http.Request) {
+    
+}
+
+func newsFeedHandler(httpHandler http.ResponseWriter, request *http.Request) {
+
+    // Extract page number from URL
+    pathParts := strings.Split(request.URL.Path, "/")
+    if len(pathParts) < 5 {
+        http.Error(httpHandler, "Invalid URL", http.StatusBadRequest)
+        return
+    }
+
+    pageStr := pathParts[4]
+    page, err := strconv.Atoi(pageStr)
+    if err != nil || page < 1 {
+        http.Error(httpHandler, "Invalid page number", http.StatusBadRequest)
+        return
+    }
+
+    // Example response
+    fmt.Fprintf(httpHandler, "News feed for page %d", page)
+
+}
+
+func discoverHandler(httpHandler http.ResponseWriter, request *http.Request) {
+    
+    // Extract page number from URL
+    pathParts := strings.Split(request.URL.Path, "/")
+    if len(pathParts) < 6 {
+        http.Error(httpHandler, "Invalid URL", http.StatusBadRequest)
+        return
+    }
+
+    categoryStr := pathParts[4]
+    pageStr := pathParts[5]
+    page, err := strconv.Atoi(pageStr)
+    if err != nil || page < 1 {
+        http.Error(httpHandler, "Invalid page number", http.StatusBadRequest)
+        return
+    }
+
+    // Example response
+    fmt.Fprintf(httpHandler, "News feed for page %d", page)
+
+}
+
+func detailHandler(httpHandler http.ResponseWriter, request *http.Request) {
+    
+    // Extract page number from URL
+    pathParts := strings.Split(request.URL.Path, "/")
+    if len(pathParts) < 5 {
+        http.Error(httpHandler, "Invalid URL", http.StatusBadRequest)
+        return
+    }
+
+    newsIDStr := pathParts[4]
+    newsID, err := strconv.Atoi(newsIDStr)
+    if err != nil || newsID < 1 {
+        http.Error(httpHandler, "Invalid news id", http.StatusBadRequest)
+        return
+    }
+
+    // Example response
+    fmt.Fprintf(httpHandler, "News feed for page %d", newsID)
+
 }
