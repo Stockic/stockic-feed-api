@@ -28,14 +28,47 @@ The structure of API is: `/api/<version>/<operation>/<optional-parameters>`
 
 The version would be v1, v2, etc., and will follow up in the future.
 
+### Accessibility Structure 
+
+The API server requires the User to provide the API Key to perform operations. This API key decodes user information like location and tier (free or premium). Every user would have an API key on the app, which would be used to communicate with the api server. Every user is bound to the API Key, and all information would be linked with the API key (technically, X-API-Key). The api server can get info from Firebase and determine the location to serve geolocation-specific data to the caller. 
+
+Hence, to conclude this section, the API key is the primary and only identifier, and each request must contain it. With the API key, the user must only worry about the operations to be performed and leave the rest to the developers of this API. 
+
 ### API Endpoints
 
-The following are the api endpoints:
+The following are the API endpoints: 
 
-#### Registration API 
+#### Home Page-Specific APIs
+According to the UI provided, the first page contains two portions: headlines (Geolocation-Specific) and Today's Newsfeed (Geolocation-Specific). 
 
-As per the UI provided, the first page contains two portions: headlines (Geolocation-Specific) and Today's Newsfeed (Geolocation-Specific). 
+1. Headlines: This API endpoint is geolocation-specific, which would be decoded by the api server itself from Firebase.
 
-1. Headlines: This API endpoint is geolocation-specific and requires 
+Endpoint: `/api/<version>/headlines`
+Method: `GET`
+Header: `X-API-Key`
 
+This API would serve headlines per the geolocation fetched by the api server. Users would be served with the latest headlines of the given region. 
 
+2. Today's Newsfeed: This API is based on content pagination and is geolocation-specific. The user must send a page number to fetch news.
+
+Endpoint: `/api/<version>/newsfeed/<page-number>`
+Method: `GET`
+Header: `X-API-Key`
+
+#### Discover Page-Specific APIs
+The Discover Page is where users get categorized newsfeeds. Hence, the category must be provided. 
+
+1. Discover: This API endpoint demands category and page number and serves specific content. 
+
+Endpoint: `/api/<version>/discover/<category>/<page>`
+Method: `GET`
+Header: `X-API-Key`
+
+#### Detailed News Page API
+As per the UI design, the third picture shows detailed information about the news. This can be fetched with the content ID. 
+
+1. Detailed Newsfeed: Provides detailed information about the news.
+
+Endpoint: `/api/<version>/detail/<news-id>`
+Method: `GET`
+Header: `X-API-Key`
