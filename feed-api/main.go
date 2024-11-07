@@ -75,10 +75,16 @@ func init() {
     logMessage("After context setting", "")
 
     // User API Caching Redis Server
-    redisAPICache = redisInit(redisAPICacheCtx, "USERAPI_CACHING_ADDRESS", "USERAPI_CACHING_DB", "USERAPI_CACHING_PASSWORD")
+    redisAPICache, err = redisInit(redisAPICacheCtx, "USERAPI_CACHING_ADDRESS", "USERAPI_CACHING_DB", "USERAPI_CACHING_PASSWORD")
+    if err != nil {
+        logMessage("API Cache Server Setup Failed!", "red", err)
+    }
 
     // Fresh News Caching Redis Server
-    redisNewsCache = redisInit(redisNewsCacheCtx, "NEWS_CACHING_ADDRESS", "NEWS_CACHING_DB", "NEWS_CACHING_PASSWORD")
+    redisNewsCache, err = redisInit(redisNewsCacheCtx, "NEWS_CACHING_ADDRESS", "NEWS_CACHING_DB", "NEWS_CACHING_PASSWORD")
+    if err != nil {
+        logMessage("News Cache Server Setup Failed", "red", err)
+    }
 
     firebaseCtx = context.Background()
 
@@ -89,11 +95,6 @@ func init() {
 		firebaseClient.Close()
 	}()
 
-    go func() {
-        // You might want to hook this to your app's shutdown logic
-        defer redisAPICacheCtxCancel()
-        defer redisNewsCacheCtxCancel()
-    }()
 }
 
 func initializeFirebase(credentialsPath string) *firestore.Client {
@@ -116,7 +117,7 @@ func initializeFirebase(credentialsPath string) *firestore.Client {
 	return firebaseClient
 }
 
-func redisInit(redisContext context.Context, redisAddress string, redisDB string, redisPassword string) *redis.Client {
+func redisInit(redisContext context.Context, redisAddress string, redisDB string, redisPassword string) (*redis.Client, error) {
 
     address := os.Getenv(redisAddress)
     if address == "" {
@@ -141,11 +142,12 @@ func redisInit(redisContext context.Context, redisAddress string, redisDB string
     _, err = rdb.Ping(redisContext).Result()
     if err != nil {
         logMessage(fmt.Sprintf("Failed to connect to Redis - Address: %s, redisDB: %s", address, dbStr), "red", err)
+        return nil, err
     }
 
     logMessage(fmt.Sprintf("Successfully initialized Redis: %s", address), "green")
     
-    return rdb
+    return rdb, err
 }
 
 // Logs messages on the console with color
@@ -189,8 +191,18 @@ func deliverJsonError(httpHandler http.ResponseWriter, message string, statusCod
 
 
 func getCachedUserStatus(ctx context.Context, apiKey string) (*UserStatus, error) {
-    val, err := redisAPICache.Get(ctx, fmt.Sprintf("apikey:%s", apiKey)).Result()
+
+    pong, err := redisAPICache.Ping(ctx).Result()
     if err != nil {
+        log.Printf("Redis connection error: %v", err)
+    } else {
+        log.Printf("Redis ping response: %s", pong)
+    }
+
+    val, err := redisAPICache.Get(ctx, fmt.Sprintf("apikey:%s", apiKey)).Result()
+    if err == redis.Nil {
+        return nil, err
+    } else if err != nil {
         return nil, err
     }
     
@@ -198,57 +210,78 @@ func getCachedUserStatus(ctx context.Context, apiKey string) (*UserStatus, error
     if err := json.Unmarshal([]byte(val), &status); err != nil {
         return nil, err
     }
+
     return &status, nil
 }
 
-func cacheUserStatus(ctx context.Context, apiKey string, status UserStatus) {
+func cacheUserStatus(ctx context.Context, apiKey string, status UserStatus) error {
+
+    pong, err := redisAPICache.Ping(ctx).Result()
+    if err != nil {
+        log.Printf("Redis connection error: %v", err)
+        logMessage("Redis connection error", "red", err)
+    } else {
+        log.Printf("Redis ping response: %s", pong)
+        logMessage(fmt.Sprintf("Redis ping response: %s", pong), "green")
+    }
+
     statusJson, err := json.Marshal(status)
     if err != nil {
-        log.Printf("Failed to marshal user status: %v", err)
-        return
+        logMessage("Failed to marshal user status", "red", err)
+        return err
     }
     
     // Store in Redis asynchronously
-    go func() {
-        err := redisAPICache.Set(ctx, fmt.Sprintf("apikey:%s", apiKey), statusJson, apiKeyCacheExpiration).Err()
-        if err != nil {
-            log.Printf("Failed to cache user status: %v", err)
-        }
-    }()
+    err = redisAPICache.Set(ctx, fmt.Sprintf("apikey:%s", apiKey), statusJson, apiKeyCacheExpiration).Err()
+    if err != nil {
+        logMessage("Failed to cache user status: %v", "red", err)
+        return err
+    } 
+
+    return err
 }
 
 func validateUserAPIKey(apiKey string) (bool, bool) {
 
-    logMessage("Validator started", "")
-
+    logMessage("Validation Started", "")
     if cachedStatus, err := getCachedUserStatus(redisAPICacheCtx, apiKey); err == nil {
         logMessage("Cache Hit!", "")
         return cachedStatus.Exists, cachedStatus.Premium
     }
 
-    logMessage("Turning to firebase", "")
+    logMessage("Cache not hit, moving to firebase", "")
+
 	docRef := firebaseClient.Collection("users").Doc(apiKey)
 	docSnapshot, err := docRef.Get(firebaseCtx)
 	if err != nil {
 		if status.Code(err) == codes.NotFound {
-            cacheUserStatus(redisAPICacheCtx, apiKey, UserStatus{Exists: false, Premium: false})
+            logMessage("User not registered ERROR, caching it", "")
+            err = cacheUserStatus(redisAPICacheCtx, apiKey, UserStatus{Exists: false, Premium: false})
+            logMessage("User not registered ERROR, cached", "", err)
 			return false, false
 		}
 		log.Fatalf("Failed to get document: %v", err)
 	}
 
 	if !docSnapshot.Exists() {
-        cacheUserStatus(redisAPICacheCtx, apiKey, UserStatus{Exists: false, Premium: false})
+        logMessage("User not registered, caching it", "")
+        err = cacheUserStatus(redisAPICacheCtx, apiKey, UserStatus{Exists: false, Premium: false})
+        logMessage("User not registered, cached", "", err)
 		return false, false
 	}
 
+    logMessage("User Existence confirm", "")
 	premiumStatus, ok := docSnapshot.Data()["premium-status"].(bool)
 	if !ok {
-        cacheUserStatus(redisAPICacheCtx, apiKey, UserStatus{Exists: true, Premium: false})
+        logMessage("User Existence confirm, caching it", "")
+        err = cacheUserStatus(redisAPICacheCtx, apiKey, UserStatus{Exists: true, Premium: false})
+        logMessage("User Exitence confirm, cached", "", err)
 		return true, false
 	}
 
-    cacheUserStatus(redisAPICacheCtx, apiKey, UserStatus{Exists: true, Premium: premiumStatus})
+    logMessage("Exists and Premium, caching", "")
+    err = cacheUserStatus(redisAPICacheCtx, apiKey, UserStatus{Exists: true, Premium: premiumStatus})
+    logMessage("Cached", "", err)
 	return true, premiumStatus
 }
 
@@ -295,6 +328,10 @@ func main() {
     if err != nil {
         fmt.Printf("\033[31m Could not start server: %s \033[0m \n", err)
     }
+
+    defer redisAPICacheCtxCancel()
+    defer redisNewsCacheCtxCancel()
+
 }
 
 // Setting up API endpoints
