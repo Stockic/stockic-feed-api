@@ -25,11 +25,31 @@ import (
 
 // Global variables for Redis Database
 var (
+    redisAPICacheCtx context.Context
+    redisAPICacheCtxCancel context.CancelFunc
+
+    redisNewsCacheCtx context.Context
+    redisNewsCacheCtxCancel context.CancelFunc
+
+    firebaseCtx context.Context
+
     redisAPICache *redis.Client
     redisNewsCache *redis.Client
     firebaseClient *firestore.Client
+
     once sync.Once
 )
+
+
+const (
+    apiKeyCacheExpiration = 24 * time.Hour
+)
+
+
+type UserStatus struct {
+    Exists  bool `json:"exists"`
+    Premium bool `json:"premium"`
+}
 
 // Init Function - For initial configurations and setting up Redis Database
 func init() {
@@ -49,30 +69,43 @@ func init() {
         log.Printf("Warning: Error loading .env file: %v", err)
     }
 
+    logMessage("Before context setting", "")
+    redisAPICacheCtx, redisAPICacheCtxCancel = context.WithCancel(context.Background())
+    redisNewsCacheCtx, redisNewsCacheCtxCancel = context.WithCancel(context.Background()) 
+    logMessage("After context setting", "")
+
     // User API Caching Redis Server
-    redisInit(redisAPICache, "USERAPI_CACHING_ADDRESS", "USERAPI_CACHING_DB", "USERAPI_CACHING_PASSWORD")
+    redisAPICache = redisInit(redisAPICacheCtx, "USERAPI_CACHING_ADDRESS", "USERAPI_CACHING_DB", "USERAPI_CACHING_PASSWORD")
 
     // Fresh News Caching Redis Server
-    redisInit(redisAPICache, "NEWS_CACHING_ADDRESS", "NEWS_CACHING_DB", "NEWS_CACHING_PASSWORD")
+    redisNewsCache = redisInit(redisNewsCacheCtx, "NEWS_CACHING_ADDRESS", "NEWS_CACHING_DB", "NEWS_CACHING_PASSWORD")
 
-    firebaseClient := initializeFirebase("../secrets/stockic-b6c89-firebase-adminsdk-wr64l-cb6a7b150d.json")
+    firebaseCtx = context.Background()
+
+    firebaseClient := initializeFirebase("../secrets/stockic-b6c89-firebase-adminsdk-wr64l-0a181fa457.json")
 
     go func() {
-		<-context.Background().Done()
+		<-firebaseCtx.Done()
 		firebaseClient.Close()
 	}()
+
+    go func() {
+        // You might want to hook this to your app's shutdown logic
+        defer redisAPICacheCtxCancel()
+        defer redisNewsCacheCtxCancel()
+    }()
 }
 
 func initializeFirebase(credentialsPath string) *firestore.Client {
 
 	once.Do(func() {
 		opt := option.WithCredentialsFile(credentialsPath)
-		app, err := firebase.NewApp(context.Background(), nil, opt)
+		app, err := firebase.NewApp(firebaseCtx, nil, opt)
 		if err != nil {
 			log.Fatalf("Failed to initialize Firebase app: %v", err)
 		}
 
-		client, err := app.Firestore(context.Background())
+		client, err := app.Firestore(firebaseCtx)
 		if err != nil {
 			log.Fatalf("Failed to create Firestore client: %v", err)
 		}
@@ -83,7 +116,7 @@ func initializeFirebase(credentialsPath string) *firestore.Client {
 	return firebaseClient
 }
 
-func redisInit(rdb *redis.Client,redisAddress string, redisDB string, redisPassword string) {
+func redisInit(redisContext context.Context, redisAddress string, redisDB string, redisPassword string) *redis.Client {
 
     address := os.Getenv(redisAddress)
     if address == "" {
@@ -99,19 +132,20 @@ func redisInit(rdb *redis.Client,redisAddress string, redisDB string, redisPassw
 
     password := os.Getenv(redisPassword)
 
-    rdb = redis.NewClient(&redis.Options{
+    rdb := redis.NewClient(&redis.Options{
         Addr:     address,
         Password: password,
         DB:       db,
     })
 
-    _, err = rdb.Ping(rdb.Context()).Result()
+    _, err = rdb.Ping(redisContext).Result()
     if err != nil {
         logMessage(fmt.Sprintf("Failed to connect to Redis - Address: %s, redisDB: %s", address, dbStr), "red", err)
     }
 
     logMessage(fmt.Sprintf("Successfully initialized Redis: %s", address), "green")
-
+    
+    return rdb
 }
 
 // Logs messages on the console with color
@@ -153,28 +187,68 @@ func deliverJsonError(httpHandler http.ResponseWriter, message string, statusCod
     }
 }
 
+
+func getCachedUserStatus(ctx context.Context, apiKey string) (*UserStatus, error) {
+    val, err := redisAPICache.Get(ctx, fmt.Sprintf("apikey:%s", apiKey)).Result()
+    if err != nil {
+        return nil, err
+    }
+    
+    var status UserStatus
+    if err := json.Unmarshal([]byte(val), &status); err != nil {
+        return nil, err
+    }
+    return &status, nil
+}
+
+func cacheUserStatus(ctx context.Context, apiKey string, status UserStatus) {
+    statusJson, err := json.Marshal(status)
+    if err != nil {
+        log.Printf("Failed to marshal user status: %v", err)
+        return
+    }
+    
+    // Store in Redis asynchronously
+    go func() {
+        err := redisAPICache.Set(ctx, fmt.Sprintf("apikey:%s", apiKey), statusJson, apiKeyCacheExpiration).Err()
+        if err != nil {
+            log.Printf("Failed to cache user status: %v", err)
+        }
+    }()
+}
+
 func validateUserAPIKey(apiKey string) (bool, bool) {
 
-    ctx := context.Background()
-    
+    logMessage("Validator started", "")
+
+    if cachedStatus, err := getCachedUserStatus(redisAPICacheCtx, apiKey); err == nil {
+        logMessage("Cache Hit!", "")
+        return cachedStatus.Exists, cachedStatus.Premium
+    }
+
+    logMessage("Turning to firebase", "")
 	docRef := firebaseClient.Collection("users").Doc(apiKey)
-	docSnapshot, err := docRef.Get(ctx)
+	docSnapshot, err := docRef.Get(firebaseCtx)
 	if err != nil {
 		if status.Code(err) == codes.NotFound {
+            cacheUserStatus(redisAPICacheCtx, apiKey, UserStatus{Exists: false, Premium: false})
 			return false, false
 		}
 		log.Fatalf("Failed to get document: %v", err)
 	}
 
 	if !docSnapshot.Exists() {
+        cacheUserStatus(redisAPICacheCtx, apiKey, UserStatus{Exists: false, Premium: false})
 		return false, false
 	}
 
 	premiumStatus, ok := docSnapshot.Data()["premium-status"].(bool)
 	if !ok {
+        cacheUserStatus(redisAPICacheCtx, apiKey, UserStatus{Exists: true, Premium: false})
 		return true, false
 	}
 
+    cacheUserStatus(redisAPICacheCtx, apiKey, UserStatus{Exists: true, Premium: premiumStatus})
 	return true, premiumStatus
 }
 
@@ -205,9 +279,7 @@ func apiKeyMiddleware(next http.HandlerFunc) http.HandlerFunc {
 
         // User exists and is premium
         next.ServeHTTP(httpHandler, request)
-
         duration := time.Since(startTime)
-
         logStatement := fmt.Sprintf("Request to %s took %v", request.URL.Path, duration)
         logMessage(logStatement, "green")
     }
