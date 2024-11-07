@@ -25,7 +25,8 @@ import (
 
 // Global variables for Redis Database
 var (
-    rdb *redis.Client
+    redisAPICache *redis.Client
+    redisNewsCache *redis.Client
     firebaseClient *firestore.Client
     once sync.Once
 )
@@ -49,10 +50,10 @@ func init() {
     }
 
     // User API Caching Redis Server
-    redisInit("USERAPI-CACHING-API-KEY", "USERAPI-CACHING-DB", "USERAPI-CACHING-PASSWORD")
+    redisInit(redisAPICache, "USERAPI_CACHING_ADDRESS", "USERAPI_CACHING_DB", "USERAPI_CACHING_PASSWORD")
 
     // Fresh News Caching Redis Server
-    redisInit("NEWS-CACHING-API-KEY", "NEWS-CACHING-DB", "NEWS-CACHING-PASSWORD")
+    redisInit(redisAPICache, "NEWS_CACHING_ADDRESS", "NEWS_CACHING_DB", "NEWS_CACHING_PASSWORD")
 
     firebaseClient := initializeFirebase("../secrets/stockic-b6c89-firebase-adminsdk-wr64l-cb6a7b150d.json")
 
@@ -82,7 +83,7 @@ func initializeFirebase(credentialsPath string) *firestore.Client {
 	return firebaseClient
 }
 
-func redisInit(redisAddress string, redisDB string, redisPassword string) {
+func redisInit(rdb *redis.Client,redisAddress string, redisDB string, redisPassword string) {
 
     address := os.Getenv(redisAddress)
     if address == "" {
@@ -106,10 +107,10 @@ func redisInit(redisAddress string, redisDB string, redisPassword string) {
 
     _, err = rdb.Ping(rdb.Context()).Result()
     if err != nil {
-        logMessage("Failed to connect to Redis", "red", err)
+        logMessage(fmt.Sprintf("Failed to connect to Redis - Address: %s, redisDB: %s", address, dbStr), "red", err)
     }
 
-    logMessage("Redis client initialized successfully", "green")
+    logMessage(fmt.Sprintf("Successfully initialized Redis: %s", address), "green")
 
 }
 
@@ -150,13 +151,14 @@ func deliverJsonError(httpHandler http.ResponseWriter, message string, statusCod
         logMessage("jsonError: Failed to encode JSON response: %v" + err.Error(), "red")
 		http.Error(httpHandler, `{"error": "internal server error"}`, http.StatusInternalServerError)
     }
-
 }
 
 func validateUserAPIKey(apiKey string) (bool, bool) {
 
+    ctx := context.Background()
+    
 	docRef := firebaseClient.Collection("users").Doc(apiKey)
-	docSnapshot, err := docRef.Get(context.Background())
+	docSnapshot, err := docRef.Get(ctx)
 	if err != nil {
 		if status.Code(err) == codes.NotFound {
 			return false, false
@@ -180,15 +182,19 @@ func validateUserAPIKey(apiKey string) (bool, bool) {
 func apiKeyMiddleware(next http.HandlerFunc) http.HandlerFunc {
     return func(httpHandler http.ResponseWriter, request *http.Request) {
         
+        startTime := time.Now()
+
         apiKey := request.Header.Get("X-API-Key")
         if apiKey == "" {
             deliverJsonError(httpHandler, "User API key is missing", http.StatusUnauthorized)
+            logMessage("User with no API Key tried to access", "red")
             return
         }
 
         var userExists, isPremium = validateUserAPIKey(apiKey)
         if !userExists {
             deliverJsonError(httpHandler, "User doesn't exist", http.StatusUnauthorized)
+            logMessage("User with no registeration tried to access", "red")
             return
         }
 
@@ -199,18 +205,15 @@ func apiKeyMiddleware(next http.HandlerFunc) http.HandlerFunc {
 
         // User exists and is premium
         next.ServeHTTP(httpHandler, request)
+
+        duration := time.Since(startTime)
+
+        logStatement := fmt.Sprintf("Request to %s took %v", request.URL.Path, duration)
+        logMessage(logStatement, "green")
     }
 }
 
 func main() {
-
-    client := initializeFirebase("../secrets/stockic-b6c89-firebase-adminsdk-wr64l-cb6a7b150d.json")
-
-	defer func() {
-		if err := client.Close(); err != nil {
-			log.Fatalf("Failed to close Firestore client: %v", err)
-		}
-	}()
 
     setupRoutes()
 
@@ -245,6 +248,18 @@ func setupRoutes() {
 
 func headlinesHandler(httpHandler http.ResponseWriter, request *http.Request) {
     
+    httpHandler.Header().Set("Content-Type", "application/json")
+    
+    // Define a struct for the response
+    response := map[string]string{
+        "status": "okay",
+    }
+
+    // Encode the response as JSON and write it to the response writer
+    if err := json.NewEncoder(httpHandler).Encode(response); err != nil {
+        http.Error(httpHandler, "Error encoding JSON response", http.StatusInternalServerError)
+        return
+    }
 }
 
 func newsFeedHandler(httpHandler http.ResponseWriter, request *http.Request) {
