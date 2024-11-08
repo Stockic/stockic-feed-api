@@ -243,45 +243,46 @@ func cacheUserStatus(ctx context.Context, apiKey string, status UserStatus) erro
 
 func validateUserAPIKey(apiKey string) (bool, bool) {
 
-    logMessage("Validation Started", "")
     if cachedStatus, err := getCachedUserStatus(redisAPICacheCtx, apiKey); err == nil {
         logMessage("Cache Hit!", "")
         return cachedStatus.Exists, cachedStatus.Premium
     }
 
-    logMessage("Cache not hit, moving to firebase", "")
-
 	docRef := firebaseClient.Collection("users").Doc(apiKey)
 	docSnapshot, err := docRef.Get(firebaseCtx)
 	if err != nil {
 		if status.Code(err) == codes.NotFound {
-            logMessage("User not registered ERROR, caching it", "")
             err = cacheUserStatus(redisAPICacheCtx, apiKey, UserStatus{Exists: false, Premium: false})
-            logMessage("User not registered ERROR, cached", "", err)
+            if err != nil {
+                logMessage("Failed to Cache", "red", err)
+            }
 			return false, false
 		}
 		log.Fatalf("Failed to get document: %v", err)
 	}
 
 	if !docSnapshot.Exists() {
-        logMessage("User not registered, caching it", "")
         err = cacheUserStatus(redisAPICacheCtx, apiKey, UserStatus{Exists: false, Premium: false})
-        logMessage("User not registered, cached", "", err)
+        if err != nil {
+            logMessage("Failed to Cache", "red", err)
+        }
 		return false, false
 	}
 
-    logMessage("User Existence confirm", "")
 	premiumStatus, ok := docSnapshot.Data()["premium-status"].(bool)
 	if !ok {
-        logMessage("User Existence confirm, caching it", "")
         err = cacheUserStatus(redisAPICacheCtx, apiKey, UserStatus{Exists: true, Premium: false})
-        logMessage("User Exitence confirm, cached", "", err)
+        if err != nil {
+            logMessage("Failed to Cache", "red", err)
+        }
 		return true, false
 	}
 
-    logMessage("Exists and Premium, caching", "")
     err = cacheUserStatus(redisAPICacheCtx, apiKey, UserStatus{Exists: true, Premium: premiumStatus})
-    logMessage("Cached", "", err)
+    if err != nil {
+        logMessage("Failed to Cache", "red", err)
+    }
+
 	return true, premiumStatus
 }
 
@@ -344,15 +345,15 @@ func setupRoutes() {
 
     // Geolocation specific pagenated newsfeed endpoint
     // /api/<version>/newsfeed/<page-number>
-    http.HandleFunc(versionPrefix + "/newsfeed", apiKeyMiddleware(newsFeedHandler))
+    http.HandleFunc(versionPrefix + "/newsfeed/", apiKeyMiddleware(newsFeedHandler))
 
     // Category specific pagenated newsfeed endpoint
     // /api/<version>/discover/<category>/<page-number>
-    http.HandleFunc(versionPrefix + "/discover", apiKeyMiddleware(discoverHandler))
+    http.HandleFunc(versionPrefix + "/discover/", apiKeyMiddleware(discoverHandler))
 
     // Internal ID based detailed newsfeed endpoint
     // /api/<version>/detail/<news-id>
-    http.HandleFunc(versionPrefix + "/detail", apiKeyMiddleware(detailHandler))
+    http.HandleFunc(versionPrefix + "/detail/", apiKeyMiddleware(detailHandler))
 }
 
 func headlinesHandler(httpHandler http.ResponseWriter, request *http.Request) {
@@ -376,14 +377,14 @@ func newsFeedHandler(httpHandler http.ResponseWriter, request *http.Request) {
     // Extract page number from URL
     pathParts := strings.Split(request.URL.Path, "/")
     if len(pathParts) < 5 {
-        http.Error(httpHandler, "Invalid URL", http.StatusBadRequest)
+        deliverJsonError(httpHandler, "Invalid URL", http.StatusBadRequest)
         return
     }
 
     pageStr := pathParts[4]
     page, err := strconv.Atoi(pageStr)
     if err != nil || page < 1 {
-        http.Error(httpHandler, "Invalid page number", http.StatusBadRequest)
+        deliverJsonError(httpHandler, "Invalid page number", http.StatusBadRequest)
         return
     }
 
@@ -397,7 +398,7 @@ func discoverHandler(httpHandler http.ResponseWriter, request *http.Request) {
     // Extract page number from URL
     pathParts := strings.Split(request.URL.Path, "/")
     if len(pathParts) < 6 {
-        http.Error(httpHandler, "Invalid URL", http.StatusBadRequest)
+        deliverJsonError(httpHandler, "Invalid URL", http.StatusBadRequest)
         return
     }
 
@@ -405,7 +406,7 @@ func discoverHandler(httpHandler http.ResponseWriter, request *http.Request) {
     pageStr := pathParts[5]
     page, err := strconv.Atoi(pageStr)
     if err != nil || page < 1 {
-        http.Error(httpHandler, "Invalid page number", http.StatusBadRequest)
+        deliverJsonError(httpHandler, "Invalid page number", http.StatusBadRequest)
         return
     }
 
@@ -419,14 +420,14 @@ func detailHandler(httpHandler http.ResponseWriter, request *http.Request) {
     // Extract page number from URL
     pathParts := strings.Split(request.URL.Path, "/")
     if len(pathParts) < 5 {
-        http.Error(httpHandler, "Invalid URL", http.StatusBadRequest)
+        deliverJsonError(httpHandler, "Invalid URL", http.StatusBadRequest)
         return
     }
 
     newsIDStr := pathParts[4]
     newsID, err := strconv.Atoi(newsIDStr)
     if err != nil || newsID < 1 {
-        http.Error(httpHandler, "Invalid news id", http.StatusBadRequest)
+        deliverJsonError(httpHandler, "Invalid news id", http.StatusBadRequest)
         return
     }
 
