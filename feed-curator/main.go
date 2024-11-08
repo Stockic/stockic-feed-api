@@ -89,6 +89,48 @@ func summarizer(modelName string, title string, text string) *genai.GenerateCont
     return response
 }
 
+func newsAPICaller(url string) APIResponse {
+
+    resp, err := http.Get(url)
+	if err != nil {
+		log.Fatalf("Error making request: %v", err)
+	}
+	defer resp.Body.Close()
+
+    body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalf("Error reading response body: %v", err)
+	}
+
+    var response APIResponse 
+
+    err = json.Unmarshal(body, &response)
+	if err != nil {
+		log.Fatalf("Error unmarshalling JSON: %v", err)
+	}
+
+    if response.Status != "ok" {
+		log.Fatalf("Error: Received non-ok status: %s", response.Status)
+	}
+
+    return response
+ 
+}
+
+func newsAPIHeadlineCaller(country string, category string, page string, pageSize string) APIResponse {
+    url := fmt.Sprintf("https://newsapi.org/v2/top-headlines?country=%s&category=%s&page=%s&pageSize=%s&apiKey", country, category, page, pageSize, os.Getenv("NEWSAPI_API_KEY"))
+
+    return newsAPICaller(url)
+
+}
+
+// searchIn = title,description,content
+func newsAPIEverything(q string, searchIn string, sortBy string, from string, to string, page string, pageSize string) APIResponse {
+    url := fmt.Sprintf("https://newsapi.org/v2/everything?q=%s&searchIn=%s&sortBy=%s&from=%s&to=%s&page=%s&pageSize=%s&apiKey=%s", q, searchIn, sortBy, from, to, page, os.Getenv("NEWS_API_KEY"))
+
+    return newsAPICaller(url)
+}
+
 func main() {
 
     url := fmt.Sprintf("https://newsapi.org/v2/everything?q=bitcoin&apiKey=%s", os.Getenv("NEWSAPI_API_KEY"))
