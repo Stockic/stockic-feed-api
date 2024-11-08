@@ -1,1 +1,4 @@
 /secrets/
+/build/.env
+/feed-api/.env
+/feed-curator/.env
