@@ -59,7 +59,7 @@ func init() {
 	if err != nil {
 		log.Fatalf("Failed to open log file: %v", err)
 	}
-
+    
 	log.SetOutput(logFile)
 	log.SetFlags(0)
 
@@ -69,10 +69,8 @@ func init() {
         log.Printf("Warning: Error loading .env file: %v", err)
     }
 
-    logMessage("Before context setting", "")
     redisAPICacheCtx, redisAPICacheCtxCancel = context.WithCancel(context.Background())
     redisNewsCacheCtx, redisNewsCacheCtxCancel = context.WithCancel(context.Background()) 
-    logMessage("After context setting", "")
 
     // User API Caching Redis Server
     redisAPICache, err = redisInit(redisAPICacheCtx, "USERAPI_CACHING_ADDRESS", "USERAPI_CACHING_DB", "USERAPI_CACHING_PASSWORD")
@@ -332,7 +330,6 @@ func main() {
 
     defer redisAPICacheCtxCancel()
     defer redisNewsCacheCtxCancel()
-
 }
 
 // Setting up API endpoints
@@ -390,7 +387,6 @@ func newsFeedHandler(httpHandler http.ResponseWriter, request *http.Request) {
 
     // Example response
     fmt.Fprintf(httpHandler, "News feed for page %d", page)
-
 }
 
 func discoverHandler(httpHandler http.ResponseWriter, request *http.Request) {
@@ -412,7 +408,6 @@ func discoverHandler(httpHandler http.ResponseWriter, request *http.Request) {
 
     // Example response
     fmt.Fprintf(httpHandler, "News feed for page %d", page)
-
 }
 
 func detailHandler(httpHandler http.ResponseWriter, request *http.Request) {

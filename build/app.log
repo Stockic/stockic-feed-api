@@ -1,267 +1,222 @@
-Warning: Error loading .env file: open .env: no such file or directory
-[WIPER-LOG] [2024-11-07 10:13:01] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:13:01] Failed to connect to Redis ERROR: dial tcp [::1]:6379: connect: connection refused
-[WIPER-LOG] [2024-11-07 10:13:01] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:13:01] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:13:01] Failed to connect to Redis ERROR: dial tcp [::1]:6379: connect: connection refused
-[WIPER-LOG] [2024-11-07 10:13:01] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:14:39] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:14:39] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:14:48] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:14:48] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:15:48] User API key is missing ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:16:23] User doesn't exist ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:19:51] User is not premium ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:22:38] User is not premium ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:24:07] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:24:07] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:27:38] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:27:38] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:27:42] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:27:42] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:51:10] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:51:10] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:51:14] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:51:14] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:52:37] Request to /api/v1/headlines took 959.05633ms ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:52:43] Request to /api/v1/headlines took 353.282809ms ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:52:46] Request to /api/v1/headlines took 333.78234ms ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:52:49] Request to /api/v1/headlines took 339.052979ms ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:52:50] Request to /api/v1/headlines took 338.661595ms ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:52:50] Request to /api/v1/headlines took 327.220198ms ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:52:51] Request to /api/v1/headlines took 318.726331ms ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:56:16] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:56:16] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:56:21] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:56:21] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:56:32] Request to /api/v1/headlines took 5.891623288s ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:56:34] Request to /api/v1/headlines took 333.692331ms ERROR: <nil>
-[WIPER-LOG] [2024-11-07 10:56:35] Request to /api/v1/headlines took 337.110596ms ERROR: <nil>
-[WIPER-LOG] [2024-11-07 11:03:07] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 11:03:07] Redis client initialized successfully ERROR: <nil>
-http: panic serving [::1]:41520: runtime error: invalid memory address or nil pointer dereference
-goroutine 59 [running]:
-net/http.(*conn).serve.func1()
-	/usr/lib/go/src/net/http/server.go:1947 +0xbe
-panic({0x11039a0?, 0x1fc1f50?})
-	/usr/lib/go/src/runtime/panic.go:785 +0x132
-main.validateUserAPIKey({0xc0006966a8, 0x14})
-	/home/maverick/Projects/Stockic/feed-api/main.go:161 +0x31
-main.setupRoutes.apiKeyMiddleware.func1({0x14ffd20, 0xc0004ba380}, 0xc0004fc640)
-	/home/maverick/Projects/Stockic/feed-api/main.go:218 +0x7a
-net/http.HandlerFunc.ServeHTTP(0x200cd20?, {0x14ffd20?, 0xc0004ba380?}, 0x709cb6?)
-	/usr/lib/go/src/net/http/server.go:2220 +0x29
-net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x14ffd20, 0xc0004ba380}, 0xc0004fc640)
-	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
-net/http.serverHandler.ServeHTTP({0xc000315500?}, {0x14ffd20?, 0xc0004ba380?}, 0x6?)
-	/usr/lib/go/src/net/http/server.go:3210 +0x8e
-net/http.(*conn).serve(0xc0000ff5f0, {0x1501570, 0xc000315410})
-	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
-created by net/http.(*Server).Serve in goroutine 1
-	/usr/lib/go/src/net/http/server.go:3360 +0x485
-http: panic serving [::1]:48378: runtime error: invalid memory address or nil pointer dereference
-goroutine 61 [running]:
-net/http.(*conn).serve.func1()
-	/usr/lib/go/src/net/http/server.go:1947 +0xbe
-panic({0x11039a0?, 0x1fc1f50?})
-	/usr/lib/go/src/runtime/panic.go:785 +0x132
-main.validateUserAPIKey({0xc0006966c0, 0x14})
-	/home/maverick/Projects/Stockic/feed-api/main.go:161 +0x31
-main.setupRoutes.apiKeyMiddleware.func1({0x14ffd20, 0xc0004ba460}, 0xc0004fc780)
-	/home/maverick/Projects/Stockic/feed-api/main.go:218 +0x7a
-net/http.HandlerFunc.ServeHTTP(0x200cd20?, {0x14ffd20?, 0xc0004ba460?}, 0x709cb6?)
-	/usr/lib/go/src/net/http/server.go:2220 +0x29
-net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x14ffd20, 0xc0004ba460}, 0xc0004fc780)
-	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
-net/http.serverHandler.ServeHTTP({0xc0003156b0?}, {0x14ffd20?, 0xc0004ba460?}, 0x6?)
-	/usr/lib/go/src/net/http/server.go:3210 +0x8e
-net/http.(*conn).serve(0xc0000ff7a0, {0x1501570, 0xc000315410})
-	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
-created by net/http.(*Server).Serve in goroutine 1
-	/usr/lib/go/src/net/http/server.go:3360 +0x485
-http: panic serving [::1]:48984: runtime error: invalid memory address or nil pointer dereference
-goroutine 63 [running]:
-net/http.(*conn).serve.func1()
-	/usr/lib/go/src/net/http/server.go:1947 +0xbe
-panic({0x11039a0?, 0x1fc1f50?})
-	/usr/lib/go/src/runtime/panic.go:785 +0x132
-main.validateUserAPIKey({0xc0006966d8, 0x14})
-	/home/maverick/Projects/Stockic/feed-api/main.go:161 +0x31
-main.setupRoutes.apiKeyMiddleware.func1({0x14ffd20, 0xc0004ba540}, 0xc0004fc8c0)
-	/home/maverick/Projects/Stockic/feed-api/main.go:218 +0x7a
-net/http.HandlerFunc.ServeHTTP(0x200cd20?, {0x14ffd20?, 0xc0004ba540?}, 0x709cb6?)
-	/usr/lib/go/src/net/http/server.go:2220 +0x29
-net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x14ffd20, 0xc0004ba540}, 0xc0004fc8c0)
-	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
-net/http.serverHandler.ServeHTTP({0xc000315800?}, {0x14ffd20?, 0xc0004ba540?}, 0x6?)
-	/usr/lib/go/src/net/http/server.go:3210 +0x8e
-net/http.(*conn).serve(0xc0000ff950, {0x1501570, 0xc000315410})
-	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
-created by net/http.(*Server).Serve in goroutine 1
-	/usr/lib/go/src/net/http/server.go:3360 +0x485
-[WIPER-LOG] [2024-11-07 11:04:53] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 11:04:53] Redis client initialized successfully ERROR: <nil>
-http: panic serving [::1]:58170: runtime error: invalid memory address or nil pointer dereference
-goroutine 31 [running]:
-net/http.(*conn).serve.func1()
-	/usr/lib/go/src/net/http/server.go:1947 +0xbe
-panic({0x1103960?, 0x1fc0f50?})
-	/usr/lib/go/src/runtime/panic.go:785 +0x132
-main.validateUserAPIKey({0xc0004a0ae0, 0x14})
-	/home/maverick/Projects/Stockic/feed-api/main.go:161 +0x31
-main.setupRoutes.apiKeyMiddleware.func1({0x14ffbc0, 0xc0004c0380}, 0xc0004fc640)
-	/home/maverick/Projects/Stockic/feed-api/main.go:205 +0x7a
-net/http.HandlerFunc.ServeHTTP(0x200bd20?, {0x14ffbc0?, 0xc0004c0380?}, 0x709cb6?)
-	/usr/lib/go/src/net/http/server.go:2220 +0x29
-net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x14ffbc0, 0xc0004c0380}, 0xc0004fc640)
-	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
-net/http.serverHandler.ServeHTTP({0xc00069b4d0?}, {0x14ffbc0?, 0xc0004c0380?}, 0x6?)
-	/usr/lib/go/src/net/http/server.go:3210 +0x8e
-net/http.(*conn).serve(0xc00041da70, {0x1501410, 0xc00069b3e0})
-	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
-created by net/http.(*Server).Serve in goroutine 1
-	/usr/lib/go/src/net/http/server.go:3360 +0x485
-http: panic serving [::1]:58182: runtime error: invalid memory address or nil pointer dereference
-goroutine 33 [running]:
-net/http.(*conn).serve.func1()
-	/usr/lib/go/src/net/http/server.go:1947 +0xbe
-panic({0x1103960?, 0x1fc0f50?})
-	/usr/lib/go/src/runtime/panic.go:785 +0x132
-main.validateUserAPIKey({0xc0004a0af8, 0x14})
-	/home/maverick/Projects/Stockic/feed-api/main.go:161 +0x31
-main.setupRoutes.apiKeyMiddleware.func1({0x14ffbc0, 0xc0004c0460}, 0xc0004fc780)
-	/home/maverick/Projects/Stockic/feed-api/main.go:205 +0x7a
-net/http.HandlerFunc.ServeHTTP(0x200bd20?, {0x14ffbc0?, 0xc0004c0460?}, 0x709cb6?)
-	/usr/lib/go/src/net/http/server.go:2220 +0x29
-net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x14ffbc0, 0xc0004c0460}, 0xc0004fc780)
-	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
-net/http.serverHandler.ServeHTTP({0xc00069b680?}, {0x14ffbc0?, 0xc0004c0460?}, 0x6?)
-	/usr/lib/go/src/net/http/server.go:3210 +0x8e
-net/http.(*conn).serve(0xc00041dc20, {0x1501410, 0xc00069b3e0})
-	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
-created by net/http.(*Server).Serve in goroutine 1
-	/usr/lib/go/src/net/http/server.go:3360 +0x485
-[WIPER-LOG] [2024-11-07 11:05:31] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 11:05:31] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 11:05:39] Request to /api/v1/headlines took 5.957546931s ERROR: <nil>
-[WIPER-LOG] [2024-11-07 11:07:16] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 11:07:16] Redis client initialized successfully ERROR: <nil>
-http: panic serving [::1]:56860: runtime error: invalid memory address or nil pointer dereference
-goroutine 60 [running]:
-net/http.(*conn).serve.func1()
-	/usr/lib/go/src/net/http/server.go:1947 +0xbe
-panic({0x1103960?, 0x1fc0f50?})
-	/usr/lib/go/src/runtime/panic.go:785 +0x132
-main.validateUserAPIKey({0xc0006a2738, 0x14})
-	/home/maverick/Projects/Stockic/feed-api/main.go:161 +0x31
-main.setupRoutes.apiKeyMiddleware.func1({0x14ffbc0, 0xc0004c0540}, 0xc0001a0500)
-	/home/maverick/Projects/Stockic/feed-api/main.go:205 +0x7a
-net/http.HandlerFunc.ServeHTTP(0x200bd20?, {0x14ffbc0?, 0xc0004c0540?}, 0x709cb6?)
-	/usr/lib/go/src/net/http/server.go:2220 +0x29
-net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x14ffbc0, 0xc0004c0540}, 0xc0001a0500)
-	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
-net/http.serverHandler.ServeHTTP({0xc00069a2a0?}, {0x14ffbc0?, 0xc0004c0540?}, 0x6?)
-	/usr/lib/go/src/net/http/server.go:3210 +0x8e
-net/http.(*conn).serve(0xc000421b00, {0x1501410, 0xc00069a1b0})
-	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
-created by net/http.(*Server).Serve in goroutine 1
-	/usr/lib/go/src/net/http/server.go:3360 +0x485
-[WIPER-LOG] [2024-11-07 11:11:53] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 11:11:53] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 11:11:56] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 11:11:56] Redis client initialized successfully ERROR: <nil>
-http: panic serving [::1]:35988: runtime error: invalid memory address or nil pointer dereference
-goroutine 11 [running]:
-net/http.(*conn).serve.func1()
-	/usr/lib/go/src/net/http/server.go:1947 +0xbe
-panic({0x11039a0?, 0x1fc1f50?})
-	/usr/lib/go/src/runtime/panic.go:785 +0x132
-main.validateUserAPIKey({0xc0003ccb28, 0x14})
-	/home/maverick/Projects/Stockic/feed-api/main.go:161 +0x31
-main.setupRoutes.apiKeyMiddleware.func1({0x14ffd40, 0xc0004bc460}, 0xc0003def00)
-	/home/maverick/Projects/Stockic/feed-api/main.go:224 +0x7a
-net/http.HandlerFunc.ServeHTTP(0x200cd20?, {0x14ffd40?, 0xc0004bc460?}, 0x709cb6?)
-	/usr/lib/go/src/net/http/server.go:2220 +0x29
-net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x14ffd40, 0xc0004bc460}, 0xc0003def00)
-	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
-net/http.serverHandler.ServeHTTP({0xc0007040c0?}, {0x14ffd40?, 0xc0004bc460?}, 0x6?)
-	/usr/lib/go/src/net/http/server.go:3210 +0x8e
-net/http.(*conn).serve(0xc0000bf050, {0x1501590, 0xc0003dbf20})
-	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
-created by net/http.(*Server).Serve in goroutine 1
-	/usr/lib/go/src/net/http/server.go:3360 +0x485
-[WIPER-LOG] [2024-11-07 11:12:54] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 11:12:54] Redis client initialized successfully ERROR: <nil>
-[WIPER-LOG] [2024-11-07 11:12:57] Request to /api/v1/headlines took 963.046336ms ERROR: <nil>
-[WIPER-LOG] [2024-11-07 11:39:48] Successfully initialized Redis: USERAPI_CACHING_ADDRESS ERROR: <nil>
-[WIPER-LOG] [2024-11-07 11:39:48] Successfully initialized Redis: NEWS_CACHING_ADDRESS ERROR: <nil>
-[WIPER-LOG] [2024-11-07 11:40:04] Successfully initialized Redis: USERAPI_CACHING_ADDRESS ERROR: <nil>
-[WIPER-LOG] [2024-11-07 11:40:04] Successfully initialized Redis: NEWS_CACHING_ADDRESS ERROR: <nil>
-[WIPER-LOG] [2024-11-07 12:04:36] Successfully initialized Redis: localhost:5000 ERROR: <nil>
-[WIPER-LOG] [2024-11-07 12:04:36] Successfully initialized Redis: localhost:6000 ERROR: <nil>
-http: panic serving [::1]:33926: runtime error: invalid memory address or nil pointer dereference
-goroutine 51 [running]:
-net/http.(*conn).serve.func1()
-	/usr/lib/go/src/net/http/server.go:1947 +0xbe
-panic({0x1103960?, 0x1fc0f50?})
-	/usr/lib/go/src/runtime/panic.go:785 +0x132
-main.validateUserAPIKey({0xc000028000, 0x14})
-	/home/maverick/Projects/Stockic/feed-api/main.go:160 +0x31
-main.setupRoutes.apiKeyMiddleware.func1({0x14ffbe0, 0xc00002a000}, 0xc0003977c0)
-	/home/maverick/Projects/Stockic/feed-api/main.go:204 +0x7a
-net/http.HandlerFunc.ServeHTTP(0x200bd20?, {0x14ffbe0?, 0xc00002a000?}, 0x709cb6?)
-	/usr/lib/go/src/net/http/server.go:2220 +0x29
-net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x14ffbe0, 0xc00002a000}, 0xc0003977c0)
-	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
-net/http.serverHandler.ServeHTTP({0xc0000d6570?}, {0x14ffbe0?, 0xc00002a000?}, 0x6?)
-	/usr/lib/go/src/net/http/server.go:3210 +0x8e
-net/http.(*conn).serve(0xc0001962d0, {0x1501430, 0xc000681440})
-	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
-created by net/http.(*Server).Serve in goroutine 1
-	/usr/lib/go/src/net/http/server.go:3360 +0x485
-[WIPER-LOG] [2024-11-07 12:05:48] Successfully initialized Redis: localhost:5000 ERROR: <nil>
-[WIPER-LOG] [2024-11-07 12:05:48] Successfully initialized Redis: localhost:6000 ERROR: <nil>
-[WIPER-LOG] [2024-11-07 12:05:51] Successfully initialized Redis: localhost:5000 ERROR: <nil>
-[WIPER-LOG] [2024-11-07 12:05:51] Successfully initialized Redis: localhost:6000 ERROR: <nil>
-[WIPER-LOG] [2024-11-07 12:05:55] Hitting Redis first ERROR: <nil>
-http: panic serving [::1]:39964: runtime error: invalid memory address or nil pointer dereference
-goroutine 26 [running]:
-net/http.(*conn).serve.func1()
-	/usr/lib/go/src/net/http/server.go:1947 +0xbe
-panic({0x1103960?, 0x1fc0f50?})
-	/usr/lib/go/src/runtime/panic.go:785 +0x132
-main.validateUserAPIKey({0xc000058090, 0x14})
-	/home/maverick/Projects/Stockic/feed-api/main.go:161 +0x4e
-main.setupRoutes.apiKeyMiddleware.func1({0x14ffc00, 0xc0001d0000}, 0xc000786140)
-	/home/maverick/Projects/Stockic/feed-api/main.go:206 +0x7a
-net/http.HandlerFunc.ServeHTTP(0x200bd20?, {0x14ffc00?, 0xc0001d0000?}, 0x709cb6?)
-	/usr/lib/go/src/net/http/server.go:2220 +0x29
-net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x14ffc00, 0xc0001d0000}, 0xc000786140)
-	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
-net/http.serverHandler.ServeHTTP({0xc000780150?}, {0x14ffc00?, 0xc0001d0000?}, 0x6?)
-	/usr/lib/go/src/net/http/server.go:3210 +0x8e
-net/http.(*conn).serve(0xc00078c090, {0x1501450, 0xc0000bd3b0})
-	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
-created by net/http.(*Server).Serve in goroutine 1
-	/usr/lib/go/src/net/http/server.go:3360 +0x485
-[WIPER-LOG] [2024-11-07 12:34:37] Hitting Redis first ERROR: <nil>
-http: panic serving [::1]:53478: runtime error: invalid memory address or nil pointer dereference
-goroutine 28 [running]:
-net/http.(*conn).serve.func1()
-	/usr/lib/go/src/net/http/server.go:1947 +0xbe
-panic({0x1103960?, 0x1fc0f50?})
-	/usr/lib/go/src/runtime/panic.go:785 +0x132
-main.validateUserAPIKey({0xc000058090, 0x14})
-	/home/maverick/Projects/Stockic/feed-api/main.go:161 +0x4e
-main.setupRoutes.apiKeyMiddleware.func1({0x14ffc00, 0xc0004bc540}, 0xc000786140)
-	/home/maverick/Projects/Stockic/feed-api/main.go:206 +0x7a
-net/http.HandlerFunc.ServeHTTP(0x200bd20?, {0x14ffc00?, 0xc0004bc540?}, 0x709cb6?)
-	/usr/lib/go/src/net/http/server.go:2220 +0x29
-net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x14ffc00, 0xc0004bc540}, 0xc000786140)
-	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
-net/http.serverHandler.ServeHTTP({0xc000780120?}, {0x14ffc00?, 0xc0004bc540?}, 0x6?)
-	/usr/lib/go/src/net/http/server.go:3210 +0x8e
-net/http.(*conn).serve(0xc000416000, {0x1501450, 0xc0000bd3b0})
-	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
-created by net/http.(*Server).Serve in goroutine 1
-	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[WIPER-LOG] [2024-11-07 19:07:05] Before context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:07:05] After context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:07:05] Successfully initialized Redis: localhost:5000 ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:07:05] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:07:10] Validation Started ERROR: <nil>
+Redis connection error: context canceled
+[WIPER-LOG] [2024-11-07 19:07:10] Cache not hit, moving to firebase ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:07:21] User Existence confirm ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:07:21] Exists and Premium, caching ERROR: <nil>
+Redis connection error: context canceled
+[WIPER-LOG] [2024-11-07 19:07:21] Redis connection error ERROR: context canceled
+[WIPER-LOG] [2024-11-07 19:07:21] Failed to cache user status: %v ERROR: context canceled
+[WIPER-LOG] [2024-11-07 19:07:21] Cached ERROR: context canceled
+[WIPER-LOG] [2024-11-07 19:07:21] Request to /api/v1/headlines took 10.981007893s ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:07:32] Validation Started ERROR: <nil>
+Redis connection error: context canceled
+[WIPER-LOG] [2024-11-07 19:07:32] Cache not hit, moving to firebase ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:07:33] User Existence confirm ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:07:33] Exists and Premium, caching ERROR: <nil>
+Redis connection error: context canceled
+[WIPER-LOG] [2024-11-07 19:07:33] Redis connection error ERROR: context canceled
+[WIPER-LOG] [2024-11-07 19:07:33] Failed to cache user status: %v ERROR: context canceled
+[WIPER-LOG] [2024-11-07 19:07:33] Cached ERROR: context canceled
+[WIPER-LOG] [2024-11-07 19:07:33] Request to /api/v1/headlines took 1.104959581s ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:09:20] Before context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:09:20] After context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:09:20] Successfully initialized Redis: localhost:5000 ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:09:20] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:09:23] Validation Started ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:09:23] Cache not hit, moving to firebase ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:09:29] User Existence confirm ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:09:29] Exists and Premium, caching ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:09:29] Redis ping response: PONG ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:09:29] Cached ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:09:29] Request to /api/v1/headlines took 6.014159861s ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:09:36] Validation Started ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:09:36] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:09:36] Request to /api/v1/headlines took 340.299µs ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:09:39] Validation Started ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:09:39] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:09:39] Request to /api/v1/headlines took 553.258µs ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:09:40] Validation Started ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:09:40] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:09:40] Request to /api/v1/headlines took 461.486µs ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:11:24] Validation Started ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:11:24] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:11:24] Request to /api/v1/headlines took 347.843µs ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:11:29] Validation Started ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:11:29] Cache not hit, moving to firebase ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:11:30] User not registered ERROR, caching it ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:11:30] Redis ping response: PONG ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:11:30] User not registered ERROR, cached ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:11:30] User doesn't exist ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:11:30] User with no registeration tried to access ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:11:31] Validation Started ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:11:31] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:11:31] User doesn't exist ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:11:31] User with no registeration tried to access ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:11:32] Validation Started ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:11:32] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:11:32] User doesn't exist ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:11:32] User with no registeration tried to access ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:11:35] Validation Started ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:11:35] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:11:35] Request to /api/v1/headlines took 403.657µs ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:11:36] Validation Started ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:11:36] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:11:36] Request to /api/v1/headlines took 392.948µs ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:12:54] Before context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:12:54] After context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:12:54] Successfully initialized Redis: localhost:5000 ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:12:54] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:12:59] Validation Started ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:12:59] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:12:59] Request to /api/v1/headlines took 362.821µs ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:13:03] Validation Started ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:13:03] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:13:03] Request to /api/v1/headlines took 335.229µs ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:13:04] Validation Started ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:13:04] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:13:04] Request to /api/v1/headlines took 486.873µs ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:13:07] Validation Started ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:13:07] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:13:07] User doesn't exist ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:13:07] User with no registeration tried to access ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:13:11] Validation Started ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:13:11] Cache not hit, moving to firebase ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:13:12] User not registered ERROR, caching it ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:13:12] Redis ping response: PONG ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:13:12] User not registered ERROR, cached ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:13:12] User doesn't exist ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:13:12] User with no registeration tried to access ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:13:12] Validation Started ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:13:12] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:13:12] User doesn't exist ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:13:12] User with no registeration tried to access ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:14:36] Validation Started ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:14:36] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:14:36] User doesn't exist ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:14:36] User with no registeration tried to access ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:18:05] Before context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:18:05] After context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:18:05] Successfully initialized Redis: localhost:5000 ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:18:05] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:18:11] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:18:11] Request to /api/v1/headlines took 535.225µs ERROR: <nil>
+Redis ping response: PONG
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:23:42] Redis ping response: PONG ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:23:42] Request to /api/v1/headlines took 1.250318468s ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:23:44] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:23:44] Request to /api/v1/headlines took 2.987586ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:23:45] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:23:45] Request to /api/v1/headlines took 324.078µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:23:45] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:23:45] Request to /api/v1/headlines took 327.465µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:23:45] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:23:45] Request to /api/v1/headlines took 390.613µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 19:23:46] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 19:23:46] Request to /api/v1/headlines took 319.891µs ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:40:58] Before context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:40:58] After context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:40:58] Successfully initialized Redis: localhost:5000 ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:40:58] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 20:41:47] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:41:47] Request to /api/v1/headlines took 408.547µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 20:42:36] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:42:36] Request to /api/v1/newsfeed/1 took 413.896µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 20:42:38] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:42:38] Request to /api/v1/newsfeed/2 took 541.466µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 20:42:39] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:42:39] Request to /api/v1/newsfeed/0 took 400.672µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 20:50:28] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:50:28] Request to /api/v1/newsfeed/0ls took 982.694µs ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:50:48] Before context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:50:48] After context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:50:48] Successfully initialized Redis: localhost:5000 ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:50:48] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 20:50:51] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:50:51] Invalid page number ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:50:51] Request to /api/v1/newsfeed/0ls took 430.298µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 20:50:55] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:50:55] Request to /api/v1/newsfeed/2 took 397.425µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 20:51:00] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:51:00] Request to /api/v1/newsfeed/20202 took 486.854µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 20:51:03] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:51:03] Invalid page number ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:51:03] Request to /api/v1/newsfeed/2020273248574825470395982345 took 444.875µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 20:51:06] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:51:06] Invalid page number ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:51:06] Request to /api/v1/newsfeed/2020273248574825470395 took 495.039µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 20:51:15] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:51:15] Invalid page number ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:51:15] Request to /api/v1/newsfeed/2020d took 475.192µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 20:51:16] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:51:16] Request to /api/v1/newsfeed/2020 took 480.08µs ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:54:23] Before context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:54:23] After context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:54:23] Successfully initialized Redis: localhost:5000 ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:54:23] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 20:54:25] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:54:25] Request to /api/v1/newsfeed/9223372036854775807 took 488.627µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-07 20:54:29] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:54:29] Invalid page number ERROR: <nil>
+[WIPER-LOG] [2024-11-07 20:54:29] Request to /api/v1/newsfeed/9223372036854775808 took 519.835µs ERROR: <nil>
+[WIPER-LOG] [2024-11-08 13:37:13] Before context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-08 13:37:13] After context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-08 13:37:13] Successfully initialized Redis: localhost:5000 ERROR: <nil>
+[WIPER-LOG] [2024-11-08 13:37:13] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-08 13:37:30] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-08 13:37:30] Request to /api/v1/headlines took 343.574µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-08 13:37:32] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-08 13:37:32] Request to /api/v1/headlines took 387.197µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-08 13:37:33] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-08 13:37:33] Request to /api/v1/headlines took 576.511µs ERROR: <nil>
+[WIPER-LOG] [2024-11-08 16:34:34] Before context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-08 16:34:34] After context setting ERROR: <nil>
+[WIPER-LOG] [2024-11-08 16:34:34] Successfully initialized Redis: localhost:5000 ERROR: <nil>
+[WIPER-LOG] [2024-11-08 16:34:34] Successfully initialized Redis: localhost:6000 ERROR: <nil>
