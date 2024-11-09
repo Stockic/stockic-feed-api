@@ -1,6 +1,36 @@
-Warning: Error loading .env file: open .env: no such file or directory
-Warning: Error loading .env file: open .env: no such file or directory
-googleapi: Error 502:
-Warning: Error loading .env file: open .env: no such file or directory
-Warning: Error loading .env file: open .env: no such file or directory
-Warning: Error loading .env file: open .env: no such file or directory
+Received non-200 status code: 429
+Error fetching headlines for country 'us': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching headlines for country 'ca': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching headlines for country 'mx': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching headlines for country 'gb': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching headlines for country 'de': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching headlines for country 'fr': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching headlines for country 'it': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching headlines for country 'es': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching headlines for country 'pl': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching headlines for country 'nl': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching headlines for country 'cn': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching headlines for country 'in': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching headlines for country 'jp': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching headlines for country 'kr': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching headlines for country 'sg': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching headlines for country 'hk': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching headlines for country 'au': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching headlines for country 'nz': non-200 status code: 429

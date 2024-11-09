@@ -1,18 +1,18 @@
 package main
 
 import (
-    "fmt"
-    "log"
-    "context"
-    "os"
-    "encoding/json"
-    "io"
-    "net/http"
+	"context"
+	"encoding/json"
+	"fmt"
+	"io"
+	"log"
+	"net/http"
+	"os"
+	"time"
 
-    "github.com/google/generative-ai-go/genai"
-    "google.golang.org/api/option"
-    "github.com/joho/godotenv"
-
+	"github.com/google/generative-ai-go/genai"
+	"github.com/joho/godotenv"
+	"google.golang.org/api/option"
 )
 
 var (
@@ -36,6 +36,24 @@ type Article struct {
 }
 
 type APIResponse struct {
+	Status       string    `json:"status"`
+	TotalResults int       `json:"totalResults"`
+	Articles     []Article `json:"articles"`
+}
+
+type SummarizedArticle struct {
+    stockicID           string `json:"stockicID"`
+	Source              string `json:"source"`
+	Author              string `json:"author"`
+	Title               string `json:"title"`
+	// Description string `json:"description"`
+	URL                 string `json:"url"`
+	URLToImage          string `json:"urlToImage"`
+	PublishedAt         string `json:"publishedAt"`
+	SummarizedContent   string `json:"content"`
+}
+
+type SummarizedResponse struct {
 	Status       string    `json:"status"`
 	TotalResults int       `json:"totalResults"`
 	Articles     []Article `json:"articles"`
@@ -89,83 +107,164 @@ func summarizer(modelName string, title string, text string) *genai.GenerateCont
     return response
 }
 
-func newsAPICaller(url string) APIResponse {
+func newsAPICaller(url string) (APIResponse, error) {
+    var response APIResponse
 
     resp, err := http.Get(url)
-	if err != nil {
-		log.Fatalf("Error making request: %v", err)
-	}
-	defer resp.Body.Close()
+    if err != nil {
+        log.Printf("Error making request: %v", err)
+        return response, err
+    }
+    defer resp.Body.Close()
+
+    if resp.StatusCode != http.StatusOK {
+        log.Printf("Received non-200 status code: %d", resp.StatusCode)
+        return response, fmt.Errorf("non-200 status code: %d", resp.StatusCode)
+    }
 
     body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatalf("Error reading response body: %v", err)
-	}
-
-    var response APIResponse 
+    if err != nil {
+        log.Printf("Error reading response body: %v", err)
+        return response, err
+    }
 
     err = json.Unmarshal(body, &response)
-	if err != nil {
-		log.Fatalf("Error unmarshalling JSON: %v", err)
-	}
+    if err != nil {
+        log.Printf("Error unmarshalling JSON: %v", err)
+        return response, err
+    }
 
     if response.Status != "ok" {
-		log.Fatalf("Error: Received non-ok status: %s", response.Status)
-	}
+        log.Printf("Error: Received non-ok status: %s", response.Status)
+        return response, fmt.Errorf("non-ok status: %s", response.Status)
+    }
 
-    return response
- 
+    return response, nil
 }
 
-func newsAPIHeadlineCaller(country string, category string, page string, pageSize string) APIResponse {
-    url := fmt.Sprintf("https://newsapi.org/v2/top-headlines?country=%s&category=%s&page=%s&pageSize=%s&apiKey", country, category, page, pageSize, os.Getenv("NEWSAPI_API_KEY"))
-
+func newsAPIHeadlineCaller(country string, page string, pageSize string) (APIResponse, error) {
+    url := fmt.Sprintf(
+        "https://newsapi.org/v2/top-headlines?country=%s&page=%s&pageSize=%s&apiKey=%s",
+        country, page, pageSize, os.Getenv("NEWSAPI_API_KEY"),
+    )
     return newsAPICaller(url)
-
 }
 
-// searchIn = title,description,content
-func newsAPIEverything(q string, searchIn string, sortBy string, from string, to string, page string, pageSize string) APIResponse {
-    url := fmt.Sprintf("https://newsapi.org/v2/everything?q=%s&searchIn=%s&sortBy=%s&from=%s&to=%s&page=%s&pageSize=%s&apiKey=%s", q, searchIn, sortBy, from, to, page, os.Getenv("NEWS_API_KEY"))
+func newsAPIEverything(q, searchIn, language, sortBy, from, to, page, pageSize string) (APIResponse, error) {
+    url := fmt.Sprintf(
+        "https://newsapi.org/v2/everything?q=%s&searchIn=%s&language=%s&sortBy=%s&from=%s&to=%s&page=%s&pageSize=%s&apiKey=%s",
+        q, searchIn, language, sortBy, from, to, page, pageSize, os.Getenv("NEWSAPI_API_KEY"),
+    )
 
     return newsAPICaller(url)
+}
+
+func fetchHeadlinesByCountry(countries []string, pageSize string) map[string]APIResponse {
+    countryHeadlines := make(map[string]APIResponse)
+
+    // Iterate over the countries
+    for _, country := range countries {
+        var allArticles []Article
+        page := 1
+
+        // Keep fetching pages until all articles for the country are fetched
+        for {
+            response, err := newsAPIHeadlineCaller(country, fmt.Sprintf("%d", page), pageSize)
+            time.Sleep(1 * time.Second)
+            if err != nil {
+                log.Printf("Error fetching headlines for country '%s': %v", country, err)
+                break
+            }
+
+            allArticles = append(allArticles, response.Articles...)
+            
+            // If the number of articles fetched is less than the total results, continue fetching next pages
+            if len(allArticles) >= response.TotalResults {
+                break
+            }
+
+            // If there are more results, increase the page number and continue fetching
+            page++
+        }
+
+        // Store the fetched articles for the country in the map
+        countryHeadlines[country] = APIResponse{
+            Status:       "ok",
+            TotalResults: len(allArticles),
+            Articles:     allArticles,
+        }
+    }
+
+    return countryHeadlines
+}
+
+func newsDiscoverySummarizer(language, sortBy, from, to string) map[string]APIResponse {
+    discoverTags := []string{
+        "gainers", "losers", "software", "finance", "stocks",
+        "bonds", "corporate", "banking", "technology", "tax", "geopolitics",
+    }
+
+    categorizedResponses := make(map[string]APIResponse)
+    pageSize := "20"
+
+    for _, category := range discoverTags {
+        page := 1
+        var categoryArticles []Article
+
+        for {
+            response, err := newsAPIEverything(category, "", language, sortBy, from, to, fmt.Sprintf("%d", page), pageSize)
+            if err != nil {
+                log.Printf("Error fetching news for category '%s': %v", category, err)
+                break
+            }
+
+            categoryArticles = append(categoryArticles, response.Articles...)
+
+            if len(categoryArticles) >= response.TotalResults {
+                break
+            }
+
+            page++
+        }
+
+        categorizedResponses[category] = APIResponse{
+            Status:       "ok",
+            TotalResults: len(categoryArticles),
+            Articles:     categoryArticles,
+        }
+    }
+
+    return categorizedResponses
 }
 
 func main() {
+    // Define country codes for each region (North America, Europe, Asia, Australia)
+    northAmerica := []string{"us", "ca", "mx"}
+    europe := []string{"gb", "de", "fr", "it", "es", "pl", "nl"}
+    asia := []string{"cn", "in", "jp", "kr", "sg", "hk"}
+    australia := []string{"au", "nz"}
 
-    url := fmt.Sprintf("https://newsapi.org/v2/everything?q=bitcoin&apiKey=%s", os.Getenv("NEWSAPI_API_KEY"))
+    // Combine all countries into one list
+    allCountries := append(append(northAmerica, europe...), append(asia, australia...)...)
 
-    resp, err := http.Get(url)
-	if err != nil {
-		log.Fatalf("Error making request: %v", err)
-	}
-	defer resp.Body.Close()
+    // Fetch headlines from all countries (passing "20" articles per page)
+    categorizedHeadlines := fetchHeadlinesByCountry(allCountries, "20")
 
-    body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatalf("Error reading response body: %v", err)
-	}
-
-    var response APIResponse 
-
-    err = json.Unmarshal(body, &response)
-	if err != nil {
-		log.Fatalf("Error unmarshalling JSON: %v", err)
-	}
-
-    if response.Status != "ok" {
-		log.Fatalf("Error: Received non-ok status: %s", response.Status)
-	}
-
-    fmt.Printf("Total Results: %d\n\n", response.TotalResults)
-	for _, article := range response.Articles {
-		fmt.Printf("Title: %s\n", article.Title)
-		fmt.Printf("Author: %s\n", article.Author)
-		fmt.Printf("URL: %s\n", article.URL)
-		fmt.Printf("Published At: %s\n", article.PublishedAt)
-		fmt.Printf("Description: %s\n", article.Description)
-		fmt.Println("---")
-	}
-
-    // printResponse(summarizer("gemini-1.5-pro", "Unmasking Bitcoin Creator Satoshi Nakamoto—Again", "https://www.wired.com/story/unmasking-bitcoin-creator-satoshi-nakamoto-again/"))
+    // Iterate over the categorized headlines and print them
+    for country, response := range categorizedHeadlines {
+        fmt.Printf("Headlines for country: %s\n", country)
+        fmt.Printf("Total Results: %d\n\n", response.TotalResults)
+        for _, article := range response.Articles {
+            fmt.Printf("Title: %s\n", article.Title)
+            fmt.Printf("Author: %s\n", article.Author)
+            fmt.Printf("URL: %s\n", article.URL)
+            fmt.Printf("URLImage: %s\n", article.URLToImage)
+            fmt.Printf("Published At: %s\n", article.PublishedAt)
+            fmt.Printf("Description: %s\n", article.Description)
+            fmt.Printf("Content: %s\n", article.Content)
+            fmt.Println("---")
+        }
+        fmt.Println("=========")
+    }
 }
+
