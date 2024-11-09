@@ -1,49 +1,314 @@
+[WIPER-LOG] [2024-11-09 17:35:48] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Received non-200 status code: 429
+Error fetching news for category 'losers': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'software': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'finance': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'stocks': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'bonds': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'corporate': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'banking': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'technology': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'tax': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'geopolitics': non-200 status code: 429
+[WIPER-LOG] [2024-11-09 17:36:08] Feedling AI with all the news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 17:36:46] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 17:36:46] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 17:36:46] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 17:37:18] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 17:37:18] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 17:37:18] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 17:37:55] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 17:37:55] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 17:37:55] =================== ERROR: <nil>
+blocked: candidate: FinishReasonSafety
+[WIPER-LOG] [2024-11-09 17:46:04] Successfully initialized Redis: localhost:4000 ERROR: <nil>
 Received non-200 status code: 429
 Error fetching headlines for country 'us': non-200 status code: 429
 Received non-200 status code: 429
-Error fetching headlines for country 'ca': non-200 status code: 429
+Error fetching news for category 'gainers': non-200 status code: 429
 Received non-200 status code: 429
-Error fetching headlines for country 'mx': non-200 status code: 429
+Error fetching news for category 'losers': non-200 status code: 429
 Received non-200 status code: 429
-Error fetching headlines for country 'gb': non-200 status code: 429
+Error fetching news for category 'software': non-200 status code: 429
 Received non-200 status code: 429
-Error fetching headlines for country 'de': non-200 status code: 429
+Error fetching news for category 'finance': non-200 status code: 429
 Received non-200 status code: 429
-Error fetching headlines for country 'fr': non-200 status code: 429
+Error fetching news for category 'stocks': non-200 status code: 429
 Received non-200 status code: 429
-Error fetching headlines for country 'it': non-200 status code: 429
+Error fetching news for category 'bonds': non-200 status code: 429
 Received non-200 status code: 429
-Error fetching headlines for country 'es': non-200 status code: 429
+Error fetching news for category 'corporate': non-200 status code: 429
 Received non-200 status code: 429
-Error fetching headlines for country 'pl': non-200 status code: 429
+Error fetching news for category 'banking': non-200 status code: 429
 Received non-200 status code: 429
-Error fetching headlines for country 'nl': non-200 status code: 429
+Error fetching news for category 'technology': non-200 status code: 429
 Received non-200 status code: 429
-Error fetching headlines for country 'cn': non-200 status code: 429
+Error fetching news for category 'tax': non-200 status code: 429
 Received non-200 status code: 429
-Error fetching headlines for country 'in': non-200 status code: 429
+Error fetching news for category 'geopolitics': non-200 status code: 429
+[WIPER-LOG] [2024-11-09 17:46:20] Feedling AI with all the news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 17:57:43] Successfully initialized Redis: localhost:4000 ERROR: <nil>
 Received non-200 status code: 429
-Error fetching headlines for country 'jp': non-200 status code: 429
+Error fetching headlines for country 'us': non-200 status code: 429
 Received non-200 status code: 429
-Error fetching headlines for country 'kr': non-200 status code: 429
+Error fetching news for category 'gainers': non-200 status code: 429
 Received non-200 status code: 429
-Error fetching headlines for country 'sg': non-200 status code: 429
+Error fetching news for category 'losers': non-200 status code: 429
 Received non-200 status code: 429
-Error fetching headlines for country 'hk': non-200 status code: 429
+Error fetching news for category 'software': non-200 status code: 429
 Received non-200 status code: 429
-Error fetching headlines for country 'au': non-200 status code: 429
+[WIPER-LOG] [2024-11-09 18:00:41] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Received non-200 status code: 426
+Error fetching news for category 'losers': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'software': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'finance': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'stocks': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'bonds': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'corporate': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'banking': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'technology': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'tax': non-200 status code: 426
+[WIPER-LOG] [2024-11-09 18:02:07] Feedling AI with all the news ERROR: <nil>
+googleapi: Error 400: * GenerateContentRequest.safety_settings[0]: element predicate failed: $.category in (HarmCategory.HARM_CATEGORY_HATE_SPEECH, HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, HarmCategory.HARM_CATEGORY_HARASSMENT, HarmCategory.HARM_CATEGORY_CIVIC_INTEGRITY)
+* GenerateContentRequest.safety_settings[1]: element predicate failed: $.category in (HarmCategory.HARM_CATEGORY_HATE_SPEECH, HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, HarmCategory.HARM_CATEGORY_HARASSMENT, HarmCategory.HARM_CATEGORY_CIVIC_INTEGRITY)
+* GenerateContentRequest.safety_settings[2]: element predicate failed: $.category in (HarmCategory.HARM_CATEGORY_HATE_SPEECH, HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, HarmCategory.HARM_CATEGORY_HARASSMENT, HarmCategory.HARM_CATEGORY_CIVIC_INTEGRITY)
+* GenerateContentRequest.safety_settings[3]: element predicate failed: $.category in (HarmCategory.HARM_CATEGORY_HATE_SPEECH, HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, HarmCategory.HARM_CATEGORY_HARASSMENT, HarmCategory.HARM_CATEGORY_CIVIC_INTEGRITY)
+* GenerateContentRequest.safety_settings[4]: element predicate failed: $.category in (HarmCategory.HARM_CATEGORY_HATE_SPEECH, HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, HarmCategory.HARM_CATEGORY_HARASSMENT, HarmCategory.HARM_CATEGORY_CIVIC_INTEGRITY)
+* GenerateContentRequest.safety_settings[5]: element predicate failed: $.category in (HarmCategory.HARM_CATEGORY_HATE_SPEECH, HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, HarmCategory.HARM_CATEGORY_HARASSMENT, HarmCategory.HARM_CATEGORY_CIVIC_INTEGRITY)
+* GenerateContentRequest.safety_settings[6]: element predicate failed: $.category in (HarmCategory.HARM_CATEGORY_HATE_SPEECH, HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, HarmCategory.HARM_CATEGORY_HARASSMENT, HarmCategory.HARM_CATEGORY_CIVIC_INTEGRITY)
+[WIPER-LOG] [2024-11-09 18:57:30] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Received non-200 status code: 426
+Error fetching news for category 'losers': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'software': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'finance': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'stocks': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'bonds': non-200 status code: 426
 Received non-200 status code: 429
-Error fetching headlines for country 'nz': non-200 status code: 429
-[WIPER-LOG] [2024-11-09 16:45:14] Successfully initialized Redis: localhost:4000 ERROR: <nil>
-googleapi: Error 429: Resource has been exhausted (e.g. check quota).
-[WIPER-LOG] [2024-11-09 16:48:22] Successfully initialized Redis: localhost:4000 ERROR: <nil>
-[WIPER-LOG] [2024-11-09 16:52:34] Successfully initialized Redis: localhost:4000 ERROR: <nil>
-[WIPER-LOG] [2024-11-09 16:53:40] Feeding AI with 1 news ERROR: <nil>
-[WIPER-LOG] [2024-11-09 16:57:27] Successfully initialized Redis: localhost:4000 ERROR: <nil>
-[WIPER-LOG] [2024-11-09 16:57:30] Feedling AI with all the news ERROR: <nil>
-[WIPER-LOG] [2024-11-09 16:57:47] Feeding AI with 1 news ERROR: <nil>
-[WIPER-LOG] [2024-11-09 16:57:47] ===== AI NEWS! ==== ERROR: <nil>
-[WIPER-LOG] [2024-11-09 16:57:47] =================== ERROR: <nil>
-[WIPER-LOG] [2024-11-09 16:57:59] Feeding AI with 1 news ERROR: <nil>
-[WIPER-LOG] [2024-11-09 16:57:59] ===== AI NEWS! ==== ERROR: <nil>
-[WIPER-LOG] [2024-11-09 16:57:59] =================== ERROR: <nil>
+Error fetching news for category 'corporate': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'banking': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'technology': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'tax': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'geopolitics': non-200 status code: 429
+[WIPER-LOG] [2024-11-09 18:58:43] Feedling AI with all the news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 18:59:20] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 18:59:21] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 18:59:21] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 18:59:52] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 18:59:52] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 18:59:52] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:00:24] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:00:24] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:00:24] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:00:31] AI Failed to process: Israeli soccer fans attacked in Amsterdam, with five reportedly hospitalized and dozens of suspects arrested - CBS News ERROR: blocked: candidate: FinishReasonSafety
+[WIPER-LOG] [2024-11-09 19:01:09] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:01:09] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:01:09] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:07:13] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Received non-200 status code: 429
+Error fetching headlines for country 'us': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'gainers': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'losers': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'software': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'finance': non-200 status code: 429
+Received non-200 status code: 429
+[WIPER-LOG] [2024-11-09 19:07:28] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Received non-200 status code: 429
+Error fetching headlines for country 'us': non-200 status code: 429
+Received non-200 status code: 429
+[WIPER-LOG] [2024-11-09 19:47:40] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Received non-200 status code: 429
+Error fetching headlines for country 'us': non-200 status code: 429
+Received non-200 status code: 429
+Error fetching news for category 'gainers': non-200 status code: 429
+[WIPER-LOG] [2024-11-09 19:50:05] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Received non-200 status code: 426
+Error fetching news for category 'losers': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'software': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'finance': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'stocks': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'bonds': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'corporate': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'banking': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'technology': non-200 status code: 426
+Received non-200 status code: 426
+Error fetching news for category 'tax': non-200 status code: 426
+[WIPER-LOG] [2024-11-09 19:51:29] Feedling AI with all the news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:52:01] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:52:01] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:52:01] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:52:33] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:52:33] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:52:33] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:53:05] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:53:05] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:53:05] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:53:07] AI Failed to process: Israeli soccer fans attacked in Amsterdam, with five reportedly hospitalized and dozens of suspects arrested - CBS News ERROR: blocked: candidate: FinishReasonSafety
+[WIPER-LOG] [2024-11-09 19:53:39] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:53:39] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:53:39] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:54:11] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:54:11] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:54:11] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:54:14] AI Failed to process: 'That Was Just Melania': Jimmy Kimmel Trolls Trump With 1 Fleeting Observation - HuffPost ERROR: blocked: candidate: FinishReasonSafety
+[WIPER-LOG] [2024-11-09 19:54:56] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:54:56] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:54:56] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:55:37] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:55:37] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:55:37] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:56:09] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:56:09] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:56:09] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:56:41] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:56:41] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:56:41] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:57:13] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:57:13] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:57:13] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:57:45] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:57:45] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:57:45] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:57:58] AI Failed to process: Brianna Chickenfry Accuses Zach Bryan of Emotional Abuse, Asking Her to Sign $12 Million NDA - Rolling Stone ERROR: blocked: candidate: FinishReasonSafety
+[WIPER-LOG] [2024-11-09 19:58:31] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:58:31] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:58:31] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:59:04] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:59:04] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:59:04] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:59:36] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:59:36] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 19:59:36] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:00:08] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:00:08] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:00:08] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:00:40] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:00:40] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:00:40] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:01:17] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:01:17] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:01:17] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:01:49] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:01:49] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:01:49] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:02:22] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:02:22] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:02:22] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:02:59] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:02:59] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:02:59] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:03:31] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:03:31] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:03:31] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:04:08] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:04:08] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:04:08] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:04:40] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:04:40] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:04:40] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:05:20] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:05:20] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:05:20] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:05:52] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:05:52] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:05:52] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:06:24] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:06:24] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:06:24] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:06:56] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:06:56] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:06:56] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:07:32] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:07:32] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:07:32] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:08:04] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:08:04] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:08:04] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:08:06] AI Failed to process: Scientists just got 1 step closer to creating a 'superheavy' element that is so big, it will add a new row to the periodic table - Livescience.com ERROR: blocked: candidate: FinishReasonSafety
+[WIPER-LOG] [2024-11-09 20:08:39] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:08:39] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:08:39] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:09:11] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:09:11] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:09:11] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:09:43] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:09:43] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:09:43] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 20:09:49] AI Failed to process: The dorky Democrats: Their timing is off ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:09:51] AI Failed to process: Even Gov. Josh Shapiro couldn’t have saved Pennsylvania for the Democrats ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:09:53] AI Failed to process: Ted McGinley Had Actual Beef With the Nerds in ‘Revenge of the Nerds’ ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:09:55] AI Failed to process: Tulane Women's Basketball Coach Wears Kamala Harris Shirt to First Game After Election, Loses Game ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:09:58] AI Failed to process: ‘Meteor Garden’, ‘Voltron’ And 28 Other Originals Leaving Netflix in December ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:00] AI Failed to process: Tech’s Winners and Losers From Trump’s Election | Commentary ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:01] AI Failed to process: Are Zoomers Shifting Right? Reddit's Largest Gen Z Forum Plays Blame Game ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:03] AI Failed to process: Retailers brace for tariffs ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:09] AI Failed to process: Rizzle Kicks are back! ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:11] AI Failed to process: Trump's victory won't halt migration, experts say ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:21] AI Failed to process: Which Stephen King Villain Should Run America? [The Losers’ Club Podcast] ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:21] AI Failed to process: Why won’t the Giants reinvest their dwindling resources back into the organization? ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:23] AI Failed to process: Alabama And LSU Meet In Potential College Football Playoff Elimination Game ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:24] AI Failed to process: The power of God, the power of the presidency: How religion helped Trump win ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:26] AI Failed to process: Ravens exploit bad Bengals defense in TNF & biggest QB surprises this season | Inside Coverage ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:27] AI Failed to process: Zac Taylor Updates Joe Burrow's Health Following Ravens Loss ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:29] AI Failed to process: Trump victory spurs worry among migrants abroad, but it’s not expected to halt migration ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:31] AI Failed to process: Sam Altman May Be One of the Biggest Losers of This Election ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:32] AI Failed to process: Can Old Dominion Freight Lines (ODFL) Double Under a Trump Presidency? ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:39] AI Failed to process: Lionsgate CEO Admits "Everything That Could Go Wrong Did Go Wrong" With BORDERLANDS Box Office Flop ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:40] AI Failed to process: Harris Was the Biggest Loser Tuesday, But Far From the Only One ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:42] AI Failed to process: Is there anything solid behind the smoke and mirrors? ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:43] AI Failed to process: How to make sure you’re on the register and everything else you need to know about GE2024 ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:45] AI Failed to process: USA: What is “Project 2025”, Donald Trump’s new governance program ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:46] AI Failed to process: Why did the polls and those who report on them miss Trump’s appeal again? ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:48] AI Failed to process: Why the first Sunday of the season won't disappoint ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:49] AI Failed to process: Democratic Elites Blame Everyone But Themselves for Historic Collapse ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:51] AI Failed to process: Donald Trump Isn’t the Only Chaos Agent ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:53] AI Failed to process: How Warren Buffett bet against the 'Trump trade' -- and lost ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:54] AI Failed to process: The Return of Trump—I ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:56] AI Failed to process: "채권" 투자, Donald Trump 따라하기 ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:57] AI Failed to process: Fed cuts rates again, but Trump's tariff plan sparks inflation fears and market uncertainty ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:10:59] AI Failed to process: Rizzle Kicks announce first album in over a decade, Competition Is For Losers ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:11:00] AI Failed to process: Stock Markets consolidate in a range bound trade following Fed rate cut decision ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:11:02] AI Failed to process: 'We're going to need everybody': Inside Kansas' offseason overhaul ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:11:03] AI Failed to process: NHL Power Rankings: Jets stay on top, plus every team's points pace vs. preseason projection ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:11:05] AI Failed to process: Austria’s Arduous Path to a New Government: Without the Far-Right ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:11:07] AI Failed to process: 'We think our time is coming': What we learned about this offseason at MLB GM meetings ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:11:07] AI Failed to process: Trump becomes a real-life ‘Rocky,' late-night losers, and more from Fox News Opinion ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:11:09] AI Failed to process: Gainers & Losers: RIL, Cochin Shipyard among 7 stocks in limelight on Friday ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:11:11] AI Failed to process: Sensex dips 55 points; Nifty closes below key support amid sectoral divergence ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:11:12] AI Failed to process: Jewish students prevent Austrian far-right speaker laying Kristallnacht wreath ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format
+[WIPER-LOG] [2024-11-09 20:11:14] AI Failed to process: Stock market update: Stocks that hit 52-week lows on NSE in today's trade ERROR: googleapi: Error 400: * GenerateContentRequest.model: unexpected model name format

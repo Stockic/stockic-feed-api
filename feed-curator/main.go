@@ -50,7 +50,7 @@ type APIResponse struct {
 
 type SummarizedArticle struct {
     stockicID           string `json:"stockicID"`
-Source              string `json:"source"`
+    Source              string `json:"source"`
 	Author              string `json:"author"`
 	Title               string `json:"title"`
 	// Description string `json:"description"`
@@ -146,24 +146,25 @@ func logMessage(message, color string, errs ...error) {
 
 }
 
-func summarizer(modelName string, title string, text string) *genai.GenerateContentResponse {
+func summarizer(modelName string, title string, text string) (*genai.GenerateContentResponse, error) {
     
     geminiCtx := context.Background()
     // Access your API key as an environment variable (see "Set up your API key" above)
     client, err := genai.NewClient(geminiCtx, option.WithAPIKey(os.Getenv("GEMINI_API_KEY")))
     if err != nil {
-        log.Fatal(err)
+        return nil, err
     }
     defer client.Close()
 
     model := client.GenerativeModel(modelName)
+
     promptInput := fmt.Sprintf("Focus on content, main financial points and not on source/author. Summarize given news only called %s in the url: %s", title, text)
     response, err := model.GenerateContent(geminiCtx, genai.Text(promptInput))
     if err != nil {
-        log.Fatal(err)
+        return nil, err
     }
 
-    return response
+    return response, err
 }
 
 func newsAPICaller(url string) (APIResponse, error) {
@@ -272,6 +273,7 @@ func newsDiscoveryByCategory(language, sortBy, from, to string) map[string]APIRe
 
         for {
             response, err := newsAPIEverythingCaller(category, "", language, sortBy, from, to, fmt.Sprintf("%d", page), pageSize)
+            time.Sleep(1 * time.Second)
             if err != nil {
                 log.Printf("Error fetching news for category '%s': %v", category, err)
                 break
@@ -307,18 +309,18 @@ func printResponse(resp *genai.GenerateContentResponse) {
 }
 
 func summarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]APIResponse) map[string]SummarizedResponse {
-    // This will store the summarized responses for each category
     summarizedResponses := make(map[string]SummarizedResponse)
 
-    // Iterate over each category in categorizedHeadlines
     for category, apiResponse := range categorizedHeadlines {
         var summarizedArticles []SummarizedArticle
 
-        // Iterate over the articles in each category
         for _, article := range apiResponse.Articles {
-            // Call the Gemini summarizer with the title and content of each article
-            summaryResp := summarizer("gemini-1.5-flash", article.Title, article.Content)
-            time.Sleep(10 * time.Second)
+            summaryResp, err := summarizer("gemini-1.5-flash", article.Title, article.Content)
+            if err != nil {
+                logMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
+                continue
+            }
+            time.Sleep(30 * time.Second)
             logMessage("Feeding AI with 1 news", "green")
 
             var contentString string = ""
@@ -334,7 +336,6 @@ func summarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]APIRes
             fmt.Println(contentString)
             logMessage("===================", "green")
 
-            // Create a summarized article object with the summarized content
             summarizedArticle := SummarizedArticle{
                 stockicID:          "", // Leave empty for now
                 Source:             article.Source.Name,
@@ -346,11 +347,9 @@ func summarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]APIRes
                 SummarizedContent:  contentString,
             }
 
-            // Append the summarized article to the list
             summarizedArticles = append(summarizedArticles, summarizedArticle)
         }
 
-        // Store the summarized articles in the response struct
         summarizedResponses[category] = SummarizedResponse{
             Status:       "ok",
             TotalResults: len(summarizedArticles),
@@ -361,7 +360,78 @@ func summarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]APIRes
     return summarizedResponses
 }
 
+func summarizeCategorizedNews(categorizedNews map[string]APIResponse) map[string]SummarizedResponse {
+    summarizedResponses := make(map[string]SummarizedResponse)
+
+    for category, apiResponse := range categorizedNews {
+        var summarizedArticles []SummarizedArticle
+
+        for _, article := range apiResponse.Articles {
+            summaryResp, err := summarizer("gemini_model_name", article.Title, article.Content)
+            if err != nil {
+                logMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
+                continue
+            }
+            time.Sleep(20 * time.Second)
+
+            logMessage("Feeding AI with 1 news", "green")
+
+            var contentString string = ""
+            for _, candidate := range summaryResp.Candidates {
+                if candidate.Content != nil {
+                    for _, part := range candidate.Content.Parts {
+                        contentString = fmt.Sprintf("%s%s", contentString, part) 
+                    }
+                }
+            }
+
+            logMessage("===== AI NEWS! ====", "green")
+            fmt.Println(contentString)
+            logMessage("===================", "green")
+
+            summarizedArticle := SummarizedArticle{
+                stockicID:          "", // Leave empty for now
+                Source:             article.Source.Name,
+                Author:             article.Author,
+                Title:              article.Title,
+                URL:                article.URL,
+                URLToImage:         article.URLToImage,
+                PublishedAt:        article.PublishedAt,
+                SummarizedContent:  contentString,
+            }
+
+            summarizedArticles = append(summarizedArticles, summarizedArticle)
+        }
+
+        summarizedResponses[category] = SummarizedResponse{
+            Status:       "ok",
+            TotalResults: len(summarizedArticles),
+            Articles:     summarizedArticles,
+        }
+    }
+
+    return summarizedResponses
+}
+
+func storeSummarizedRedis(redisKey string, summarizedHeadlines map[string]SummarizedResponse) error {
+    summarizedJSONData, err := json.Marshal(summarizedHeadlines)
+	if err != nil {
+        logMessage("Error serializing data", "red", err)
+        return err
+	}
+
+	err = freshNewsRedis.Set(freshNewsRedisCtx, redisKey, summarizedJSONData, 0).Err()
+	if err != nil {
+		log.Fatalf("Error setting data in Redis: %v", err)
+        return err
+	}
+
+    logMessage(fmt.Sprintf("Data stored in Redis successfully: %s", redisKey), "green", err)
+    return nil
+}
+
 func main() {
+
     // Define country codes for each region (North America, Europe, Asia, Australia)
     northAmerica := []string{"us"}
     // europe := []string{"gb", "de", "fr", "it", "es", "pl", "nl"}
@@ -389,10 +459,30 @@ func main() {
         }
         fmt.Println("=========")
     }
+    
+    categorizedDiscovery := newsDiscoveryByCategory("en", "publishedAt", "2024-11-07", "2024-11-08")
+
+    for category, response := range categorizedDiscovery {
+        fmt.Printf("Category: %s\n", category)
+        fmt.Printf("Total Results: %d\n\n", response.TotalResults)
+        for _, article := range response.Articles {
+            fmt.Printf("Title: %s\n", article.Title)
+            fmt.Printf("Author: %s\n", article.Author)
+            fmt.Printf("URL: %s\n", article.URL)
+            fmt.Printf("URLImage: %s\n", article.URLToImage)
+            fmt.Printf("Published At: %s\n", article.PublishedAt)
+            fmt.Printf("Description: %s\n", article.Description)
+            fmt.Printf("Content: %s\n", article.Content)
+            fmt.Println("---")
+        }
+        fmt.Println("=========")
+    }
 
     logMessage("Feedling AI with all the news", "green")
 
     summarizedHeadlines := summarizeCountryCategorizedHeadlines(categorizedHeadlines)
+
+    summarizedCategorized := summarizeCategorizedNews(categorizedDiscovery)
 
     for category, summarizedResponse := range summarizedHeadlines {
         fmt.Printf("Summarized Headline Category: %s, Total Articles: %d\n", category, summarizedResponse.TotalResults)
@@ -401,7 +491,22 @@ func main() {
         }
     }
 
-    // categorizedNews := newsSummarizer("en", "publishedAt", "2024-11-07", "2024-11-08")
+    for category, summarizedResponse := range summarizedCategorized {
+        fmt.Printf("Summarized News Category: %s, Total Articles: %d\n", category, summarizedResponse.TotalResults)
+        for _, article := range summarizedResponse.Articles {
+            fmt.Printf("Summarized Article Title: %s\n", article.Title)
+        }
+    }
+
+    err := storeSummarizedRedis("headlines", summarizedHeadlines)
+    if err != nil {
+        logMessage("Failed to store headlines news in Redis", "red", err)
+    }
+
+    err = storeSummarizedRedis("discover", summarizedCategorized)
+    if err != nil {
+        logMessage("Failed to store discover news in Redis", "red", err)
+    }
 
     defer freshNewsRedisCtxCancel()
 }
