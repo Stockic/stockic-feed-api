@@ -34,3 +34,16 @@ Received non-200 status code: 429
 Error fetching headlines for country 'au': non-200 status code: 429
 Received non-200 status code: 429
 Error fetching headlines for country 'nz': non-200 status code: 429
+[WIPER-LOG] [2024-11-09 16:45:14] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+googleapi: Error 429: Resource has been exhausted (e.g. check quota).
+[WIPER-LOG] [2024-11-09 16:48:22] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+[WIPER-LOG] [2024-11-09 16:52:34] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+[WIPER-LOG] [2024-11-09 16:53:40] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 16:57:27] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+[WIPER-LOG] [2024-11-09 16:57:30] Feedling AI with all the news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 16:57:47] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 16:57:47] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 16:57:47] =================== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 16:57:59] Feeding AI with 1 news ERROR: <nil>
+[WIPER-LOG] [2024-11-09 16:57:59] ===== AI NEWS! ==== ERROR: <nil>
+[WIPER-LOG] [2024-11-09 16:57:59] =================== ERROR: <nil>

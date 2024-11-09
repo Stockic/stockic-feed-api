@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+    "strconv"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -10,6 +11,7 @@ import (
 	"os"
 	"time"
 
+    "github.com/go-redis/redis/v8"
 	"github.com/google/generative-ai-go/genai"
 	"github.com/joho/godotenv"
 	"google.golang.org/api/option"
@@ -17,6 +19,11 @@ import (
 
 var (
     geminiCtx context.Context
+
+    freshNewsRedisCtx context.Context
+    freshNewsRedisCtxCancel context.CancelFunc
+
+    freshNewsRedis *redis.Client
 )
 
 type Source struct {
@@ -43,7 +50,7 @@ type APIResponse struct {
 
 type SummarizedArticle struct {
     stockicID           string `json:"stockicID"`
-	Source              string `json:"source"`
+Source              string `json:"source"`
 	Author              string `json:"author"`
 	Title               string `json:"title"`
 	// Description string `json:"description"`
@@ -54,9 +61,9 @@ type SummarizedArticle struct {
 }
 
 type SummarizedResponse struct {
-	Status       string    `json:"status"`
-	TotalResults int       `json:"totalResults"`
-	Articles     []Article `json:"articles"`
+	Status       string                 `json:"status"`
+	TotalResults int                    `json:"totalResults"`
+	Articles     []SummarizedArticle    `json:"articles"`
 }
 
 func init() {
@@ -75,16 +82,68 @@ func init() {
         log.Printf("Warning: Error loading .env file: %v", err)
     }
 
+    freshNewsRedisCtx, freshNewsRedisCtxCancel = context.WithCancel(context.Background())
+
+    freshNewsRedis, err = redisInit(freshNewsRedisCtx, "FRESHNEWS_REDIS_ADDRESS", "FRESHNEWS_REDIS_DB", "FRESHNEWS_REDIS_PASSWORD")
+    if err != nil {
+        logMessage("FRESH NEWS Redis Server Setup Failed!", "red", err)
+    }
 }
 
-func printResponse(resp *genai.GenerateContentResponse) {
-	for _, cand := range resp.Candidates {
-		if cand.Content != nil {
-			for _, part := range cand.Content.Parts {
-				fmt.Println(part)
-			}
-		}
+func redisInit(redisContext context.Context, redisAddress string, redisDB string, redisPassword string) (*redis.Client, error) {
+
+    address := os.Getenv(redisAddress)
+    if address == "" {
+        address = "localhost:6379"
+    }
+
+    dbStr := os.Getenv(redisDB)
+    db, err := strconv.Atoi(dbStr)
+    if err != nil {
+        db = 0
+        logMessage("Warning: Invalid REDIS_DB value, using default: 0", "red")
+    }
+
+    password := os.Getenv(redisPassword)
+
+    rdb := redis.NewClient(&redis.Options{
+        Addr:     address,
+        Password: password,
+        DB:       db,
+    })
+
+    _, err = rdb.Ping(redisContext).Result()
+    if err != nil {
+        logMessage(fmt.Sprintf("Failed to connect to Redis - Address: %s, redisDB: %s", address, dbStr), "red", err)
+        return nil, err
+    }
+
+    logMessage(fmt.Sprintf("Successfully initialized Redis: %s", address), "green")
+    
+    return rdb, err
+}
+
+func logMessage(message, color string, errs ...error) {
+
+    var err error
+	if len(errs) > 0 {
+		err = errs[0]
+	} else {
+		err = nil
 	}
+
+	timestamp := time.Now().Format("2006-01-02 15:04:05")
+    
+    log.Printf("[WIPER-LOG] [%s] %s ERROR: %v", timestamp, message, err)
+
+    if color == "red" {
+        fmt.Printf("\033[31m [%s] %s \033[0m ERROR: %v\n", timestamp, message, err)
+    } else if color == "green" {
+        fmt.Printf("\033[32m [%s] %s \033[0m ERROR: %v\n", timestamp, message, err)
+    } else {
+        fmt.Printf("\033[31m [%s] %s \033[0m ERROR: %v\n", timestamp, message, err)
+    }
+
 }
 
 func summarizer(modelName string, title string, text string) *genai.GenerateContentResponse {
@@ -150,7 +209,7 @@ func newsAPIHeadlineCaller(country string, page string, pageSize string) (APIRes
     return newsAPICaller(url)
 }
 
-func newsAPIEverything(q, searchIn, language, sortBy, from, to, page, pageSize string) (APIResponse, error) {
+func newsAPIEverythingCaller(q, searchIn, language, sortBy, from, to, page, pageSize string) (APIResponse, error) {
     url := fmt.Sprintf(
         "https://newsapi.org/v2/everything?q=%s&searchIn=%s&language=%s&sortBy=%s&from=%s&to=%s&page=%s&pageSize=%s&apiKey=%s",
         q, searchIn, language, sortBy, from, to, page, pageSize, os.Getenv("NEWSAPI_API_KEY"),
@@ -198,7 +257,7 @@ func fetchHeadlinesByCountry(countries []string, pageSize string) map[string]API
     return countryHeadlines
 }
 
-func newsDiscoverySummarizer(language, sortBy, from, to string) map[string]APIResponse {
+func newsDiscoveryByCategory(language, sortBy, from, to string) map[string]APIResponse {
     discoverTags := []string{
         "gainers", "losers", "software", "finance", "stocks",
         "bonds", "corporate", "banking", "technology", "tax", "geopolitics",
@@ -212,7 +271,7 @@ func newsDiscoverySummarizer(language, sortBy, from, to string) map[string]APIRe
         var categoryArticles []Article
 
         for {
-            response, err := newsAPIEverything(category, "", language, sortBy, from, to, fmt.Sprintf("%d", page), pageSize)
+            response, err := newsAPIEverythingCaller(category, "", language, sortBy, from, to, fmt.Sprintf("%d", page), pageSize)
             if err != nil {
                 log.Printf("Error fetching news for category '%s': %v", category, err)
                 break
@@ -237,20 +296,84 @@ func newsDiscoverySummarizer(language, sortBy, from, to string) map[string]APIRe
     return categorizedResponses
 }
 
+func printResponse(resp *genai.GenerateContentResponse) {
+	for _, cand := range resp.Candidates {
+		if cand.Content != nil {
+			for _, part := range cand.Content.Parts {
+				fmt.Println(part)
+			}
+		}
+	}
+}
+
+func summarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]APIResponse) map[string]SummarizedResponse {
+    // This will store the summarized responses for each category
+    summarizedResponses := make(map[string]SummarizedResponse)
+
+    // Iterate over each category in categorizedHeadlines
+    for category, apiResponse := range categorizedHeadlines {
+        var summarizedArticles []SummarizedArticle
+
+        // Iterate over the articles in each category
+        for _, article := range apiResponse.Articles {
+            // Call the Gemini summarizer with the title and content of each article
+            summaryResp := summarizer("gemini-1.5-flash", article.Title, article.Content)
+            time.Sleep(10 * time.Second)
+            logMessage("Feeding AI with 1 news", "green")
+
+            var contentString string = ""
+            for _, candidate := range summaryResp.Candidates {
+                if candidate.Content != nil {
+                    for _, part := range candidate.Content.Parts {
+                        contentString = fmt.Sprintf("%s%s", contentString, part) 
+                    }
+                }
+            }
+
+            logMessage("===== AI NEWS! ====", "green")
+            fmt.Println(contentString)
+            logMessage("===================", "green")
+
+            // Create a summarized article object with the summarized content
+            summarizedArticle := SummarizedArticle{
+                stockicID:          "", // Leave empty for now
+                Source:             article.Source.Name,
+                Author:             article.Author,
+                Title:              article.Title,
+                URL:                article.URL,
+                URLToImage:         article.URLToImage,
+                PublishedAt:        article.PublishedAt,
+                SummarizedContent:  contentString,
+            }
+
+            // Append the summarized article to the list
+            summarizedArticles = append(summarizedArticles, summarizedArticle)
+        }
+
+        // Store the summarized articles in the response struct
+        summarizedResponses[category] = SummarizedResponse{
+            Status:       "ok",
+            TotalResults: len(summarizedArticles),
+            Articles:     summarizedArticles,
+        }
+    }
+
+    return summarizedResponses
+}
+
 func main() {
     // Define country codes for each region (North America, Europe, Asia, Australia)
-    northAmerica := []string{"us", "ca", "mx"}
-    europe := []string{"gb", "de", "fr", "it", "es", "pl", "nl"}
-    asia := []string{"cn", "in", "jp", "kr", "sg", "hk"}
-    australia := []string{"au", "nz"}
+    northAmerica := []string{"us"}
+    // europe := []string{"gb", "de", "fr", "it", "es", "pl", "nl"}
+    // asia := []string{"cn", "in", "jp", "kr", "sg", "hk"}
+    // australia := []string{"au", "nz"}
 
     // Combine all countries into one list
-    allCountries := append(append(northAmerica, europe...), append(asia, australia...)...)
+    allCountries := append(northAmerica)
 
     // Fetch headlines from all countries (passing "20" articles per page)
     categorizedHeadlines := fetchHeadlinesByCountry(allCountries, "20")
 
-    // Iterate over the categorized headlines and print them
     for country, response := range categorizedHeadlines {
         fmt.Printf("Headlines for country: %s\n", country)
         fmt.Printf("Total Results: %d\n\n", response.TotalResults)
@@ -266,5 +389,20 @@ func main() {
         }
         fmt.Println("=========")
     }
+
+    logMessage("Feedling AI with all the news", "green")
+
+    summarizedHeadlines := summarizeCountryCategorizedHeadlines(categorizedHeadlines)
+
+    for category, summarizedResponse := range summarizedHeadlines {
+        fmt.Printf("Summarized Headline Category: %s, Total Articles: %d\n", category, summarizedResponse.TotalResults)
+        for _, article := range summarizedResponse.Articles {
+            fmt.Printf("Summarized Article Title: %s\n", article.Title)
+        }
+    }
+
+    // categorizedNews := newsSummarizer("en", "publishedAt", "2024-11-07", "2024-11-08")
+
+    defer freshNewsRedisCtxCancel()
 }
 
