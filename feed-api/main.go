@@ -24,7 +24,7 @@ import (
 )
 
 type SummarizedArticle struct {
-    stockicID           string `json:"stockicID"`
+    StockicID           string `json:"stockicID"`
     Source              string `json:"source"`
 	Author              string `json:"author"`
 	Title               string `json:"title"`
@@ -366,7 +366,7 @@ func findArticleByID(id, headlinesData, discoverData string) *SummarizedArticle 
         // Search in headlines
         for _, response := range headlines {
             for _, article := range response.Articles {
-                if article.stockicID == id {
+                if article.StockicID == id {
                     return &article
                 }
             }
@@ -377,7 +377,7 @@ func findArticleByID(id, headlinesData, discoverData string) *SummarizedArticle 
         // Search in discover news
         for _, response := range discover {
             for _, article := range response.Articles {
-                if article.stockicID == id {
+                if article.StockicID == id {
                     return &article
                 }
             }
@@ -408,7 +408,7 @@ func setupRoutes() {
     
     // Geolocation specific headlines endpoint
     // /api/<version>/headlines/<page-size>
-    http.HandleFunc(versionPrefix + "/headlines", apiKeyMiddleware(headlinesHandler))
+    http.HandleFunc(versionPrefix + "/headlines/", apiKeyMiddleware(headlinesHandler))
 
     // Geolocation specific pagenated newsfeed endpoint
     // /api/<version>/newsfeed/<page-size>/<page-number>
@@ -515,25 +515,25 @@ func discoverHandler(httpHandler http.ResponseWriter, request *http.Request) {
     }
 
     pathParts := strings.Split(request.URL.Path, "/")
-    if len(pathParts) < 8 {
-        deliverJsonError(httpHandler, "Invalid URL", http.StatusBadRequest)
+    if len(pathParts) < 7 {
+        deliverJsonError(httpHandler, "Less than 8 parts", http.StatusBadRequest)
         return
     }
 
-    category := pathParts[5]
+    category := pathParts[4]
     if category == "" {
         deliverJsonError(httpHandler, "Category is empty", http.StatusBadRequest)
         return
     }
 
-    pageSizeStr := pathParts[6]
+    pageSizeStr := pathParts[5]
     pageSize, err := strconv.Atoi(pageSizeStr)
     if err != nil || pageSize < 1 {
-        deliverJsonError(httpHandler, "Invalid page number", http.StatusBadRequest)
+        deliverJsonError(httpHandler, "Invalid page size number", http.StatusBadRequest)
         return
     }
 
-    pageStr := pathParts[7]
+    pageStr := pathParts[6]
     page, err := strconv.Atoi(pageStr)
     if err != nil || page < 1 {
         deliverJsonError(httpHandler, "Invalid page number", http.StatusBadRequest)
@@ -551,6 +551,8 @@ func discoverHandler(httpHandler http.ResponseWriter, request *http.Request) {
         http.Error(httpHandler, "Failed to parse category news data", http.StatusInternalServerError)
         return
     }
+
+    fmt.Println(categorizedNews)
 
     categoryNews, exists := categorizedNews[category]
     if !exists {

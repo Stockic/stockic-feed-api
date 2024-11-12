@@ -1,0 +1,432 @@
+[WIPER-LOG] [2024-11-12 21:52:42] Failed to connect to Redis - Address: localhost:6379, redisDB: 0 ERROR: dial tcp [::1]:6379: connect: connection refused
+[WIPER-LOG] [2024-11-12 21:52:42] API Cache Server Setup Failed! ERROR: dial tcp [::1]:6379: connect: connection refused
+[WIPER-LOG] [2024-11-12 21:52:42] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 21:55:34] Failed to connect to Redis - Address: localhost:6379, redisDB: 0 ERROR: dial tcp [::1]:6379: connect: connection refused
+[WIPER-LOG] [2024-11-12 21:55:34] API Cache Server Setup Failed! ERROR: dial tcp [::1]:6379: connect: connection refused
+[WIPER-LOG] [2024-11-12 21:55:34] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 21:56:26] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 21:56:26] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Redis ping response: PONG
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:00:38] Redis ping response: PONG ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:00:38] Invalid URL ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:00:38] Request to /api/v1/headlines took 11.016275934s ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:00:55] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:00:55] Invalid URL ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:00:55] Request to /api/v1/headlines took 768.394µs ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:01:26] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:01:26] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:01:36] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:01:36] Request to /api/v1/headlines/1 took 1.210978ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:01:38] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:01:38] Request to /api/v1/headlines/2 took 1.24981ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:01:39] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:01:39] Request to /api/v1/headlines/3 took 1.675004ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:01:43] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:01:43] Request to /api/v1/headlines/36 took 1.734369ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:02:15] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:02:15] Request to /api/v1/headlines/4 took 4.685443ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:02:18] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:02:18] Request to /api/v1/headlines/6 took 1.532109ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:03:04] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:03:04] Request to /api/v1/newsfeed/10/1 took 1.273625ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:03:06] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:03:06] Request to /api/v1/newsfeed/10/2 took 2.896807ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:03:15] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:03:15] Request to /api/v1/newsfeed/100/2 took 1.121302ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:03:21] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:03:21] Request to /api/v1/newsfeed/36/2 took 936.851µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:03:23] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:03:23] Request to /api/v1/newsfeed/36/1 took 1.445784ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:03:53] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:03:53] Invalid URL ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:03:53] Request to /api/v1/discover/crypto/20/1 took 480.648µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:04:20] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:04:20] Invalid URL ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:04:20] Request to /api/v1/discover/crypto/ took 587.296µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:04:23] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:04:23] Invalid URL ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:04:23] Request to /api/v1/discover/ took 779.08µs ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:08:34] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:08:34] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:08:43] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:08:43] Less than 8 parts ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:08:43] Request to /api/v1/discover/crypto/20/1 took 686.959µs ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:09:25] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:09:25] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:09:28] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:09:28] Less than 8 parts ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:09:28] Request to /api/v1/discover/crypto/20/1 took 536.591µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:09:30] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:09:30] Less than 8 parts ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:09:30] Request to /api/v1/discover/crypto/20/1 took 578.635µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:09:31] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:09:31] Less than 8 parts ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:09:31] Request to /api/v1/discover/crypto/20/1/ took 683.955µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:09:33] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:09:33] Less than 8 parts ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:09:33] Request to /api/v1/discover/crypto/20/1/2 took 685.842µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:09:36] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:09:36] Request to /api/v1/discover/crypto/20/1/2/4 took 11.332657ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:09:39] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:09:39] Request to /api/v1/discover/crypto/20/1/2/ took 17.584778ms ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:10:02] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:10:02] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:10:07] Cache Hit! ERROR: <nil>
+http: panic serving [::1]:40234: runtime error: index out of range [7] with length 7
+goroutine 30 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0x12a29e0?, 0xc00049c858?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+main.discoverHandler({0x1502980, 0xc0001c8000}, 0x4e206f?)
+	/home/maverick/Projects/Stockic/feed-api/main.go:536 +0x672
+net/http.HandlerFunc.ServeHTTP(0xc00049c828?, {0x1502980?, 0xc0001c8000?}, 0x46bafd?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.apiKeyMiddleware.func3({0x1502980, 0xc0001c8000}, 0xc0000ca640)
+	/home/maverick/Projects/Stockic/feed-api/main.go:331 +0xb2
+net/http.HandlerFunc.ServeHTTP(0x200ccc0?, {0x1502980?, 0xc0001c8000?}, 0x709cb6?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x1502980, 0xc0001c8000}, 0xc0000ca640)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00068d080?}, {0x1502980?, 0xc0001c8000?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000419a70, {0x15041d0, 0xc00068cf90})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:10:13] Cache Hit! ERROR: <nil>
+http: panic serving [::1]:56972: runtime error: index out of range [7] with length 7
+goroutine 14 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0x12a29e0?, 0xc0005b0408?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+main.discoverHandler({0x1502980, 0xc0004bc540}, 0x4e206f?)
+	/home/maverick/Projects/Stockic/feed-api/main.go:536 +0x672
+net/http.HandlerFunc.ServeHTTP(0xc0005b03d8?, {0x1502980?, 0xc0004bc540?}, 0x46bafd?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.apiKeyMiddleware.func3({0x1502980, 0xc0004bc540}, 0xc000592640)
+	/home/maverick/Projects/Stockic/feed-api/main.go:331 +0xb2
+net/http.HandlerFunc.ServeHTTP(0x200ccc0?, {0x1502980?, 0xc0004bc540?}, 0x709cb6?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x1502980, 0xc0004bc540}, 0xc000592640)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00058f500?}, {0x1502980?, 0xc0004bc540?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000c42d0, {0x15041d0, 0xc00068cf90})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:10:16] Cache Hit! ERROR: <nil>
+http: panic serving [::1]:56974: runtime error: index out of range [7] with length 7
+goroutine 67 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0x12a29e0?, 0xc0005b0450?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+main.discoverHandler({0x1502980, 0xc0004bc620}, 0x4e206f?)
+	/home/maverick/Projects/Stockic/feed-api/main.go:536 +0x672
+net/http.HandlerFunc.ServeHTTP(0xc0005b0420?, {0x1502980?, 0xc0004bc620?}, 0x46bafd?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.apiKeyMiddleware.func3({0x1502980, 0xc0004bc620}, 0xc000592780)
+	/home/maverick/Projects/Stockic/feed-api/main.go:331 +0xb2
+net/http.HandlerFunc.ServeHTTP(0x200ccc0?, {0x1502980?, 0xc0004bc620?}, 0x709cb6?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x1502980, 0xc0004bc620}, 0xc000592780)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00058f770?}, {0x1502980?, 0xc0004bc620?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000c4510, {0x15041d0, 0xc00068cf90})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:10:18] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:10:18] Request to /api/v1/discover/crypto/20/20/1 took 9.449596ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:10:21] Cache Hit! ERROR: <nil>
+http: panic serving [::1]:57040: runtime error: index out of range [7] with length 7
+goroutine 82 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0x12a29e0?, 0xc000332d38?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+main.discoverHandler({0x1502980, 0xc0004bc540}, 0x4e206f?)
+	/home/maverick/Projects/Stockic/feed-api/main.go:536 +0x672
+net/http.HandlerFunc.ServeHTTP(0xc000332d08?, {0x1502980?, 0xc0004bc540?}, 0x46bafd?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.apiKeyMiddleware.func3({0x1502980, 0xc0004bc540}, 0xc0000ca000)
+	/home/maverick/Projects/Stockic/feed-api/main.go:331 +0xb2
+net/http.HandlerFunc.ServeHTTP(0x200ccc0?, {0x1502980?, 0xc0004bc540?}, 0x709cb6?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x1502980, 0xc0004bc540}, 0xc0000ca000)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00068c6f0?}, {0x1502980?, 0xc0004bc540?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000418360, {0x15041d0, 0xc00068cf90})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:10:22] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:10:22] Less than 8 parts ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:10:22] Request to /api/v1/discover/crypto took 685.004µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:10:24] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:10:24] Less than 8 parts ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:10:24] Request to /api/v1/discover/crypto/2 took 611.39µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:10:27] Cache Hit! ERROR: <nil>
+http: panic serving [::1]:57060: runtime error: index out of range [7] with length 7
+goroutine 86 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0x12a29e0?, 0xc000332d80?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+main.discoverHandler({0x1502980, 0xc0004bc620}, 0x4e206f?)
+	/home/maverick/Projects/Stockic/feed-api/main.go:536 +0x672
+net/http.HandlerFunc.ServeHTTP(0xc000332d50?, {0x1502980?, 0xc0004bc620?}, 0x46bafd?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.apiKeyMiddleware.func3({0x1502980, 0xc0004bc620}, 0xc0000ca280)
+	/home/maverick/Projects/Stockic/feed-api/main.go:331 +0xb2
+net/http.HandlerFunc.ServeHTTP(0x200ccc0?, {0x1502980?, 0xc0004bc620?}, 0x709cb6?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x1502980, 0xc0004bc620}, 0xc0000ca280)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00068ce40?}, {0x1502980?, 0xc0004bc620?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000418900, {0x15041d0, 0xc00068cf90})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[WIPER-LOG] [2024-11-12 22:10:55] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:10:55] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:11:02] Cache Hit! ERROR: <nil>
+http: panic serving [::1]:47066: runtime error: index out of range [7] with length 7
+goroutine 58 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0x12a29e0?, 0xc0003b8810?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+main.discoverHandler({0x1502980, 0xc0003c80e0}, 0x4e206f?)
+	/home/maverick/Projects/Stockic/feed-api/main.go:536 +0x672
+net/http.HandlerFunc.ServeHTTP(0xc0003b87e0?, {0x1502980?, 0xc0003c80e0?}, 0x46bafd?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.apiKeyMiddleware.func3({0x1502980, 0xc0003c80e0}, 0xc0004fc640)
+	/home/maverick/Projects/Stockic/feed-api/main.go:331 +0xb2
+net/http.HandlerFunc.ServeHTTP(0x200ccc0?, {0x1502980?, 0xc0003c80e0?}, 0x709cb6?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x1502980, 0xc0003c80e0}, 0xc0004fc640)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0003d56e0?}, {0x1502980?, 0xc0003c80e0?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000116f30, {0x15041d0, 0xc0003d55f0})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:11:04] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:11:04] Less than 8 parts ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:11:04] Request to /api/v1/discover/stocks/2 took 681.093µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:11:06] Cache Hit! ERROR: <nil>
+http: panic serving [::1]:47082: runtime error: index out of range [7] with length 7
+goroutine 66 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0x12a29e0?, 0xc0003b88b8?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+main.discoverHandler({0x1502980, 0xc0003c82a0}, 0x4e206f?)
+	/home/maverick/Projects/Stockic/feed-api/main.go:536 +0x672
+net/http.HandlerFunc.ServeHTTP(0xc0003b8888?, {0x1502980?, 0xc0003c82a0?}, 0x46bafd?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.apiKeyMiddleware.func3({0x1502980, 0xc0003c82a0}, 0xc0004fc8c0)
+	/home/maverick/Projects/Stockic/feed-api/main.go:331 +0xb2
+net/http.HandlerFunc.ServeHTTP(0x200ccc0?, {0x1502980?, 0xc0003c82a0?}, 0x709cb6?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x1502980, 0xc0003c82a0}, 0xc0004fc8c0)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0003d5d70?}, {0x1502980?, 0xc0003c82a0?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000117440, {0x15041d0, 0xc0003d55f0})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[WIPER-LOG] [2024-11-12 22:20:10] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:20:10] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:20:11] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:20:11] Invalid page number ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:20:11] Request to /api/v1/headlines/ took 3.346235ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:20:13] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:20:13] Request to /api/v1/headlines/1 took 1.99781ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:20:19] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:20:19] Request to /api/v1/headlines/40 took 1.349404ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:20:26] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:20:26] Request to /api/v1/headlines/10000 took 1.524844ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:20:29] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:20:29] Request to /api/v1/headlines/2 took 1.654121ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:20:33] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:20:33] Request to /api/v1/headlines/40 took 1.52729ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:21:26] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:21:26] Request to /api/v1/newsfeed/10/1 took 1.3376ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:21:30] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:21:30] Request to /api/v1/newsfeed/10/2 took 1.05174ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:21:32] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:21:32] Request to /api/v1/newsfeed/10/3 took 1.152171ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:21:34] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:21:34] Request to /api/v1/newsfeed/10/4 took 1.270832ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:21:35] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:21:35] Request to /api/v1/newsfeed/10/10 took 1.518769ms ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:34:13] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:34:13] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:34:22] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:34:22] Request to /api/v1/headlines/1 took 1.348844ms ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:39:32] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:39:32] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:41:23] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:41:23] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:41:31] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:41:31] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:41:36] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:41:36] Request to /api/v1/headlines/1 took 1.30268ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:41:54] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:41:54] Request to /api/v1/headlines/1 took 1.6632ms ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:42:11] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:42:11] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:42:13] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:42:13] Request to /api/v1/headlines/1 took 1.886623ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:43:00] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:43:00] Request to /api/v1/headlines/1 took 22.70659ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:43:12] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:43:12] Request to /api/v1/headlines/1 took 1.850515ms ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:45:10] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:45:10] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:45:15] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:45:15] Request to /api/v1/headlines/1 took 2.201258ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:49:33] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:49:33] Request to /api/v1/newsfeed/10/3 took 1.833055ms ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:55:29] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:55:29] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:55:31] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:55:31] Request to /api/v1/detail/4139d7579bccd274ed722ce5246664fccdc01c7a460c9b43144c113d7e5cc221 took 3.284426ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 22:55:55] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 22:55:55] Request to /api/v1/detail/3f2cff95c6da9cc5958f1af05a6fbb65cf68b1ee65574f3bc7cb5c746ad186ef took 2.35442ms ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:01:13] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:01:13] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:01:34] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:01:34] Less than 8 parts ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:01:34] Request to /api/v1/discover/stocks/1/1 took 688.146µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:01:48] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:01:48] Less than 8 parts ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:01:48] Request to /api/v1/discover/stocks/1/1 took 643.308µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:01:50] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:01:50] Request to /api/v1/discover/stocks/1/1/1 took 96.928041ms ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:04:33] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:04:33] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:04:35] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:04:35] Request to /api/v1/discover/stocks/1/1/1 took 131.498569ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:04:39] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:04:39] Less than 8 parts ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:04:39] Request to /api/v1/discover/stocks/1/1 took 757.569µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:04:41] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:04:41] Less than 8 parts ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:04:41] Request to /api/v1/discover/stocks/1/1 took 480.159µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:04:43] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:04:43] Less than 8 parts ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:04:43] Request to /api/v1/discover/stocks/1/2 took 949.492µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:04:45] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:04:45] Request to /api/v1/discover/stocks/1/2/1 took 104.135452ms ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:05:06] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:05:06] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:05:11] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:05:11] Request to /api/v1/discover/stocks/10/1 took 103.256849ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:05:13] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:05:13] Request to /api/v1/discover/stocks/10/2 took 133.641579ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:05:15] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:05:15] Request to /api/v1/discover/stocks/10/100 took 126.782536ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:05:19] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:05:19] Request to /api/v1/discover/stocks/10/101 took 130.037839ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:05:23] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:05:23] Request to /api/v1/discover/stocks/10/10 took 115.486127ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:05:31] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:05:31] Request to /api/v1/discover/stocks/1/1 took 131.7097ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:05:32] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:05:32] Request to /api/v1/discover/stocks/1/2 took 137.996672ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:05:35] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:05:35] Request to /api/v1/discover/stocks/1/3 took 116.325411ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:05:41] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:05:41] Request to /api/v1/discover/stocks/100/1 took 108.125834ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:05:51] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:05:51] Request to /api/v1/discover/stocks/10/1 took 132.623084ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:05:54] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:05:54] Request to /api/v1/discover/stocks/10/2 took 113.588121ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-12 23:05:59] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-12 23:05:59] Request to /api/v1/discover/stocks/1/1 took 143.152565ms ERROR: <nil>
