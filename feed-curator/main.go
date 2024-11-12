@@ -10,6 +10,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+    "crypto/sha256"
+    "encoding/hex"
 
     "github.com/go-redis/redis/v8"
 	"github.com/google/generative-ai-go/genai"
@@ -49,7 +51,7 @@ type APIResponse struct {
 }
 
 type SummarizedArticle struct {
-    stockicID           string `json:"stockicID"`
+    StockicID           string `json:"stockicID"`
     Source              string `json:"source"`
 	Author              string `json:"author"`
 	Title               string `json:"title"`
@@ -315,29 +317,31 @@ func summarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]APIRes
         var summarizedArticles []SummarizedArticle
 
         for _, article := range apiResponse.Articles {
-            summaryResp, err := summarizer("gemini-1.5-flash", article.Title, article.Content)
-            if err != nil {
-                logMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
-                continue
-            }
-            time.Sleep(30 * time.Second)
-            logMessage("Feeding AI with 1 news", "green")
+            // summaryResp, err := summarizer("gemini-1.5-flash", article.Title, article.Content)
+            // if err != nil {
+            //    logMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
+            //    continue
+            // }
+            // time.Sleep(30 * time.Second)
+            // logMessage("Feeding AI with 1 news", "green")
 
-            var contentString string = ""
-            for _, candidate := range summaryResp.Candidates {
-                if candidate.Content != nil {
-                    for _, part := range candidate.Content.Parts {
-                        contentString = fmt.Sprintf("%s%s", contentString, part) 
-                    }
-                }
-            }
+            // var contentString string = ""
+            // for _, candidate := range summaryResp.Candidates {
+            //     if candidate.Content != nil {
+            //         for _, part := range candidate.Content.Parts {
+            //             contentString = fmt.Sprintf("%s%s", contentString, part) 
+            //         }
+            //     }
+            // }
+            
+            contentString := article.Content
 
             logMessage("===== AI NEWS! ====", "green")
             fmt.Println(contentString)
             logMessage("===================", "green")
 
+            // Create summarized article
             summarizedArticle := SummarizedArticle{
-                stockicID:          "", // Leave empty for now
                 Source:             article.Source.Name,
                 Author:             article.Author,
                 Title:              article.Title,
@@ -347,10 +351,26 @@ func summarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]APIRes
                 SummarizedContent:  contentString,
             }
 
+            // Concatenate fields to generate StockicID
+            concatenatedFields := fmt.Sprintf("%s%s%s%s%s%s%s",
+                summarizedArticle.Source,
+                summarizedArticle.Author,
+                summarizedArticle.Title,
+                summarizedArticle.URL,
+                summarizedArticle.URLToImage,
+                summarizedArticle.PublishedAt,
+                summarizedArticle.SummarizedContent,
+            )
+
+            // Generate SHA256 hash
+            hash := sha256.Sum256([]byte(concatenatedFields))
+            summarizedArticle.StockicID = hex.EncodeToString(hash[:])
+
+            // Append to list of summarized articles
             summarizedArticles = append(summarizedArticles, summarizedArticle)
         }
-
         summarizedResponses[category] = SummarizedResponse{
+
             Status:       "ok",
             TotalResults: len(summarizedArticles),
             Articles:     summarizedArticles,
@@ -367,30 +387,31 @@ func summarizeCategorizedNews(categorizedNews map[string]APIResponse) map[string
         var summarizedArticles []SummarizedArticle
 
         for _, article := range apiResponse.Articles {
-            summaryResp, err := summarizer("gemini_model_name", article.Title, article.Content)
-            if err != nil {
-                logMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
-                continue
-            }
-            time.Sleep(20 * time.Second)
+            // summaryResp, err := summarizer("gemini_model_name", article.Title, article.Content)
+            // if err != nil {
+            //      logMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
+            //      continue
+            // }
+            // time.Sleep(20 * time.Second)
 
-            logMessage("Feeding AI with 1 news", "green")
+            // logMessage("Feeding AI with 1 news", "green")
 
-            var contentString string = ""
-            for _, candidate := range summaryResp.Candidates {
-                if candidate.Content != nil {
-                    for _, part := range candidate.Content.Parts {
-                        contentString = fmt.Sprintf("%s%s", contentString, part) 
-                    }
-                }
-            }
+            // var contentString string = ""
+            // for _, candidate := range summaryResp.Candidates {
+            //     if candidate.Content != nil {
+            //         for _, part := range candidate.Content.Parts {
+            //             contentString = fmt.Sprintf("%s%s", contentString, part) 
+            //         }
+            //     }
+            // }
+
+            contentString := article.Content
 
             logMessage("===== AI NEWS! ====", "green")
             fmt.Println(contentString)
             logMessage("===================", "green")
 
             summarizedArticle := SummarizedArticle{
-                stockicID:          "", // Leave empty for now
                 Source:             article.Source.Name,
                 Author:             article.Author,
                 Title:              article.Title,
@@ -399,6 +420,19 @@ func summarizeCategorizedNews(categorizedNews map[string]APIResponse) map[string
                 PublishedAt:        article.PublishedAt,
                 SummarizedContent:  contentString,
             }
+
+            concatenatedFields := fmt.Sprintf("%s%s%s%s%s%s%s",
+                summarizedArticle.Source,
+                summarizedArticle.Author,
+                summarizedArticle.Title,
+                summarizedArticle.URL,
+                summarizedArticle.URLToImage,
+                summarizedArticle.PublishedAt,
+                summarizedArticle.SummarizedContent,
+            )
+
+            hash := sha256.Sum256([]byte(concatenatedFields))
+            summarizedArticle.StockicID = hex.EncodeToString(hash[:])
 
             summarizedArticles = append(summarizedArticles, summarizedArticle)
         }

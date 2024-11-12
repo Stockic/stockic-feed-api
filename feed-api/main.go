@@ -23,6 +23,24 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+type SummarizedArticle struct {
+    StockicID           string `json:"stockicID"`
+    Source              string `json:"source"`
+	Author              string `json:"author"`
+	Title               string `json:"title"`
+	// Description string `json:"description"`
+	URL                 string `json:"url"`
+	URLToImage          string `json:"urlToImage"`
+	PublishedAt         string `json:"publishedAt"`
+	SummarizedContent   string `json:"content"`
+}
+
+type SummarizedResponse struct {
+	Status       string                 `json:"status"`
+	TotalResults int                    `json:"totalResults"`
+	Articles     []SummarizedArticle    `json:"articles"`
+}
+
 // Global variables for Redis Database
 var (
     redisAPICacheCtx context.Context
@@ -317,6 +335,58 @@ func apiKeyMiddleware(next http.HandlerFunc) http.HandlerFunc {
     }
 }
 
+// Helper function to paginate articles
+func paginateArticles(articles []SummarizedArticle, page, pageSize int) *SummarizedResponse {
+    startIndex := (page - 1) * pageSize
+    endIndex := startIndex + pageSize
+
+    if startIndex >= len(articles) {
+        return &SummarizedResponse{
+            Status:       "ok",
+            TotalResults: len(articles),
+            Articles:     []SummarizedArticle{},
+        }
+    }
+
+    if endIndex > len(articles) {
+        endIndex = len(articles)
+    }
+
+    return &SummarizedResponse{
+        Status:       "ok",
+        TotalResults: len(articles),
+        Articles:     articles[startIndex:endIndex],
+    }
+}
+
+func findArticleByID(id, headlinesData, discoverData string) *SummarizedArticle {
+    var headlines, discover map[string]SummarizedResponse
+    
+    if err := json.Unmarshal([]byte(headlinesData), &headlines); err == nil {
+        // Search in headlines
+        for _, response := range headlines {
+            for _, article := range response.Articles {
+                if article.StockicID == id {
+                    return &article
+                }
+            }
+        }
+    }
+
+    if err := json.Unmarshal([]byte(discoverData), &discover); err == nil {
+        // Search in discover news
+        for _, response := range discover {
+            for _, article := range response.Articles {
+                if article.StockicID == id {
+                    return &article
+                }
+            }
+        }
+    }
+
+    return nil
+}
+
 func main() {
 
     setupRoutes()
@@ -337,15 +407,15 @@ func setupRoutes() {
     versionPrefix := "/api/v1"    
     
     // Geolocation specific headlines endpoint
-    // /api/<version>/headlines
-    http.HandleFunc(versionPrefix + "/headlines", apiKeyMiddleware(headlinesHandler))
+    // /api/<version>/headlines/<page-size>
+    http.HandleFunc(versionPrefix + "/headlines/", apiKeyMiddleware(headlinesHandler))
 
     // Geolocation specific pagenated newsfeed endpoint
-    // /api/<version>/newsfeed/<page-number>
+    // /api/<version>/newsfeed/<page-size>/<page-number>
     http.HandleFunc(versionPrefix + "/newsfeed/", apiKeyMiddleware(newsFeedHandler))
 
     // Category specific pagenated newsfeed endpoint
-    // /api/<version>/discover/<category>/<page-number>
+    // /api/<version>/discover/<category>/<page-number>/<page-number>
     http.HandleFunc(versionPrefix + "/discover/", apiKeyMiddleware(discoverHandler))
 
     // Internal ID based detailed newsfeed endpoint
@@ -354,51 +424,62 @@ func setupRoutes() {
 }
 
 func headlinesHandler(httpHandler http.ResponseWriter, request *http.Request) {
-    
-    httpHandler.Header().Set("Content-Type", "application/json")
-    
-    // Define a struct for the response
-    response := map[string]string{
-        "status": "okay",
-    }
-
-    // Encode the response as JSON and write it to the response writer
-    if err := json.NewEncoder(httpHandler).Encode(response); err != nil {
-        http.Error(httpHandler, "Error encoding JSON response", http.StatusInternalServerError)
+    if request.Method != http.MethodGet {
+        http.Error(httpHandler, "Method not allowed", http.StatusMethodNotAllowed)
         return
     }
-}
 
-func newsFeedHandler(httpHandler http.ResponseWriter, request *http.Request) {
-
-    // Extract page number from URL
     pathParts := strings.Split(request.URL.Path, "/")
     if len(pathParts) < 5 {
         deliverJsonError(httpHandler, "Invalid URL", http.StatusBadRequest)
         return
     }
 
-    pageStr := pathParts[4]
-    page, err := strconv.Atoi(pageStr)
-    if err != nil || page < 1 {
+    pageSizeStr := pathParts[4]
+    pageSize, err := strconv.Atoi(pageSizeStr)
+    if err != nil || pageSize < 1 {
         deliverJsonError(httpHandler, "Invalid page number", http.StatusBadRequest)
         return
     }
 
-    // Example response
-    fmt.Fprintf(httpHandler, "News feed for page %d", page)
+    headlinesData, err := redisNewsCache.Get(redisNewsCacheCtx, "headlines").Result()
+    if err != nil {
+        http.Error(httpHandler, "Failed to fetch headlines", http.StatusInternalServerError)
+        return
+    }
+
+    var headlines map[string]SummarizedResponse
+    if err := json.Unmarshal([]byte(headlinesData), &headlines); err != nil {
+        http.Error(httpHandler, "Failed to parse headlines data", http.StatusInternalServerError)
+        return
+    }
+
+    response := paginateArticles(headlines["us"].Articles, 1, pageSize)
+    
+    httpHandler.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(httpHandler).Encode(response)
 }
 
-func discoverHandler(httpHandler http.ResponseWriter, request *http.Request) {
-    
-    // Extract page number from URL
+// Newsfeed handler - returns paginated news
+func newsFeedHandler(httpHandler http.ResponseWriter, request *http.Request) {
+    if request.Method != http.MethodGet {
+        http.Error(httpHandler, "Method not allowed", http.StatusMethodNotAllowed)
+        return
+    }
+
     pathParts := strings.Split(request.URL.Path, "/")
     if len(pathParts) < 6 {
         deliverJsonError(httpHandler, "Invalid URL", http.StatusBadRequest)
         return
     }
 
-    // categoryStr := pathParts[4]
+    pageSizeStr := pathParts[4]
+    pageSize, err := strconv.Atoi(pageSizeStr)
+    if err != nil || pageSize < 1 {
+        deliverJsonError(httpHandler, "Invalid page number", http.StatusBadRequest)
+        return
+    }
+
     pageStr := pathParts[5]
     page, err := strconv.Atoi(pageStr)
     if err != nil || page < 1 {
@@ -406,26 +487,117 @@ func discoverHandler(httpHandler http.ResponseWriter, request *http.Request) {
         return
     }
 
-    // Example response
-    fmt.Fprintf(httpHandler, "News feed for page %d", page)
+    // Fetch headlines from Redis
+    headlinesData, err := redisNewsCache.Get(redisNewsCacheCtx, "headlines").Result()
+    if err != nil {
+        http.Error(httpHandler, "Failed to fetch news", http.StatusInternalServerError)
+        return
+    }
+
+    var headlines map[string]SummarizedResponse
+    if err := json.Unmarshal([]byte(headlinesData), &headlines); err != nil {
+        http.Error(httpHandler, "Failed to parse news data", http.StatusInternalServerError)
+        return
+    }
+
+    // Return paginated articles
+    response := paginateArticles(headlines["us"].Articles, page, pageSize)
+    
+    httpHandler.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(httpHandler).Encode(response)
+}
+
+func discoverHandler(httpHandler http.ResponseWriter, request *http.Request) {
+
+    if request.Method != http.MethodGet {
+        http.Error(httpHandler, "Method not allowed", http.StatusMethodNotAllowed)
+        return
+    }
+
+    pathParts := strings.Split(request.URL.Path, "/")
+    if len(pathParts) < 7 {
+        deliverJsonError(httpHandler, "Less than 8 parts", http.StatusBadRequest)
+        return
+    }
+
+    category := pathParts[4]
+    if category == "" {
+        deliverJsonError(httpHandler, "Category is empty", http.StatusBadRequest)
+        return
+    }
+
+    pageSizeStr := pathParts[5]
+    pageSize, err := strconv.Atoi(pageSizeStr)
+    if err != nil || pageSize < 1 {
+        deliverJsonError(httpHandler, "Invalid page size number", http.StatusBadRequest)
+        return
+    }
+
+    pageStr := pathParts[6]
+    page, err := strconv.Atoi(pageStr)
+    if err != nil || page < 1 {
+        deliverJsonError(httpHandler, "Invalid page number", http.StatusBadRequest)
+        return
+    }
+
+    discoverData, err := redisNewsCache.Get(redisNewsCacheCtx, "discover").Result()
+    if err != nil {
+        http.Error(httpHandler, "Failed to fetch category news", http.StatusInternalServerError)
+        return
+    }
+
+    var categorizedNews map[string]SummarizedResponse
+    if err := json.Unmarshal([]byte(discoverData), &categorizedNews); err != nil {
+        http.Error(httpHandler, "Failed to parse category news data", http.StatusInternalServerError)
+        return
+    }
+
+    fmt.Println(categorizedNews)
+
+    categoryNews, exists := categorizedNews[category]
+    if !exists {
+        http.Error(httpHandler, "Category not found", http.StatusNotFound)
+        return
+    }
+
+    response := paginateArticles(categoryNews.Articles, page, pageSize)
+    
+    httpHandler.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(httpHandler).Encode(response)
 }
 
 func detailHandler(httpHandler http.ResponseWriter, request *http.Request) {
-    
-    // Extract page number from URL
+    if request.Method != http.MethodGet {
+        http.Error(httpHandler, "Method not allowed", http.StatusMethodNotAllowed)
+        return
+    }
+
     pathParts := strings.Split(request.URL.Path, "/")
     if len(pathParts) < 5 {
-        deliverJsonError(httpHandler, "Invalid URL", http.StatusBadRequest)
+        http.Error(httpHandler, "Invalid URL", http.StatusBadRequest)
         return
     }
 
-    newsIDStr := pathParts[4]
-    newsID, err := strconv.Atoi(newsIDStr)
-    if err != nil || newsID < 1 {
-        deliverJsonError(httpHandler, "Invalid news id", http.StatusBadRequest)
+    newsID := pathParts[len(pathParts)-1]
+
+    headlinesData, err := redisNewsCache.Get(redisNewsCacheCtx, "headlines").Result()
+    if err != nil {
+        http.Error(httpHandler, "Failed to fetch headlines", http.StatusInternalServerError)
         return
     }
 
-    // Example response
-    fmt.Fprintf(httpHandler, "News feed for page %d", newsID)
+    discoverData, err := redisNewsCache.Get(redisAPICacheCtx, "discover").Result()
+    if err != nil {
+        http.Error(httpHandler, "Failed to fetch discover news", http.StatusInternalServerError)
+        return
+    }
+
+    article := findArticleByID(newsID, headlinesData, discoverData)
+    if article == nil {
+        http.Error(httpHandler, "Article not found", http.StatusNotFound)
+        return
+    }
+
+    httpHandler.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(httpHandler).Encode(article)
 }
