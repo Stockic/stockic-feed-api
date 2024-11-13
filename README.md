@@ -47,7 +47,7 @@ According to the UI provided, the first page contains two portions: headlines (G
 
 1. Headlines: This API endpoint is geolocation-specific, which would be decoded by the api server itself from Firebase.
 
-Endpoint: `/api/<version>/headlines`
+Endpoint: `http://adityapatil.dev/api/<version>/headlines/<page-size>`
 Method: `GET`
 Header: `X-API-Key`
 
@@ -55,7 +55,7 @@ This API would serve headlines per the geolocation fetched by the api server. Us
 
 2. Today's Newsfeed: This API is based on content pagination and is geolocation-specific. The user must send a page number to fetch news.
 
-Endpoint: `/api/<version>/newsfeed/<page-number>`
+Endpoint: `http://adityapatil.dev/api/<version>/newsfeed/<page-size>/<page-number>`
 Method: `GET`
 Header: `X-API-Key`
 
@@ -64,16 +64,18 @@ The Discover Page is where users get categorized newsfeeds. Hence, the category 
 
 1. Discover: This API endpoint demands category and page number and serves specific content. 
 
-Endpoint: `/api/<version>/discover/<category>/<page>`
+Endpoint: `http://adityapatil.dev/api/<version>/discover/<category>/<page-size>/<page-number>`
 Method: `GET`
 Header: `X-API-Key`
+
+Available categories: `gainers`, `losers`, `software`, `finance`, `stocks`, `bonds`, `corporate`, `banking`, `technology`, `tax`, `geopolitics`
 
 #### Detailed News Page API
 As per the UI design, the third picture shows detailed information about the news. This can be fetched with the content ID. 
 
 1. Detailed Newsfeed: Provides detailed information about the news.
 
-Endpoint: `/api/<version>/detail/<news-id>`
+Endpoint: `http://adityapatil.dev/api/<version>/detail/<news-id>`
 Method: `GET`
 Header: `X-API-Key`
 
