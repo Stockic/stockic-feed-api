@@ -430,3 +430,204 @@ Redis ping response: PONG
 Redis ping response: PONG
 [WIPER-LOG] [2024-11-12 23:05:59] Cache Hit! ERROR: <nil>
 [WIPER-LOG] [2024-11-12 23:05:59] Request to /api/v1/discover/stocks/1/1 took 143.152565ms ERROR: <nil>
+[WIPER-LOG] [2024-11-14 18:06:31] Failed to connect to Redis - Address: localhost:6000, redisDB: 0 ERROR: dial tcp [::1]:6000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:06:31] API Cache Server Setup Failed! ERROR: dial tcp [::1]:6000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:06:31] Failed to connect to Redis - Address: localhost:4000, redisDB: 0 ERROR: dial tcp [::1]:4000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:06:31] News Cache Server Setup Failed ERROR: dial tcp [::1]:4000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:06:41] Failed to connect to Redis - Address: localhost:6000, redisDB: 0 ERROR: dial tcp [::1]:6000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:06:41] API Cache Server Setup Failed! ERROR: dial tcp [::1]:6000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:06:41] Failed to connect to Redis - Address: localhost:4000, redisDB: 0 ERROR: dial tcp [::1]:4000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:06:41] News Cache Server Setup Failed ERROR: dial tcp [::1]:4000: connect: connection refused
+http: panic serving [::1]:55820: runtime error: invalid memory address or nil pointer dereference
+goroutine 85 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0x1106e40?, 0x1fc3eb0?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+main.getCachedUserStatus({0x15053a8, 0xc0003b8000}, {0xc000056198, 0x14})
+	/home/maverick/Projects/Stockic/feed-api/main.go:215 +0x41
+main.validateUserAPIKey({0xc000056198, 0x14})
+	/home/maverick/Projects/Stockic/feed-api/main.go:266 +0x49
+main.setupRoutes.apiKeyMiddleware.func1({0x1503b20, 0xc0003ba0e0}, 0xc0001a0140)
+	/home/maverick/Projects/Stockic/feed-api/main.go:322 +0x7a
+net/http.HandlerFunc.ServeHTTP(0x200ece0?, {0x1503b20?, 0xc0003ba0e0?}, 0x709cb6?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x1503b20, 0xc0003ba0e0}, 0xc0001a0140)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000712270?}, {0x1503b20?, 0xc0003ba0e0?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000196360, {0x1505370, 0xc0003c7710})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[WIPER-LOG] [2024-11-14 18:09:58] Failed to connect to Redis - Address: localhost:6000, redisDB: 0 ERROR: dial tcp [::1]:6000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:09:58] API Cache Server Setup Failed! ERROR: dial tcp [::1]:6000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:09:58] Failed to connect to Redis - Address: localhost:4000, redisDB: 0 ERROR: dial tcp [::1]:4000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:09:58] News Cache Server Setup Failed ERROR: dial tcp [::1]:4000: connect: connection refused
+http: panic serving [::1]:45276: runtime error: invalid memory address or nil pointer dereference
+goroutine 60 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0x1106e40?, 0x1fc3eb0?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+main.getCachedUserStatus({0x15053a8, 0xc000144000}, {0xc000136870, 0x14})
+	/home/maverick/Projects/Stockic/feed-api/main.go:215 +0x41
+main.validateUserAPIKey({0xc000136870, 0x14})
+	/home/maverick/Projects/Stockic/feed-api/main.go:266 +0x49
+main.setupRoutes.apiKeyMiddleware.func1({0x1503b20, 0xc0004c0380}, 0xc00013a3c0)
+	/home/maverick/Projects/Stockic/feed-api/main.go:322 +0x7a
+net/http.HandlerFunc.ServeHTTP(0x200ece0?, {0x1503b20?, 0xc0004c0380?}, 0x709cb6?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x1503b20, 0xc0004c0380}, 0xc00013a3c0)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0005a3c20?}, {0x1503b20?, 0xc0004c0380?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000196360, {0x1505370, 0xc0005a3bc0})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[WIPER-LOG] [2024-11-14 18:10:41] Failed to connect to Redis - Address: localhost:6000, redisDB: 0 ERROR: dial tcp [::1]:6000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:10:41] API Cache Server Setup Failed! ERROR: dial tcp [::1]:6000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:10:41] Failed to connect to Redis - Address: localhost:4000, redisDB: 0 ERROR: dial tcp [::1]:4000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:10:41] News Cache Server Setup Failed ERROR: dial tcp [::1]:4000: connect: connection refused
+http: panic serving [::1]:59116: runtime error: invalid memory address or nil pointer dereference
+goroutine 93 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0x1106e40?, 0x1fc3eb0?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+main.getCachedUserStatus({0x15053a8, 0xc000626000}, {0xc0006147f8, 0x14})
+	/home/maverick/Projects/Stockic/feed-api/main.go:215 +0x41
+main.validateUserAPIKey({0xc0006147f8, 0x14})
+	/home/maverick/Projects/Stockic/feed-api/main.go:266 +0x49
+main.setupRoutes.apiKeyMiddleware.func1({0x1503b20, 0xc000224000}, 0xc0004fc640)
+	/home/maverick/Projects/Stockic/feed-api/main.go:322 +0x7a
+net/http.HandlerFunc.ServeHTTP(0x200ece0?, {0x1503b20?, 0xc000224000?}, 0x709cb6?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x1503b20, 0xc000224000}, 0xc0004fc640)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000202ae0?}, {0x1503b20?, 0xc000224000?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0001f6f30, {0x1505370, 0xc000202990})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[WIPER-LOG] [2024-11-14 18:11:42] Failed to connect to Redis - Address: localhost:6000, redisDB: 0 ERROR: dial tcp [::1]:6000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:11:42] API Cache Server Setup Failed! ERROR: dial tcp [::1]:6000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:11:42] Failed to connect to Redis - Address: localhost:4000, redisDB: 0 ERROR: dial tcp [::1]:4000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:11:42] News Cache Server Setup Failed ERROR: dial tcp [::1]:4000: connect: connection refused
+http: panic serving [::1]:55580: runtime error: invalid memory address or nil pointer dereference
+goroutine 103 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0x1106e40?, 0x1fc3eb0?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+main.getCachedUserStatus({0x15053a8, 0xc0003be000}, {0xc0006a2768, 0x14})
+	/home/maverick/Projects/Stockic/feed-api/main.go:215 +0x41
+main.validateUserAPIKey({0xc0006a2768, 0x14})
+	/home/maverick/Projects/Stockic/feed-api/main.go:266 +0x49
+main.setupRoutes.apiKeyMiddleware.func1({0x1503b20, 0xc0004c0460}, 0xc0004fc780)
+	/home/maverick/Projects/Stockic/feed-api/main.go:322 +0x7a
+net/http.HandlerFunc.ServeHTTP(0x200ece0?, {0x1503b20?, 0xc0004c0460?}, 0x709cb6?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x1503b20, 0xc0004c0460}, 0xc0004fc780)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001f30e0?}, {0x1503b20?, 0xc0004c0460?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0003d1320, {0x1505370, 0xc0001f2000})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[WIPER-LOG] [2024-11-14 18:14:17] Failed to connect to Redis - Address: localhost:6000, redisDB: 0 ERROR: dial tcp [::1]:6000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:14:17] API Cache Server Setup Failed! ERROR: dial tcp [::1]:6000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:14:17] Failed to connect to Redis - Address: localhost:4000, redisDB: 0 ERROR: dial tcp [::1]:4000: connect: connection refused
+[WIPER-LOG] [2024-11-14 18:14:17] News Cache Server Setup Failed ERROR: dial tcp [::1]:4000: connect: connection refused
+http: panic serving [::1]:55400: runtime error: invalid memory address or nil pointer dereference
+goroutine 104 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0x1106e40?, 0x1fc3eb0?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+main.getCachedUserStatus({0x15053a8, 0xc0000c0410}, {0xc0000565d0, 0x14})
+	/home/maverick/Projects/Stockic/feed-api/main.go:215 +0x41
+main.validateUserAPIKey({0xc0000565d0, 0x14})
+	/home/maverick/Projects/Stockic/feed-api/main.go:266 +0x49
+main.setupRoutes.apiKeyMiddleware.func1({0x1503b20, 0xc0004bc540}, 0xc0000e4f00)
+	/home/maverick/Projects/Stockic/feed-api/main.go:322 +0x7a
+net/http.HandlerFunc.ServeHTTP(0x200ece0?, {0x1503b20?, 0xc0004bc540?}, 0x709cb6?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x1503b20, 0xc0004bc540}, 0xc0000e4f00)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0000c3f20?}, {0x1503b20?, 0xc0004bc540?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00017d5f0, {0x1505370, 0xc000781620})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+http: panic serving [::1]:38310: runtime error: invalid memory address or nil pointer dereference
+goroutine 105 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0x1106e40?, 0x1fc3eb0?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+main.getCachedUserStatus({0x15053a8, 0xc0000c0410}, {0xc00049c8a0, 0x14})
+	/home/maverick/Projects/Stockic/feed-api/main.go:215 +0x41
+main.validateUserAPIKey({0xc00049c8a0, 0x14})
+	/home/maverick/Projects/Stockic/feed-api/main.go:266 +0x49
+main.setupRoutes.apiKeyMiddleware.func1({0x1503b20, 0xc000036000}, 0xc0004fe3c0)
+	/home/maverick/Projects/Stockic/feed-api/main.go:322 +0x7a
+net/http.HandlerFunc.ServeHTTP(0x200ece0?, {0x1503b20?, 0xc000036000?}, 0x709cb6?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x1503b20, 0xc000036000}, 0xc0004fe3c0)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000781770?}, {0x1503b20?, 0xc000036000?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00017d680, {0x1505370, 0xc000781620})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+http: panic serving [::1]:58654: runtime error: invalid memory address or nil pointer dereference
+goroutine 107 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0x1106e40?, 0x1fc3eb0?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+main.getCachedUserStatus({0x15053a8, 0xc0000c0410}, {0xc00049c8b8, 0x14})
+	/home/maverick/Projects/Stockic/feed-api/main.go:215 +0x41
+main.validateUserAPIKey({0xc00049c8b8, 0x14})
+	/home/maverick/Projects/Stockic/feed-api/main.go:266 +0x49
+main.setupRoutes.apiKeyMiddleware.func1({0x1503b20, 0xc0000360e0}, 0xc0004fe500)
+	/home/maverick/Projects/Stockic/feed-api/main.go:322 +0x7a
+net/http.HandlerFunc.ServeHTTP(0x200ece0?, {0x1503b20?, 0xc0000360e0?}, 0x709cb6?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a7f9?, {0x1503b20, 0xc0000360e0}, 0xc0004fe500)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0007818f0?}, {0x1503b20?, 0xc0000360e0?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00017d830, {0x1505370, 0xc000781620})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[WIPER-LOG] [2024-11-14 18:15:50] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-14 18:15:50] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Redis ping response: PONG
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-14 18:16:09] Redis ping response: PONG ERROR: <nil>
+[WIPER-LOG] [2024-11-14 18:16:09] Request to /api/v1/test/ took 16.632362888s ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-14 18:16:11] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-14 18:16:11] Request to /api/v1/test/ took 370.875µs ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-14 18:17:03] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-14 18:17:03] Request to /api/v1/test/ took 477.155µs ERROR: <nil>
+[WIPER-LOG] [2024-11-14 18:19:48] Successfully initialized Redis: localhost:6000 ERROR: <nil>
+[WIPER-LOG] [2024-11-14 18:19:48] Successfully initialized Redis: localhost:4000 ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-14 18:19:51] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-14 18:19:51] Request to /api/v1/headlines/1 took 1.458826ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-14 18:19:54] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-14 18:19:54] Request to /api/v1/headlines/4 took 1.308284ms ERROR: <nil>
+Redis ping response: PONG
+[WIPER-LOG] [2024-11-14 18:19:55] Cache Hit! ERROR: <nil>
+[WIPER-LOG] [2024-11-14 18:19:55] Request to /api/v1/headlines/5 took 1.537062ms ERROR: <nil>

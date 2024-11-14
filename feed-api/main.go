@@ -41,6 +41,10 @@ type SummarizedResponse struct {
 	Articles     []SummarizedArticle    `json:"articles"`
 }
 
+type Greet struct {
+    Response    string  `json:"response"`
+}
+
 // Global variables for Redis Database
 var (
     redisAPICacheCtx context.Context
@@ -405,6 +409,8 @@ func main() {
 // Setting up API endpoints
 func setupRoutes() {
     versionPrefix := "/api/v1"    
+
+    http.HandleFunc(versionPrefix + "/ping/", apiKeyMiddleware(greeter))
     
     // Geolocation specific headlines endpoint
     // /api/<version>/headlines/<page-size>
@@ -421,6 +427,15 @@ func setupRoutes() {
     // Internal ID based detailed newsfeed endpoint
     // /api/<version>/detail/<news-id>
     http.HandleFunc(versionPrefix + "/detail/", apiKeyMiddleware(detailHandler))
+}
+
+func greeter(httpHandler http.ResponseWriter, request *http.Request) {
+    response := Greet{
+        Response: "pong",
+    }
+
+    httpHandler.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(httpHandler).Encode(response)
 }
 
 func headlinesHandler(httpHandler http.ResponseWriter, request *http.Request) {
