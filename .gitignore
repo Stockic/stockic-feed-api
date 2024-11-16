@@ -7,7 +7,3 @@
 
 /feed-api/secrets/id_rsa_stockic.pub
 /feed-api/secrets/id_rsa_stockic
-
-/feed-api/.env
-/feed-curator/.env
-
