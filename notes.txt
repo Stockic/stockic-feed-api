@@ -1,0 +1,1 @@
+echo "{\"auths\":{\"ghcr.io\":{\"auth\":\"$(echo -n 'username:password' | base64)\"}}}" > .dockerconfigjson
