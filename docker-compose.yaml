@@ -1,9 +1,8 @@
-
 version: "3.8"
 
 services:
   feed-api:
-    image: ghcr.io/stockic/stockic-feed-api:latest # Replace with your organization and repository
+    image: ghcr.io/stockic/stockic-feed-api:latest
     deploy:
       replicas: 3
       restart_policy:
@@ -49,6 +48,7 @@ services:
     container_name: watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./.dockerconfigjson:/config.json
     environment:
       - WATCHTOWER_CLEANUP=true          # Remove old images to save space
       - WATCHTOWER_POLL_INTERVAL=30      # Poll for updates every 30 seconds
