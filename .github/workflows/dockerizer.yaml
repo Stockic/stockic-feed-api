@@ -48,4 +48,4 @@ jobs:
     - name: Build and push feed-curator image
       run: |
         docker build -f Dockerfile.feed-curator -t ghcr.io/stockic/stockic-curator-api:latest .
-        docker push ghcr.io/stockic/stockic-curator-api:latest
+        docker push ghcr.io/stockic/stockic-feed-curator:latest
