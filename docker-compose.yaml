@@ -3,7 +3,7 @@ version: "3.8"
 
 services:
   feed-api:
-    image: ghcr.io/your-org/stockic-feed-api:latest # Replace with your organization and repository
+    image: ghcr.io/stockic/stockic-feed-api:latest # Replace with your organization and repository
     deploy:
       replicas: 3
       restart_policy:
@@ -31,7 +31,7 @@ services:
     restart: always
 
   feed-curator:
-    image: ghcr.io/your-org/stockic-feed-curator:latest
+    image: ghcr.io/stockic/stockic-feed-curator:latest
     container_name: feed-curator
     networks:
       - app-network
