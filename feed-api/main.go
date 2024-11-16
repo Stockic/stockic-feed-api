@@ -431,7 +431,7 @@ func setupRoutes() {
 
 func greeter(httpHandler http.ResponseWriter, request *http.Request) {
     response := Greet{
-        Response: "pong! watch tower works",
+        Response: "pong! does it work?",
     }
 
     httpHandler.Header().Set("Content-Type", "application/json")
