@@ -1,0 +1,61 @@
+
+version: "3.8"
+
+services:
+  feed-api:
+    image: ghcr.io/stockic/stockic-feed-api:latest # Replace with your organization and repository
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+    networks:
+      - app-network
+    labels:
+      - "traefik.http.routers.feed-api.rule=Host(`feed-api.local`)"
+      - "traefik.http.services.feed-api.loadbalancer.server.port=8080"
+    depends_on:
+      - redis
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - feed-api
+    networks:
+      - app-network
+    restart: always
+
+  feed-curator:
+    image: ghcr.io/stockic/stockic-feed-curator:latest
+    container_name: feed-curator
+    networks:
+      - app-network
+    restart: always
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    networks:
+      - app-network
+    restart: always
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true          # Remove old images to save space
+      - WATCHTOWER_POLL_INTERVAL=30      # Poll for updates every 30 seconds
+      - WATCHTOWER_INCLUDE_STOPPED=true  # Update stopped containers as well
+      - WATCHTOWER_DEBUG=true            # Enable debug logging (optional)
+    restart: always
+
+networks:
+  app-network:
+    driver: bridge
