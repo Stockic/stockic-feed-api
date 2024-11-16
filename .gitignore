@@ -1,7 +1,13 @@
 /secrets/
 /build/.env
-/feed-api/.env
-/feed-curator/.env
 /build/*
+
 /feed-api/app.log
 /feed-curator/summarizer.log
+
+/feed-api/secrets/id_rsa_stockic.pub
+/feed-api/secrets/id_rsa_stockic
+
+/feed-api/.env
+/feed-curator/.env
+
