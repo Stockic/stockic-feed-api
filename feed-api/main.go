@@ -108,7 +108,7 @@ func init() {
 
     firebaseCtx = context.Background()
 
-    firebaseClient := initializeFirebase("../secrets/stockic-b6c89-firebase-adminsdk-wr64l-0a181fa457.json")
+    firebaseClient := initializeFirebase("./secrets/stockic-b6c89-firebase-adminsdk-wr64l-a8e3bdf5e7.json")
 
     go func() {
 		<-firebaseCtx.Done()
@@ -395,7 +395,7 @@ func main() {
 
     setupRoutes()
 
-    port := ":80"
+    port := ":8080"
     fmt.Printf("\033[36m Starting server on port %s...\033[0m \n", port)
     err := http.ListenAndServe(port, nil)
     if err != nil {
@@ -410,7 +410,7 @@ func main() {
 func setupRoutes() {
     versionPrefix := "/api/v1"    
 
-    http.HandleFunc(versionPrefix + "/ping/", apiKeyMiddleware(greeter))
+    http.HandleFunc(versionPrefix + "/ping", apiKeyMiddleware(greeter))
     
     // Geolocation specific headlines endpoint
     // /api/<version>/headlines/<page-size>

@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  feed-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.feed-api
+    deploy:
+      replicas: 3
+    networks:
+      - app-network
+    labels:
+      - "traefik.http.routers.feed-api.rule=Host(`feed-api.local`)"
+      - "traefik.http.services.feed-api.loadbalancer.server.port=8080"
+    depends_on:
+      - redis
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"  
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - feed-api
+    networks:
+      - app-network
+    restart: always
+
+  feed-curator:
+    build:
+      context: .
+      dockerfile: Dockerfile.feed-curator
+    container_name: feed-curator
+    networks:
+      - app-network
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    networks:
+      - app-network
+    restart: always
+
+networks:
+  app-network:
+    driver: bridge

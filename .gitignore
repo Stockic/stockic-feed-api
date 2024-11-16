@@ -3,3 +3,5 @@
 /feed-api/.env
 /feed-curator/.env
 /build/*
+/feed-api/app.log
+/feed-curator/summarizer.log
