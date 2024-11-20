@@ -22,7 +22,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./docker-internals/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - feed-api
     networks:
@@ -48,7 +48,7 @@ services:
     container_name: watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./.dockerconfigjson:/config.json
+      - ./docker-internals/.dockerconfigjson:/config.json
     environment:
       - WATCHTOWER_CLEANUP=true          # Remove old images to save space
       - WATCHTOWER_POLL_INTERVAL=30      # Poll for updates every 30 seconds
