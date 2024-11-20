@@ -9,11 +9,14 @@ services:
         condition: on-failure
     networks:
       - app-network
+    volumes:
+      - ./docker-internals/.env:/root/app/.env
     labels:
       - "traefik.http.routers.feed-api.rule=Host(`feed-api.local`)"
       - "traefik.http.services.feed-api.loadbalancer.server.port=8080"
     depends_on:
-      - redis
+      - redis-api-cache
+      - redis-news-cache
     restart: always
 
   nginx:
@@ -34,12 +37,26 @@ services:
     container_name: feed-curator
     networks:
       - app-network
+    depends_on:
+      - redis-news-cache
+    volumes:
+      - ./docker-internals/.env:/root/app/.env
     restart: always
 
-  redis:
+  redis-api-cache:
     image: redis:latest
+    container_name: redis-api-cache
     ports:
       - "6000:6379"
+    networks:
+      - app-network
+    restart: always
+
+  redis-news-cache:
+    image: redis:latest
+    container_name: redis-news-cache
+    ports:
+      - "5000:6379"
     networks:
       - app-network
     restart: always

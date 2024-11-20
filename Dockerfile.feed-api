@@ -8,7 +8,7 @@ RUN go mod download
 
 COPY ./feed-api/ .
 
-COPY ./feed-api/.env ./.env
+# COPY ./feed-api/.env ./.env
 
 RUN go build -o feed-api .
 
