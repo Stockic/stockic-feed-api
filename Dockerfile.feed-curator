@@ -8,8 +8,6 @@ RUN go mod download
 
 COPY ./feed-curator/ .
 
-# COPY ./feed-curator/.env ./.env
-
 RUN go build -o feed-curator .
 
 CMD ["./feed-curator"]

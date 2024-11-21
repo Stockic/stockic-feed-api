@@ -10,7 +10,7 @@ services:
     networks:
       - app-network
     volumes:
-      - ./docker-internals/.env:/root/app/.env
+      - ./docker-internals/api-cache.env:/root/app/.env
     labels:
       - "traefik.http.routers.feed-api.rule=Host(`feed-api.local`)"
       - "traefik.http.services.feed-api.loadbalancer.server.port=8080"
@@ -40,7 +40,7 @@ services:
     depends_on:
       - redis-news-cache
     volumes:
-      - ./docker-internals/.env:/root/app/.env
+      - ./docker-internals/news-cache.env:/root/app/.env
     restart: always
 
   redis-api-cache:
