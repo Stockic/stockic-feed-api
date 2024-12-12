@@ -21,8 +21,7 @@ jobs:
 
     - name: Install doctl
       run: |
-        curl -sL https://github.com/digitalocean/doctl/releases/latest/download/doctl-linux-amd64.tar.gz | tar -xz
-        sudo mv doctl /usr/local/bin/
+        apt update -y && apt upgrade -y && apt install doctl -y
 
     - name: Authenticate with DigitalOcean
       env:
