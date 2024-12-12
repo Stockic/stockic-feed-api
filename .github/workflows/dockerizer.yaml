@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-push:
-    name: Build and Push Docker Images to DigitalOcean Registry
+    name: Build and Push Docker Images to DigitalOcean
     runs-on: ubuntu-latest
 
     steps:
@@ -18,6 +18,18 @@ jobs:
       uses: actions/setup-go@v5
       with:
         go-version: '1.23.2'
+
+    - name: Install doctl
+      run: |
+        curl -sL https://github.com/digitalocean/doctl/releases/latest/download/doctl-linux-amd64.tar.gz | tar -xz
+        sudo mv doctl /usr/local/bin/
+
+    - name: Authenticate with DigitalOcean
+      env:
+        DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DOCR_ACCESS_TOKEN }}
+      run: |
+        doctl auth init -t $DIGITALOCEAN_ACCESS_TOKEN
+        doctl registry login
 
     - name: Run make
       run: make 
@@ -32,10 +44,6 @@ jobs:
     - name: Success Notification
       if: success()
       run: echo "Go binary compiled successfully ... Moving forward to create Docker Images"
-
-    - name: Log in to DigitalOcean Container Registry
-      run: |
-        echo "${{ secrets.DO_PAT }}" | docker login -u "${{ secrets.DO_USERNAME }}" --password-stdin registry.digitalocean.com
 
     - name: Build and push feed-api image
       run: |
