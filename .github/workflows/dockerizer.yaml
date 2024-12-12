@@ -21,7 +21,7 @@ jobs:
 
     - name: Install doctl
       run: |
-        apt update -y && apt upgrade -y && apt install doctl -y
+        sudo apt update -y && sudo apt upgrade -y && sudo apt install doctl -y
 
     - name: Authenticate with DigitalOcean
       env:
