@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-push:
-    name: Build and Push Docker Images to DigitalOcean Registry
+    name: Build and Push Docker Images to GHCR
     runs-on: ubuntu-latest
 
     steps:
@@ -33,16 +33,19 @@ jobs:
       if: success()
       run: echo "Go binary compiled successfully ... Moving forward to create Docker Images"
 
-    - name: Log in to DigitalOcean Container Registry
-      run: |
-        echo "${{ secrets.DO_PAT }}" | docker login -u "${{ secrets.DO_USERNAME }}" --password-stdin registry.digitalocean.com
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.CR_PAT }}
 
     - name: Build and push feed-api image
       run: |
-        docker buildx build --platform linux/amd64 -f Dockerfile.feed-api -t registry.digitalocean.com/your-registry-name/feed-api:latest .
-        docker push registry.digitalocean.com/your-registry-name/feed-api:latest
+        docker buildx build --platform linux/amd64 -f Dockerfile.feed-api -t ghcr.io/stockic/stockic-feed-api:latest .
+        docker push ghcr.io/stockic/stockic-feed-api:latest
 
     - name: Build and push feed-curator image
       run: |
-        docker buildx build --platform linux/amd64 -f Dockerfile.feed-curator -t registry.digitalocean.com/your-registry-name/feed-curator:latest .
-        docker push registry.digitalocean.com/your-registry-name/feed-curator:latest
+        docker buildx build --platform linux/amd64 -f Dockerfile.feed-curator -t ghcr.io/stockic/stockic-feed-curator:latest .
+        docker push ghcr.io/stockic/stockic-feed-curator:latest
