@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-push:
-    name: Build and Push Docker Images to DigitalOcean
+    name: Build and Push Docker Images to GHCR
     runs-on: ubuntu-latest
 
     steps:
@@ -18,17 +18,6 @@ jobs:
       uses: actions/setup-go@v5
       with:
         go-version: '1.23.2'
-
-    - name: Install doctl
-      run: |
-        sudo snap install doctl --classic
-
-    - name: Authenticate with DigitalOcean
-      env:
-        DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DO_PAT }}
-      run: |
-        sudo doctl auth init -t $DIGITALOCEAN_ACCESS_TOKEN
-        sudo doctl registry login
 
     - name: Run make
       run: make 
@@ -44,12 +33,19 @@ jobs:
       if: success()
       run: echo "Go binary compiled successfully ... Moving forward to create Docker Images"
 
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.CR_PAT }}
+
     - name: Build and push feed-api image
       run: |
-        sudo docker buildx build --platform linux/amd64 -f Dockerfile.feed-api -t registry.digitalocean.com/your-registry-name/feed-api:latest .
-        sudo docker push registry.digitalocean.com/your-registry-name/feed-api:latest
+        docker buildx build --platform linux/amd64 -f Dockerfile.feed-api -t ghcr.io/stockic/stockic-feed-api:latest .
+        docker push ghcr.io/stockic/stockic-feed-api:latest
 
     - name: Build and push feed-curator image
       run: |
-        sudo docker buildx build --platform linux/amd64 -f Dockerfile.feed-curator -t registry.digitalocean.com/your-registry-name/feed-curator:latest .
-        sudo docker push registry.digitalocean.com/your-registry-name/feed-curator:latest
+        docker buildx build --platform linux/amd64 -f Dockerfile.feed-curator -t ghcr.io/stockic/stockic-feed-curator:latest .
+        docker push ghcr.io/stockic/stockic-feed-curator:latest
