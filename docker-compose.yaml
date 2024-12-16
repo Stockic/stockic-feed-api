@@ -1,23 +1,48 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  feed-api:
-    image: ghcr.io/stockic/stockic-feed-api:latest
-    deploy:
-      replicas: 3
-      restart_policy:
-        condition: on-failure
+  redis-news-cache:
+    image: redis:latest
+    container_name: redis-news-cache
+    ports:
+      - "6000:6379"
     networks:
-      - app-network
-    volumes:
-      - ./docker-internals/api-cache.env:/root/app/.env
-    labels:
-      - "traefik.http.routers.feed-api.rule=Host(`feed-api.local`)"
-      - "traefik.http.services.feed-api.loadbalancer.server.port=8080"
+      - internal-network
+
+  redis-api-cache:
+    image: redis:latest
+    container_name: redis-api-cache
+    ports:
+      - "5000:6379"
+    networks:
+      - internal-network
+
+  feed-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.feed-api
+    container_name: feed-api
+    env_file:
+      - ./docker-internals/api-cache.env
     depends_on:
-      - redis-api-cache
       - redis-news-cache
-    restart: always
+      - redis-api-cache
+    expose:
+      - "8080"
+    networks:
+      - internal-network
+
+  feed-curator:
+    build:
+      context: .
+      dockerfile: Dockerfile.feed-curator
+    container_name: feed-curator
+    env_file:
+      - ./docker-internals/news-cache.env
+    depends_on:
+      - redis-news-cache
+    networks:
+      - internal-network
 
   nginx:
     image: nginx:latest
@@ -25,55 +50,12 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./docker-internals/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker-internals/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - feed-api
     networks:
-      - app-network
-    restart: always
-
-  feed-curator:
-    image: ghcr.io/stockic/stockic-feed-curator:latest
-    container_name: feed-curator
-    networks:
-      - app-network
-    depends_on:
-      - redis-news-cache
-    volumes:
-      - ./docker-internals/news-cache.env:/root/app/.env
-    restart: always
-
-  redis-api-cache:
-    image: redis:latest
-    container_name: redis-api-cache
-    ports:
-      - "6000:6379"
-    networks:
-      - app-network
-    restart: always
-
-  redis-news-cache:
-    image: redis:latest
-    container_name: redis-news-cache
-    ports:
-      - "5000:6379"
-    networks:
-      - app-network
-    restart: always
-
-  watchtower:
-    image: containrrr/watchtower
-    container_name: watchtower
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./docker-internals/.dockerconfigjson:/config.json
-    environment:
-      - WATCHTOWER_CLEANUP=true          # Remove old images to save space
-      - WATCHTOWER_POLL_INTERVAL=30      # Poll for updates every 30 seconds
-      - WATCHTOWER_INCLUDE_STOPPED=true  # Update stopped containers as well
-      - WATCHTOWER_DEBUG=true            # Enable debug logging (optional)
-    restart: always
+      - internal-network
 
 networks:
-  app-network:
+  internal-network:
     driver: bridge
