@@ -46,10 +46,8 @@ jobs:
 
     - name: Build and push feed-api image
       run: |
-        sudo docker buildx build --platform linux/amd64 -f Dockerfile.feed-api -t registry.digitalocean.com/your-registry-name/feed-api:latest .
-        sudo docker push registry.digitalocean.com/your-registry-name/feed-api:latest
+        sudo docker -f Dockerfile.feed-api -t feed-api:latest .
 
     - name: Build and push feed-curator image
       run: |
-        sudo docker buildx build --platform linux/amd64 -f Dockerfile.feed-curator -t registry.digitalocean.com/your-registry-name/feed-curator:latest .
-        sudo docker push registry.digitalocean.com/your-registry-name/feed-curator:latest
+        sudo docker -f Dockerfile.feed-curator -t feed-curator:latest .
