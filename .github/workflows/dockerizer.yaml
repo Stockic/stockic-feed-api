@@ -35,8 +35,8 @@ jobs:
 
     - name: Build and push feed-api image
       run: |
-        sudo docker -f Dockerfile.feed-api -t feed-api:latest .
+        sudo docker build -f Dockerfile.feed-api -t feed-api:latest .
 
     - name: Build and push feed-curator image
       run: |
-        sudo docker -f Dockerfile.feed-curator -t feed-curator:latest .
+        sudo docker build -f Dockerfile.feed-curator -t feed-curator:latest .
