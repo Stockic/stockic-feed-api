@@ -19,17 +19,6 @@ jobs:
       with:
         go-version: '1.23.2'
 
-    - name: Install doctl
-      run: |
-        sudo snap install doctl --classic
-
-    - name: Authenticate with DigitalOcean
-      env:
-        DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DO_PAT }}
-      run: |
-        sudo doctl auth init -t $DIGITALOCEAN_ACCESS_TOKEN
-        sudo doctl registry login
-
     - name: Run make
       run: make 
 
