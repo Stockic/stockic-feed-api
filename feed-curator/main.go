@@ -336,9 +336,14 @@ func summarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]APIRes
             
             contentString := article.Content
 
-            logMessage("===== AI NEWS! ====", "green")
+            // logMessage("===== AI NEWS! ====", "green")
             fmt.Println(contentString)
-            logMessage("===================", "green")
+            // logMessage("===================", "green")
+
+            if article.URLToImage == "" {
+                logMessage(fmt.Sprintf("Skipping article without image: %s", article.Title), "yellow")
+                continue
+            }
 
             // Create summarized article
             summarizedArticle := SummarizedArticle{
@@ -407,9 +412,14 @@ func summarizeCategorizedNews(categorizedNews map[string]APIResponse) map[string
 
             contentString := article.Content
 
-            logMessage("===== AI NEWS! ====", "green")
+            // logMessage("===== AI NEWS! ====", "green")
             fmt.Println(contentString)
-            logMessage("===================", "green")
+            // logMessage("===================", "green")
+
+            if article.URLToImage == "" {
+                logMessage(fmt.Sprintf("Skipping article without image: %s", article.Title), "yellow")
+                continue
+            }
 
             summarizedArticle := SummarizedArticle{
                 Source:             article.Source.Name,
