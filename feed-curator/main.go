@@ -336,9 +336,14 @@ func summarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]APIRes
             
             contentString := article.Content
 
-            logMessage("===== AI NEWS! ====", "green")
+            // logMessage("===== AI NEWS! ====", "green")
             fmt.Println(contentString)
-            logMessage("===================", "green")
+            // logMessage("===================", "green")
+
+            if article.URLToImage == "" {
+                logMessage(fmt.Sprintf("Skipping article without image: %s", article.Title), "yellow")
+                continue
+            }
 
             // Create summarized article
             summarizedArticle := SummarizedArticle{
@@ -407,9 +412,14 @@ func summarizeCategorizedNews(categorizedNews map[string]APIResponse) map[string
 
             contentString := article.Content
 
-            logMessage("===== AI NEWS! ====", "green")
+            // logMessage("===== AI NEWS! ====", "green")
             fmt.Println(contentString)
-            logMessage("===================", "green")
+            // logMessage("===================", "green")
+
+            if article.URLToImage == "" {
+                logMessage(fmt.Sprintf("Skipping article without image: %s", article.Title), "yellow")
+                continue
+            }
 
             summarizedArticle := SummarizedArticle{
                 Source:             article.Source.Name,
@@ -467,16 +477,6 @@ func storeSummarizedRedis(redisKey string, summarizedHeadlines map[string]Summar
 func main() {
 
     for {
-        currentTime := time.Now()
-
-		nextMidnight := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day()+1, 0, 0, 0, 0, currentTime.Location())
-		durationUntilMidnight := nextMidnight.Sub(currentTime)
-
-		fmt.Printf("Waiting for next midnight... Time remaining: %v\n", durationUntilMidnight)
-
-		time.Sleep(durationUntilMidnight)
-
-		fmt.Println("It's 00:00! Executing the main function...")
 
         // Define country codes for each region (North America, Europe, Asia, Australia)
         northAmerica := []string{"us"}
@@ -555,6 +555,18 @@ func main() {
         }
 
         defer freshNewsRedisCtxCancel()
+
+
+        currentTime := time.Now()
+
+	nextMidnight := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day()+1, 0, 0, 0, 0, currentTime.Location())
+	durationUntilMidnight := nextMidnight.Sub(currentTime)
+
+	fmt.Printf("Waiting for next midnight... Time remaining: %v\n", durationUntilMidnight)
+
+	time.Sleep(durationUntilMidnight)
+
+	fmt.Println("It's 00:00! Executing the main function...")
     }
 }
 
