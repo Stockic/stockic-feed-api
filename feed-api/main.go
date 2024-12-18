@@ -53,20 +53,22 @@ var (
     redisNewsCacheCtx context.Context
     redisNewsCacheCtxCancel context.CancelFunc
 
+    redisLogCtx context.Context
+    redisLogCtxCancel context.CancelFunc
+
     firebaseCtx context.Context
 
     redisAPICache *redis.Client
     redisNewsCache *redis.Client
+    redisLog *redis.Client
     firebaseClient *firestore.Client
 
     once sync.Once
 )
 
-
 const (
     apiKeyCacheExpiration = 24 * time.Hour
 )
-
 
 type UserStatus struct {
     Exists  bool `json:"exists"`
@@ -92,7 +94,8 @@ func init() {
     }
 
     redisAPICacheCtx, redisAPICacheCtxCancel = context.WithCancel(context.Background())
-    redisNewsCacheCtx, redisNewsCacheCtxCancel = context.WithCancel(context.Background()) 
+    redisNewsCacheCtx, redisNewsCacheCtxCancel = context.WithCancel(context.Background())
+    redisLogCtx, redisLogCtxCancel = context.WithCancel(context.Background())
 
     // User API Caching Redis Server
     redisAPICache, err = redisInit(redisAPICacheCtx, "USERAPI_CACHING_ADDRESS", "USERAPI_CACHING_DB", "USERAPI_CACHING_PASSWORD")
@@ -104,6 +107,11 @@ func init() {
     redisNewsCache, err = redisInit(redisNewsCacheCtx, "NEWS_CACHING_ADDRESS", "NEWS_CACHING_DB", "NEWS_CACHING_PASSWORD")
     if err != nil {
         logMessage("News Cache Server Setup Failed", "red", err)
+    }
+
+    redisLog, err = redisInit(redisLogCtx, "LOGREDIS_ADDRESS", "LOGREDIS_DB", "LOGREDIS_PASSWORD")
+    if err != nil {
+        logMessage("Log Redis Server Setup Failed", "red", err)
     }
 
     firebaseCtx = context.Background()
@@ -264,7 +272,7 @@ func cacheUserStatus(ctx context.Context, apiKey string, status UserStatus) erro
 func validateUserAPIKey(apiKey string) (bool, bool) {
 
     if cachedStatus, err := getCachedUserStatus(redisAPICacheCtx, apiKey); err == nil {
-        logMessage("Cache Hit!", "")
+        // logMessage("Cache Hit!", "")
         return cachedStatus.Exists, cachedStatus.Premium
     }
 
@@ -306,6 +314,53 @@ func validateUserAPIKey(apiKey string) (bool, bool) {
 	return true, premiumStatus
 }
 
+// Syncing Log Redis to Firebase 
+func SyncLogRedisToFirebase() {
+	ticker := time.NewTicker(1 * time.Minute) // Sync every 1 minutes
+	defer ticker.Stop()
+
+	for range ticker.C {
+		ctx := context.Background()
+
+		keys, err := redisLog.Keys(ctx, "endpoint:/detail/news:*").Result()
+		if err != nil {
+			log.Printf("Error fetching Redis keys: %v", err)
+			continue
+		}
+
+		for _, key := range keys {
+			parts := strings.Split(key, "/")
+			if len(parts) < 4 {
+				log.Printf("Invalid key format: %s", key)
+				continue
+			}
+			newsID := strings.TrimPrefix(parts[1], "news:")
+			apiKey := strings.TrimPrefix(parts[3], "user:")
+
+			// Get and reset the count atomically
+			accessCount, err := redisLog.GetDel(ctx, key).Result()
+			if err != nil {
+				log.Printf("Error fetching and deleting key %s: %v", key, err)
+				continue
+			}
+
+			// Create the log data for Firestore
+			logData := map[string]interface{}{
+				"accessCount": accessCount,
+				"lastSynced":  time.Now().UTC().Format(time.RFC3339),
+			}
+
+			// Push log to Firestore under the user's API Key
+			_, err = firebaseClient.Collection("Users").Doc(apiKey).Collection("logs").Doc(newsID).Set(ctx, logData)
+			if err != nil {
+				logMessage(fmt.Sprintf("Error writing to Firestore for key %s", key), "red", err)
+				redisLog.Set(ctx, key, accessCount, 0)
+				continue
+			}
+		}
+	}
+}
+
 // Middleware for validating API Keys (Admin and User)
 func apiKeyMiddleware(next http.HandlerFunc) http.HandlerFunc {
     return func(httpHandler http.ResponseWriter, request *http.Request) {
@@ -328,7 +383,28 @@ func apiKeyMiddleware(next http.HandlerFunc) http.HandlerFunc {
 
         if !isPremium {
             deliverJsonError(httpHandler, "User is not premium", http.StatusUnauthorized)
+            logMessage("Non-Premium user is trying to access", "red")
             return
+        }
+
+        // Check if /detail/ is being accessed and store the newsID async to redis
+        urlPath := request.URL.Path
+        if strings.HasPrefix(urlPath, "/detail/") {
+            parts := strings.Split(urlPath, "/")
+            if len(parts) >= 3 {
+                newsID := parts[2]
+
+                redisKey := "endpoint:/detail/news:" + newsID + "/user:" + apiKey
+
+                go func() {
+                    err := redisLog.Incr(context.Background(), redisKey).Err()
+                    if err != nil {
+                        logMessage(fmt.Sprintf("Failed to increment Redis key %s: %v", redisKey, err), "red")
+                    } else {
+                        logMessage(fmt.Sprintf("Successfully incremented Redis key %s", redisKey), "green")
+                    }
+                }()
+            }
         }
 
         // User exists and is premium
@@ -392,6 +468,8 @@ func findArticleByID(id, headlinesData, discoverData string) *SummarizedArticle 
 }
 
 func main() {
+
+    go SyncLogRedisToFirebase()
 
     setupRoutes()
 
