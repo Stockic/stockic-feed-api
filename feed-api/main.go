@@ -319,7 +319,9 @@ func SyncLogRedisToFirebase() {
 	ticker := time.NewTicker(1 * time.Minute) // Sync every 1 minutes
 	defer ticker.Stop()
 
+    logMessage("Started the Goroutine for Firebase Sync")
 	for range ticker.C {
+        logMessage("Syncing Procedure: Log Redis to Firebase", "green")
 		keys, err := redisLog.Keys(redisLogCtx, "endpoint:/detail/news:*").Result()
 		if err != nil {
 			log.Printf("Error fetching Redis keys: %v", err)
