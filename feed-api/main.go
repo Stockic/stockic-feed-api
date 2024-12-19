@@ -320,9 +320,7 @@ func SyncLogRedisToFirebase() {
 	defer ticker.Stop()
 
 	for range ticker.C {
-		ctx := context.Background()
-
-		keys, err := redisLog.Keys(ctx, "endpoint:/detail/news:*").Result()
+		keys, err := redisLog.Keys(redisLogCtx, "endpoint:/detail/news:*").Result()
 		if err != nil {
 			log.Printf("Error fetching Redis keys: %v", err)
 			continue
@@ -338,7 +336,7 @@ func SyncLogRedisToFirebase() {
 			apiKey := strings.TrimPrefix(parts[3], "user:")
 
 			// Get and reset the count atomically
-			accessCount, err := redisLog.GetDel(ctx, key).Result()
+			accessCount, err := redisLog.GetDel(redisLogCtx, key).Result()
 			if err != nil {
 				log.Printf("Error fetching and deleting key %s: %v", key, err)
 				continue
@@ -354,7 +352,7 @@ func SyncLogRedisToFirebase() {
 			_, err = firebaseClient.Collection("Users").Doc(apiKey).Collection("logs").Doc(newsID).Set(firebaseCtx, logData)
 			if err != nil {
 				logMessage(fmt.Sprintf("Error writing to Firestore for key %s", key), "red", err)
-				redisLog.Set(ctx, key, accessCount, 0)
+				redisLog.Set(redisLogCtx, key, accessCount, 0)
 				continue
 			}
 		}
