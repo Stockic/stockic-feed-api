@@ -389,10 +389,11 @@ func apiKeyMiddleware(next http.HandlerFunc) http.HandlerFunc {
 
         // Check if /detail/ is being accessed and store the newsID async to redis
         urlPath := request.URL.Path
-        if strings.HasPrefix(urlPath, "/detail/") {
+        if strings.HasPrefix(urlPath, "/api/v1/detail") {
+            logMessage("Started logging detail request", "green")
             parts := strings.Split(urlPath, "/")
-            if len(parts) >= 3 {
-                newsID := parts[2]
+            if len(parts) >= 5 {
+                newsID := parts[4]
 
                 redisKey := "endpoint:/detail/news:" + newsID + "/user:" + apiKey
 
