@@ -351,7 +351,7 @@ func SyncLogRedisToFirebase() {
 			}
 
 			// Push log to Firestore under the user's API Key
-			_, err = firebaseClient.Collection("Users").Doc(apiKey).Collection("logs").Doc(newsID).Set(ctx, logData)
+			_, err = firebaseClient.Collection("Users").Doc(apiKey).Collection("logs").Doc(newsID).Set(firebaseCtx, logData)
 			if err != nil {
 				logMessage(fmt.Sprintf("Error writing to Firestore for key %s", key), "red", err)
 				redisLog.Set(ctx, key, accessCount, 0)
