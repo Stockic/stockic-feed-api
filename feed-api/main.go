@@ -376,18 +376,19 @@ func apiKeyMiddleware(next http.HandlerFunc) http.HandlerFunc {
             return
         }
 
-        var userExists, isPremium = validateUserAPIKey(apiKey)
+        // var userExists, isPremium = validateUserAPIKey(apiKey)
+        var userExists, _ = validateUserAPIKey(apiKey)
         if !userExists {
             deliverJsonError(httpHandler, "User doesn't exist", http.StatusUnauthorized)
             logMessage("User with no registeration tried to access", "red")
             return
         }
 
-        if !isPremium {
-            deliverJsonError(httpHandler, "User is not premium", http.StatusUnauthorized)
-            logMessage("Non-Premium user is trying to access", "red")
-            return
-        }
+        // if !isPremium {
+        //     deliverJsonError(httpHandler, "User is not premium", http.StatusUnauthorized)
+        //     logMessage("Non-Premium user is trying to access", "red")
+        //     return
+        // }
 
         // Check if /detail/ is being accessed and store the newsID async to redis
         urlPath := request.URL.Path
