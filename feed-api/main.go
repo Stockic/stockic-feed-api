@@ -391,7 +391,7 @@ func apiKeyMiddleware(next http.HandlerFunc) http.HandlerFunc {
 
         // Check if /detail/ is being accessed and store the newsID async to redis
         urlPath := request.URL.Path
-        if strings.HasPrefix(urlPath, "/api/v1/detail") {
+        if strings.HasPrefix(urlPath, fmt.Sprintf("%s/detail", versionPrefix)) {
             logMessage("Started logging detail request", "green")
             parts := strings.Split(urlPath, "/")
             if len(parts) >= 5 {
@@ -486,6 +486,7 @@ func main() {
 
     defer redisAPICacheCtxCancel()
     defer redisNewsCacheCtxCancel()
+    defer redisLogCtxCancel()
 }
 
 // Setting up API endpoints
