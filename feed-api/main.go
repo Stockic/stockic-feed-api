@@ -68,6 +68,7 @@ var (
 
 const (
     apiKeyCacheExpiration = 24 * time.Hour
+    versionPrefix = "/api/v1"
 )
 
 type UserStatus struct {
@@ -336,6 +337,7 @@ func SyncLogRedisToFirebase() {
 			}
 			newsID := strings.TrimPrefix(parts[1], "news:")
 			apiKey := strings.TrimPrefix(parts[3], "user:")
+            logMessage(fmt.Sprintf("Pushing Redis Keys to Firebase: News ID: %s, API Key: %s", newsID, apiKey), "green")
 
 			// Get and reset the count atomically
 			accessCount, err := redisLog.GetDel(redisLogCtx, key).Result()
@@ -351,7 +353,7 @@ func SyncLogRedisToFirebase() {
 			}
 
 			// Push log to Firestore under the user's API Key
-			_, err = firebaseClient.Collection("Users").Doc(apiKey).Collection("logs").Doc(newsID).Set(firebaseCtx, logData)
+			_, err = firebaseClient.Collection("users").Doc(apiKey).Collection("logs").Doc(newsID).Set(firebaseCtx, logData)
 			if err != nil {
 				logMessage(fmt.Sprintf("Error writing to Firestore for key %s", key), "red", err)
 				redisLog.Set(redisLogCtx, key, accessCount, 0)
@@ -396,6 +398,7 @@ func apiKeyMiddleware(next http.HandlerFunc) http.HandlerFunc {
                 newsID := parts[4]
 
                 redisKey := "endpoint:/detail/news:" + newsID + "/user:" + apiKey
+                logMessage(fmt.Sprintf("Redis Key: %s", redisKey), "green")
 
                 go func() {
                     err := redisLog.Incr(context.Background(), redisKey).Err()
@@ -487,9 +490,8 @@ func main() {
 
 // Setting up API endpoints
 func setupRoutes() {
-    versionPrefix := "/api/v1"    
 
-    http.HandleFunc(versionPrefix + "/ping", apiKeyMiddleware(greeter))
+    http.HandleFunc(versionPrefix + "/ping", apiKeyMiddleware(ping))
     
     // Geolocation specific headlines endpoint
     // /api/<version>/headlines/<page-size>
@@ -506,11 +508,13 @@ func setupRoutes() {
     // Internal ID based detailed newsfeed endpoint
     // /api/<version>/detail/<news-id>
     http.HandleFunc(versionPrefix + "/detail/", apiKeyMiddleware(detailHandler))
+
+    // Add a mechanism where if any of the known params are not provided, the IP would be banned
 }
 
-func greeter(httpHandler http.ResponseWriter, request *http.Request) {
+func ping(httpHandler http.ResponseWriter, request *http.Request) {
     response := Greet{
-        Response: "pong! does it work?",
+        Response: "pong!",
     }
 
     httpHandler.Header().Set("Content-Type", "application/json")
