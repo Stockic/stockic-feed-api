@@ -397,8 +397,7 @@ func apiKeyMiddleware(next http.HandlerFunc) http.HandlerFunc {
             if len(parts) >= 5 {
                 newsID := parts[4]
 
-                // redisKey := "endpoint:/detail/news:" + newsID + "/user:" + apiKey
-                redisKey := "endpoint:/detail/" + newsID + "/" + apiKey
+                redisKey := "endpoint:/detail/news:" + newsID + "/user:" + apiKey
                 logMessage(fmt.Sprintf("Redis Key: %s", redisKey), "green")
 
                 go func() {
