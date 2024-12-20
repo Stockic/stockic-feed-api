@@ -1,0 +1,42 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    name: Build and Push Docker Images to DigitalOcean
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.23.2'
+
+    - name: Run make
+      run: make 
+
+    - name: Run make clean
+      run: make clean
+
+    - name: Build Success
+      if: success()
+      run: echo "Build completed successfully with make."
+
+    - name: Success Notification
+      if: success()
+      run: echo "Go binary compiled successfully ... Moving forward to create Docker Images"
+
+    - name: Build and push feed-api image
+      run: |
+        sudo docker build -f Dockerfile.feed-api -t feed-api:latest .
+
+    - name: Build and push feed-curator image
+      run: |
+        sudo docker build -f Dockerfile.feed-curator -t feed-curator:latest .
