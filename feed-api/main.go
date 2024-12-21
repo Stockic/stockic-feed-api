@@ -471,24 +471,52 @@ func RequestMiddleware(next http.HandlerFunc) http.HandlerFunc {
 
         apiKey := request.Header.Get("X-API-Key")
         if apiKey == "" {
-            deliverJsonError(httpHandler, "User API key is missing", http.StatusUnauthorized)
+            clientIP := getClientIP(request)
+            logMessage(fmt.Sprintf("Intrusion IP detected: %s Reason: Blocked IP Access Detected with no API Key", clientIP), "red")
+            if isBlocked(clientIP) {
+                http.Error(httpHandler, "You were Blocked: User doesn't exist", http.StatusForbidden)
+                return
+            }
+
+            logMessage(fmt.Sprintf("IP: %s wasn't blocked. Reason: No API Key. Initiating Blocking Procedure", clientIP), "red")
+
+            err := saveBlockedIPToFirebase(clientIP)
+            if err != nil {
+                logMessage("Failed to store blocked IP in Firebase", "red", err)
+                http.Error(httpHandler, "Internal Server Error", http.StatusInternalServerError)
+                return
+            }
+
+            http.Error(httpHandler, "No API Key, You are Blocked", http.StatusNotFound)
+
             logMessage("User with no API Key tried to access", "red")
             return
         }
 
-        // var userExists, isPremium = validateUserAPIKey(apiKey)
         var userExists, _ = validateUserAPIKey(apiKey)
         if !userExists {
-            deliverJsonError(httpHandler, "User doesn't exist", http.StatusUnauthorized)
+            // Non existing user trying to access the api. Initiate Blocking Procedure. 
+            clientIP := getClientIP(request)
+            logMessage(fmt.Sprintf("Intrusion IP detected: %s Reason: Blocked IP Access Detected with Non-existing User", clientIP), "red")
+            if isBlocked(clientIP) {
+                http.Error(httpHandler, "You were Blocked: User doesn't exist", http.StatusForbidden)
+                return
+            }
+
+            logMessage(fmt.Sprintf("IP: %s wasn't blocked. Reason: User doesn't exist. Initiating Blocking Procedure", clientIP), "red")
+
+            err := saveBlockedIPToFirebase(clientIP)
+            if err != nil {
+                logMessage("Failed to store blocked IP in Firebase", "red", err)
+                http.Error(httpHandler, "Internal Server Error", http.StatusInternalServerError)
+                return
+            }
+
+            http.Error(httpHandler, "User doesn't exist, You are Blocked", http.StatusNotFound)
+
             logMessage("User with no registeration tried to access", "red")
             return
         }
-
-        // if !isPremium {
-        //     deliverJsonError(httpHandler, "User is not premium", http.StatusUnauthorized)
-        //     logMessage("Non-Premium user is trying to access", "red")
-        //     return
-        // }
 
         // Check if /detail/ is being accessed and store the newsID async to redis
         urlPath := request.URL.Path
@@ -567,7 +595,7 @@ func fallbackHandler(httpHandler http.ResponseWriter, request *http.Request) {
     clientIP := getClientIP(request)
     logMessage(fmt.Sprintf("Intrusion IP detected: %s", clientIP), "red")
 	if isBlocked(clientIP) {
-		http.Error(httpHandler, "You are forbidden buddy, Fuck off", http.StatusForbidden)
+		http.Error(httpHandler, "You are Blocked", http.StatusForbidden)
 		return
 	}
 
@@ -587,7 +615,7 @@ func fallbackHandler(httpHandler http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	http.Error(httpHandler, "Invalid Endpoint Accessed, Fuck off", http.StatusNotFound)
+	http.Error(httpHandler, "Invalid Endpoint Accessed, You are Blocked", http.StatusNotFound)
 	logMessage(fmt.Sprintf("Blocked IP: %s\n", clientIP), "green")
 }
 
