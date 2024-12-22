@@ -471,49 +471,14 @@ func RequestMiddleware(next http.HandlerFunc) http.HandlerFunc {
 
         apiKey := request.Header.Get("X-API-Key")
         if apiKey == "" {
-            clientIP := getClientIP(request)
-            logMessage(fmt.Sprintf("Intrusion IP detected: %s Reason: Blocked IP Access Detected with no API Key", clientIP), "red")
-            if isBlocked(clientIP) {
-                http.Error(httpHandler, "You were Blocked: User doesn't exist", http.StatusForbidden)
-                return
-            }
-
-            logMessage(fmt.Sprintf("IP: %s wasn't blocked. Reason: No API Key. Initiating Blocking Procedure", clientIP), "red")
-
-            err := saveBlockedIPToFirebase(clientIP)
-            if err != nil {
-                logMessage("Failed to store blocked IP in Firebase", "red", err)
-                http.Error(httpHandler, "Internal Server Error", http.StatusInternalServerError)
-                return
-            }
-
-            http.Error(httpHandler, "No API Key, You are Blocked", http.StatusNotFound)
-
+            http.Error(httpHandler, "No API Key", http.StatusNotFound)
             logMessage("User with no API Key tried to access", "red")
             return
         }
 
         var userExists, _ = validateUserAPIKey(apiKey)
         if !userExists {
-            // Non existing user trying to access the api. Initiate Blocking Procedure. 
-            clientIP := getClientIP(request)
-            logMessage(fmt.Sprintf("Intrusion IP detected: %s Reason: Blocked IP Access Detected with Non-existing User", clientIP), "red")
-            if isBlocked(clientIP) {
-                http.Error(httpHandler, "You were Blocked: User doesn't exist", http.StatusForbidden)
-                return
-            }
-
-            logMessage(fmt.Sprintf("IP: %s wasn't blocked. Reason: User doesn't exist. Initiating Blocking Procedure", clientIP), "red")
-
-            err := saveBlockedIPToFirebase(clientIP)
-            if err != nil {
-                logMessage("Failed to store blocked IP in Firebase", "red", err)
-                http.Error(httpHandler, "Internal Server Error", http.StatusInternalServerError)
-                return
-            }
-
-            http.Error(httpHandler, "User doesn't exist, You are Blocked", http.StatusNotFound)
-
+            http.Error(httpHandler, "User doesn't exist", http.StatusNotFound)
             logMessage("User with no registeration tried to access", "red")
             return
         }
