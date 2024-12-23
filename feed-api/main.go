@@ -483,7 +483,17 @@ func RequestMiddleware(next http.HandlerFunc) http.HandlerFunc {
             return
         }
 
+        /*
+        It's important to keep the premium status check in the code
+        since this middleware is going to be used in premium integrations.
+
+        PLEASE DO NOT REMOVE PREMIUM STATUS CHECKS
+        */
+
         // Check if /detail/ is being accessed and store the newsID async to redis
+
+        // Move this to discover endpoint
+
         urlPath := request.URL.Path
         if strings.HasPrefix(urlPath, fmt.Sprintf("%s/detail", versionPrefix)) {
             logMessage("Started logging detail request", "green")
@@ -505,7 +515,6 @@ func RequestMiddleware(next http.HandlerFunc) http.HandlerFunc {
             }
         }
 
-        // User exists and is premium
         next.ServeHTTP(httpHandler, request)
         duration := time.Since(startTime)
         logStatement := fmt.Sprintf("Request to %s took %v", request.URL.Path, duration)
@@ -567,7 +576,7 @@ func fallbackHandler(httpHandler http.ResponseWriter, request *http.Request) {
     /* Now this would have been practical if I want to unblock
     suspected IPs after sometime like 1 hour. But since we know that
     legit IPs don't have any chance of accessing invalid endpoints, we 
-    are blocking them permentantly and storing them in Firebase. 
+    are blocking them permenantly and storing them in Firebase. 
     We can allow them from backend only in case we need to. */
     // blockIP(clientIP)
 
@@ -785,4 +794,8 @@ func detailHandler(httpHandler http.ResponseWriter, request *http.Request) {
     if err != nil {
         logMessage("JSON Encoder in detailHandler() Failed", "red", err)
     }
+
+    /*
+    Write a goroutine function to add XPs to Firebase in 
+    */
 }

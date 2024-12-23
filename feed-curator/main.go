@@ -421,6 +421,21 @@ func summarizeCategorizedNews(categorizedNews map[string]APIResponse) map[string
                 continue
             }
 
+            if article.Author == "" {
+                logMessage("No Author, replacing with Aditya Patil", "red")
+                article.Author = "Aditya Patil"
+            }
+
+            if article.Source.Name == "" {
+                logMessage("No source Name - Replacing with Stockic Editors", "red")
+                article.Source.Name = "Stockic Editors"
+            }
+
+            if article.Source.Name == "The Washington Post" {
+                logMessage("The Washington Post News, changing URL", "red")
+                article.URLToImage = "https://www.washingtonpost.com/wp-apps/imrs.php?src=https%3A%2F%2Farc-anglerfish-washpost-prod-washpost%252Es3%252Eamazonaws%252Ecom%2Fpublic%2FBA3LQ27PFVG5RCTQ7P2D2SMBJU%252Ejpg&w=924&h=694"
+            }
+
             summarizedArticle := SummarizedArticle{
                 Source:             article.Source.Name,
                 Author:             article.Author,
