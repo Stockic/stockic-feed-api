@@ -99,7 +99,6 @@ func CacheUserStatus(ctx context.Context, apiKey string, status models.UserStatu
         return err
     }
     
-    // Store in Redis asynchronously
     err = config.RedisAPICache.Set(ctx, fmt.Sprintf("apikey:%s", apiKey), statusJson, config.APIKeyCacheExpiration).Err()
     if err != nil {
         utils.LogMessage("Failed to cache user status: %v", "red", err)
@@ -109,14 +108,20 @@ func CacheUserStatus(ctx context.Context, apiKey string, status models.UserStatu
     return err
 }
 
-// services/sync_service.go
 func SyncLogRedisToFirebase() {
     ticker := time.NewTicker(1 * time.Minute) // Sync every 1 minutes
 	defer ticker.Stop()
-
     utils.LogMessage("Started the Goroutine for Firebase Sync", "green")
+
 	for range ticker.C {
+
         utils.LogMessage("Syncing Procedure: Log Redis to Firebase", "green")
+        
+        if _, err := config.RedisLog.Ping(config.RedisLogCtx).Result(); err != nil {
+            utils.LogMessage("RedisLog connection failed - Cannot Sync to Firebase", "red", err)
+            continue
+        }
+
 		keys, err := config.RedisLog.Keys(config.RedisLogCtx, "endpoint:/detail/news:*").Result()
 		if err != nil {
 			log.Printf("Error fetching Redis keys: %v", err)
@@ -157,7 +162,6 @@ func SyncLogRedisToFirebase() {
 	}
 }
 
-// services/article_service.go
 func FindArticleByID(id, headlinesData, discoverData string) *models.SummarizedArticle {
     var headlines, discover map[string]models.SummarizedResponse
     
