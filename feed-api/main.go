@@ -11,6 +11,7 @@ import (
     "os"
     "context"
     "sync"
+    "net"
     
     "github.com/go-redis/redis/v8"
     "github.com/joho/godotenv"
@@ -363,62 +364,6 @@ func SyncLogRedisToFirebase() {
 	}
 }
 
-// Middleware for validating API Keys (Admin and User)
-func apiKeyMiddleware(next http.HandlerFunc) http.HandlerFunc {
-    return func(httpHandler http.ResponseWriter, request *http.Request) {
-        
-        startTime := time.Now()
-
-        apiKey := request.Header.Get("X-API-Key")
-        if apiKey == "" {
-            deliverJsonError(httpHandler, "User API key is missing", http.StatusUnauthorized)
-            logMessage("User with no API Key tried to access", "red")
-            return
-        }
-
-        var userExists, isPremium = validateUserAPIKey(apiKey)
-        if !userExists {
-            deliverJsonError(httpHandler, "User doesn't exist", http.StatusUnauthorized)
-            logMessage("User with no registeration tried to access", "red")
-            return
-        }
-
-        if !isPremium {
-            deliverJsonError(httpHandler, "User is not premium", http.StatusUnauthorized)
-            logMessage("Non-Premium user is trying to access", "red")
-            return
-        }
-
-        // Check if /detail/ is being accessed and store the newsID async to redis
-        urlPath := request.URL.Path
-        if strings.HasPrefix(urlPath, fmt.Sprintf("%s/detail", versionPrefix)) {
-            logMessage("Started logging detail request", "green")
-            parts := strings.Split(urlPath, "/")
-            if len(parts) >= 5 {
-                newsID := parts[4]
-
-                redisKey := "endpoint:/detail/news:" + newsID + "/user:" + apiKey
-                logMessage(fmt.Sprintf("Redis Key: %s", redisKey), "green")
-
-                go func() {
-                    err := redisLog.Incr(context.Background(), redisKey).Err()
-                    if err != nil {
-                        logMessage(fmt.Sprintf("Failed to increment Redis key %s: %v", redisKey, err), "red")
-                    } else {
-                        logMessage(fmt.Sprintf("Successfully incremented Redis key %s", redisKey), "green")
-                    }
-                }()
-            }
-        }
-
-        // User exists and is premium
-        next.ServeHTTP(httpHandler, request)
-        duration := time.Since(startTime)
-        logStatement := fmt.Sprintf("Request to %s took %v", request.URL.Path, duration)
-        logMessage(logStatement, "green")
-    }
-}
-
 // Helper function to paginate articles
 func paginateArticles(articles []SummarizedArticle, page, pageSize int) *SummarizedResponse {
     startIndex := (page - 1) * pageSize
@@ -471,6 +416,112 @@ func findArticleByID(id, headlinesData, discoverData string) *SummarizedArticle 
     return nil
 }
 
+func getClientIP(request *http.Request) string {
+	ip := request.RemoteAddr
+	if strings.Contains(ip, ":") {
+		ip, _, _ = net.SplitHostPort(ip)
+	}
+	return ip
+}
+
+func saveBlockedIPToFirebase(ip string) error {
+    logMessage(fmt.Sprintf("Storing Blocked IP to Firebase: %s", ip), "green")
+	doc := map[string]interface{}{
+		"ip":        ip,
+		"blockedAt": time.Now(),
+	}
+
+    _, _, err := firebaseClient.Collection("blocked").Add(firebaseCtx, doc)
+	if err != nil {
+		return fmt.Errorf("failed to store IP in Firebase: %w", err)
+	}
+
+	return nil
+}
+
+func isBlocked(ip string) bool {
+    
+    logMessage("isBlocked() checking for blocked IPs", "red")
+	if redisAPICache.Exists(redisAPICacheCtx, ip).Val() > 0 {
+        logMessage("Blocked Cache Hit!", "green")
+		return true
+	}
+
+	iter := firebaseClient.Collection("blocked").Where("ip", "==", ip).Documents(firebaseCtx)
+	defer iter.Stop()
+
+	if doc, err := iter.Next(); err == nil && doc.Exists() {
+		go func() {
+            err := redisAPICache.Set(redisAPICacheCtx, ip, "blocked", time.Hour).Err()
+            if err != nil {
+                logMessage("Failed to write firebase blocked IP to Redis", "red")
+            }
+		}()
+		return true
+	}
+
+	return false
+}
+
+// Middleware for validating API Keys (Admin and User)
+func RequestMiddleware(next http.HandlerFunc) http.HandlerFunc {
+    return func(httpHandler http.ResponseWriter, request *http.Request) {
+        
+        startTime := time.Now()
+
+        apiKey := request.Header.Get("X-API-Key")
+        if apiKey == "" {
+            http.Error(httpHandler, "No API Key", http.StatusNotFound)
+            logMessage("User with no API Key tried to access", "red")
+            return
+        }
+
+        var userExists, _ = validateUserAPIKey(apiKey)
+        if !userExists {
+            http.Error(httpHandler, "User doesn't exist", http.StatusNotFound)
+            logMessage("User with no registeration tried to access", "red")
+            return
+        }
+
+        /*
+        It's important to keep the premium status check in the code
+        since this middleware is going to be used in premium integrations.
+
+        PLEASE DO NOT REMOVE PREMIUM STATUS CHECKS
+        */
+
+        // Check if /detail/ is being accessed and store the newsID async to redis
+
+        // Move this to discover endpoint
+
+        urlPath := request.URL.Path
+        if strings.HasPrefix(urlPath, fmt.Sprintf("%s/detail", versionPrefix)) {
+            logMessage("Started logging detail request", "green")
+            parts := strings.Split(urlPath, "/")
+            if len(parts) >= 5 {
+                newsID := parts[4]
+
+                redisKey := "endpoint:/detail/news:" + newsID + "/user:" + apiKey
+                logMessage(fmt.Sprintf("Redis Key: %s", redisKey), "green")
+
+                go func() {
+                    err := redisLog.Incr(context.Background(), redisKey).Err()
+                    if err != nil {
+                        logMessage(fmt.Sprintf("Failed to increment Redis key %s: %v", redisKey, err), "red")
+                    } else {
+                        logMessage(fmt.Sprintf("Successfully incremented Redis key %s", redisKey), "green")
+                    }
+                }()
+            }
+        }
+
+        next.ServeHTTP(httpHandler, request)
+        duration := time.Since(startTime)
+        logStatement := fmt.Sprintf("Request to %s took %v", request.URL.Path, duration)
+        logMessage(logStatement, "green")
+    }
+}
+
 func main() {
 
     go SyncLogRedisToFirebase()
@@ -492,25 +543,54 @@ func main() {
 // Setting up API endpoints
 func setupRoutes() {
 
-    http.HandleFunc(versionPrefix + "/ping", apiKeyMiddleware(ping))
+    http.HandleFunc(versionPrefix + "/ping", RequestMiddleware(ping))
     
     // Geolocation specific headlines endpoint
     // /api/<version>/headlines/<page-size>
-    http.HandleFunc(versionPrefix + "/headlines/", apiKeyMiddleware(headlinesHandler))
+    http.HandleFunc(versionPrefix + "/headlines/", RequestMiddleware(headlinesHandler))
 
     // Geolocation specific pagenated newsfeed endpoint
     // /api/<version>/newsfeed/<page-size>/<page-number>
-    http.HandleFunc(versionPrefix + "/newsfeed/", apiKeyMiddleware(newsFeedHandler))
+    http.HandleFunc(versionPrefix + "/newsfeed/", RequestMiddleware(newsFeedHandler))
 
     // Category specific pagenated newsfeed endpoint
     // /api/<version>/discover/<category>/<page-number>/<page-number>
-    http.HandleFunc(versionPrefix + "/discover/", apiKeyMiddleware(discoverHandler))
+    http.HandleFunc(versionPrefix + "/discover/", RequestMiddleware(discoverHandler))
 
     // Internal ID based detailed newsfeed endpoint
     // /api/<version>/detail/<news-id>
-    http.HandleFunc(versionPrefix + "/detail/", apiKeyMiddleware(detailHandler))
+    http.HandleFunc(versionPrefix + "/detail/", RequestMiddleware(detailHandler))
 
-    // Add a mechanism where if any of the known params are not provided, the IP would be banned
+    // Mechanism where if any of the known params are not provided, the IP would be banned
+    http.HandleFunc("/", fallbackHandler)
+}
+
+func fallbackHandler(httpHandler http.ResponseWriter, request *http.Request) {
+    clientIP := getClientIP(request)
+    logMessage(fmt.Sprintf("Intrusion IP detected: %s", clientIP), "red")
+	if isBlocked(clientIP) {
+		http.Error(httpHandler, "You are Blocked", http.StatusForbidden)
+		return
+	}
+
+    /* Now this would have been practical if I want to unblock
+    suspected IPs after sometime like 1 hour. But since we know that
+    legit IPs don't have any chance of accessing invalid endpoints, we 
+    are blocking them permenantly and storing them in Firebase. 
+    We can allow them from backend only in case we need to. */
+    // blockIP(clientIP)
+
+    logMessage(fmt.Sprintf("IP: %s wasn't blocked", clientIP), "red")
+
+	err := saveBlockedIPToFirebase(clientIP)
+	if err != nil {
+		logMessage("Failed to store blocked IP in Firebase", "red", err)
+		http.Error(httpHandler, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	http.Error(httpHandler, "Invalid Endpoint Accessed, You are Blocked", http.StatusNotFound)
+	logMessage(fmt.Sprintf("Blocked IP: %s\n", clientIP), "green")
 }
 
 func ping(httpHandler http.ResponseWriter, request *http.Request) {
@@ -519,7 +599,10 @@ func ping(httpHandler http.ResponseWriter, request *http.Request) {
     }
 
     httpHandler.Header().Set("Content-Type", "application/json")
-    json.NewEncoder(httpHandler).Encode(response)
+    err := json.NewEncoder(httpHandler).Encode(response)
+    if err != nil {
+        logMessage("JSON Encoder in ping() Failed", "red", err)    
+    }
 }
 
 func headlinesHandler(httpHandler http.ResponseWriter, request *http.Request) {
@@ -556,7 +639,10 @@ func headlinesHandler(httpHandler http.ResponseWriter, request *http.Request) {
     response := paginateArticles(headlines["us"].Articles, 1, pageSize)
     
     httpHandler.Header().Set("Content-Type", "application/json")
-    json.NewEncoder(httpHandler).Encode(response)
+    err = json.NewEncoder(httpHandler).Encode(response)
+    if err != nil {
+        logMessage("JSON Encoder in headlinesHandler() Failed", "red", err)
+    }
 }
 
 // Newsfeed handler - returns paginated news
@@ -603,7 +689,10 @@ func newsFeedHandler(httpHandler http.ResponseWriter, request *http.Request) {
     response := paginateArticles(headlines["us"].Articles, page, pageSize)
     
     httpHandler.Header().Set("Content-Type", "application/json")
-    json.NewEncoder(httpHandler).Encode(response)
+    err = json.NewEncoder(httpHandler).Encode(response)
+    if err != nil {
+        logMessage("JSON Encoder in newsFeedHandler() Failed", "red", err)
+    }
 }
 
 func discoverHandler(httpHandler http.ResponseWriter, request *http.Request) {
@@ -662,7 +751,10 @@ func discoverHandler(httpHandler http.ResponseWriter, request *http.Request) {
     response := paginateArticles(categoryNews.Articles, page, pageSize)
     
     httpHandler.Header().Set("Content-Type", "application/json")
-    json.NewEncoder(httpHandler).Encode(response)
+    err = json.NewEncoder(httpHandler).Encode(response)
+    if err != nil {
+        logMessage("JSON Encoder in discoverHandler() Failed", "red", err)
+    }
 }
 
 func detailHandler(httpHandler http.ResponseWriter, request *http.Request) {
@@ -698,5 +790,12 @@ func detailHandler(httpHandler http.ResponseWriter, request *http.Request) {
     }
 
     httpHandler.Header().Set("Content-Type", "application/json")
-    json.NewEncoder(httpHandler).Encode(article)
+    err = json.NewEncoder(httpHandler).Encode(article)
+    if err != nil {
+        logMessage("JSON Encoder in detailHandler() Failed", "red", err)
+    }
+
+    /*
+    Write a goroutine function to add XPs to Firebase in 
+    */
 }
