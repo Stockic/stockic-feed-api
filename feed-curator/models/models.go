@@ -6,12 +6,12 @@ import (
 )
 
 var (
-    geminiCtx context.Context
+    GeminiCtx context.Context
 
-    freshNewsRedisCtx context.Context
-    freshNewsRedisCtxCancel context.CancelFunc
+    FreshNewsRedisCtx context.Context
+    FreshNewsRedisCtxCancel context.CancelFunc
 
-    freshNewsRedis *redis.Client
+    FreshNewsRedis *redis.Client
 )
 
 type Source struct {
