@@ -2,15 +2,22 @@ package main
 
 import (
 	"fmt"
-    "time"
+	"time"
 
-    "feed-curator/models"
-    "feed-curator/fetcher"
-    "feed-curator/summarizer"
-    "feed-curator/utils"
+	"feed-curator/database"
+	"feed-curator/fetcher"
+	"feed-curator/models"
+	"feed-curator/summarizer"
+	"feed-curator/utils"
 )
 
+func init() {
+    database.InitRedis()
+} 
+
 func main() {
+
+    defer models.FreshNewsRedisCtxCancel()
 
     for {
         // Define country codes for each region (North America, Europe, Asia, Australia)
@@ -88,9 +95,6 @@ func main() {
         if err != nil {
             utils.LogMessage("Failed to store discover news in Redis", "red", err)
         }
-
-        defer models.FreshNewsRedisCtxCancel()
-
 
         currentTime := time.Now()
 
