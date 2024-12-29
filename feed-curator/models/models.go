@@ -1,8 +1,10 @@
-package models 
+package models
 
 import (
-    "context"
-    "github.com/go-redis/redis/v8"
+	"context"
+
+	"github.com/go-redis/redis/v8"
+	"github.com/minio/minio-go/v7"
 )
 
 var (
@@ -10,6 +12,9 @@ var (
 
     FreshNewsRedisCtx context.Context
     FreshNewsRedisCtxCancel context.CancelFunc
+
+    MinIOClient *minio.Client
+    MinIOCtx context.Context
 
     FreshNewsRedis *redis.Client
 )

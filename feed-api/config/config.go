@@ -31,5 +31,5 @@ var (
 
 const (
     APIKeyCacheExpiration = 24 * time.Hour
-    VersionPrefix = "/api/v1"
+    VersionPrefix = "/api/v2"
 )

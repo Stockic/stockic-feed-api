@@ -5,6 +5,7 @@ import (
     "context"
     "os"
     "log"
+    "time"
     "encoding/hex"
     "encoding/json"
     "crypto/sha256"
@@ -44,28 +45,28 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
         var summarizedArticles []models.SummarizedArticle
 
         for _, article := range apiResponse.Articles {
-            // summaryResp, err := summarizer("gemini-1.5-flash", article.Title, article.Content)
-            // if err != nil {
-            //    utils.LogMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
-            //    continue
-            // }
-            // time.Sleep(30 * time.Second)
-            // utils.LogMessage("Feeding AI with 1 news", "green")
+            summaryResp, err := Summarizer("gemini-1.5-flash", article.Title, article.Content)
+            if err != nil {
+               utils.LogMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
+               continue
+            }
+            time.Sleep(30 * time.Second)
+            utils.LogMessage("Feeding AI with 1 news", "green")
 
-            // var contentString string = ""
-            // for _, candidate := range summaryResp.Candidates {
-            //     if candidate.Content != nil {
-            //         for _, part := range candidate.Content.Parts {
-            //             contentString = fmt.Sprintf("%s%s", contentString, part) 
-            //         }
-            //     }
-            // }
+            var contentString string = ""
+            for _, candidate := range summaryResp.Candidates {
+                if candidate.Content != nil {
+                    for _, part := range candidate.Content.Parts {
+                        contentString = fmt.Sprintf("%s%s", contentString, part) 
+                    }
+                }
+            }
             
-            contentString := article.Content
+            // contentString := article.Content
 
-            // utils.LogMessage("===== AI NEWS! ====", "green")
+            utils.LogMessage("===== AI NEWS! ====", "green")
             fmt.Println(contentString)
-            // utils.LogMessage("===================", "green")
+            utils.LogMessage("===================", "green")
 
             if article.URLToImage == "" {
                 utils.LogMessage(fmt.Sprintf("Skipping article without image: %s", article.Title), "yellow")
@@ -85,7 +86,6 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
             if article.Source.Name == "The Washington Post" {
                 utils.LogMessage("The Washington Post News, changing URL", "red")
                 article.URLToImage = "https://theintercept.com/wp-content/uploads/2017/01/the-washington-post-newspaper-2-1484771977.jpg"
-                // continue
             }
 
 

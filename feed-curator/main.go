@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"time"
+    "log"
+    "os"
 
 	"feed-curator/database"
 	"feed-curator/fetcher"
@@ -12,7 +14,16 @@ import (
 )
 
 func init() {
+    logFile, err := os.OpenFile("summarizer.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+    if err != nil {
+        log.Fatalf("Failed to open log file: %v", err)
+    }
+
+    log.SetOutput(logFile)
+    log.SetFlags(0)
+
     database.InitRedis()
+    database.InitMinIO()
 } 
 
 func main() {
@@ -48,7 +59,7 @@ func main() {
             fmt.Println("=========")
         }
         
-        categorizedDiscovery := fetcher.NewsDiscoveryByCategory("en", "publishedAt", "2024-11-07", "2024-11-08")
+        categorizedDiscovery := fetcher.NewsDiscoveryByCategory("en", "publishedAt", "2024-12-28", "2024-12-29")
 
         for category, response := range categorizedDiscovery {
             fmt.Printf("Category: %s\n", category)
