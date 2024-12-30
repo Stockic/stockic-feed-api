@@ -8,15 +8,18 @@ import (
 )
 
 var (
+    LogFile = "summarizer.log"
+
     GeminiCtx context.Context
 
     FreshNewsRedisCtx context.Context
     FreshNewsRedisCtxCancel context.CancelFunc
 
     MinIOClient *minio.Client
-    MinIOCtx context.Context
+    MinIOCtx = context.Background()
 
     FreshNewsRedis *redis.Client
+    RedisChannel   = "__keyspace@0__:*"
 )
 
 type Source struct {

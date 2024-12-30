@@ -2,19 +2,20 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
 	"time"
-    "log"
-    "os"
 
 	"feed-curator/database"
 	"feed-curator/fetcher"
 	"feed-curator/models"
+	"feed-curator/services"
 	"feed-curator/summarizer"
 	"feed-curator/utils"
 )
 
 func init() {
-    logFile, err := os.OpenFile("summarizer.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+    logFile, err := os.OpenFile(models.LogFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
     if err != nil {
         log.Fatalf("Failed to open log file: %v", err)
     }
@@ -24,6 +25,7 @@ func init() {
 
     database.InitRedis()
     database.InitMinIO()
+    go services.BucketStoreMinIOService()
 } 
 
 func main() {

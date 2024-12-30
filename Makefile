@@ -28,7 +28,8 @@ fmt:
 
 tidy:
 	@echo "Tidying Go modules..."
-	@go mod tidy
+	@cd $(FEED_API_DIR) && go mod tidy
+	@cd $(FEED_CURATOR_DIR) && go mod tidy
 
 deps:
 	@echo "Installing Go dependencies..."

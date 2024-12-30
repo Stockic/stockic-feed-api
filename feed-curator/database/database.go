@@ -8,6 +8,7 @@ import (
     "log"
     "bytes"
     "time"
+    "path/filepath"
     "encoding/json"
     
     "feed-curator/utils"
@@ -20,28 +21,98 @@ import (
 	"github.com/minio/minio-go/v7/pkg/credentials"
 )
 
+func UploadRedisDataToMinIO(minioClient *minio.Client, key string, value string, MinIOBucket string) error {
+	
+    payload := map[string]interface{}{
+		"key":   key,
+		"value": value,
+		"time":  time.Now().Format(time.RFC3339),
+	}
+    
+	payloadBytes, err := json.Marshal(payload)
+	if err != nil {
+		return fmt.Errorf("failed to marshal payload: %v", err)
+	}
+
+    reader := bytes.NewReader(payloadBytes)
+
+	objectName := fmt.Sprintf("%s.json", key)
+	_, err = minioClient.PutObject(models.MinIOCtx, 
+        MinIOBucket,                            // Bucket Name 
+        objectName,                             // Object Name
+		reader,                                 // Reader of JSON file 
+        int64(len(payloadBytes)),               // Size of file
+        minio.PutObjectOptions{                 // Metadata
+            ContentType: "application/json",
+    })
+
+    if err != nil {
+        return fmt.Errorf("Error uploading file: %s Error: %v", key, err)
+    }
+
+	return nil
+}
+
+func UploadLogDataToMinIO(minioClient *minio.Client, BucketName, localFilePath string) error {
+
+    // Open the log file
+    file, err := os.Open(localFilePath)
+    if err != nil {
+        return fmt.Errorf("error opening file: %w", err)
+    }
+    defer file.Close()
+
+    // Get file stats
+    stat, err := file.Stat()
+    if err != nil {
+        return fmt.Errorf("error getting file stats: %w", err)
+    }
+
+    timestamp := time.Now().Format("20060102_150405")
+    fileName := filepath.Base(localFilePath)
+    fileExt := filepath.Ext(fileName)
+    fileNameWithoutExt := fileName[:len(fileName)-len(fileExt)]
+    objectName := fmt.Sprintf("logs/%s/%s_%s%s",
+        time.Now().Format("2006/01"),
+        fileNameWithoutExt,
+        timestamp,
+        fileExt,
+    )
+
+    // Upload the file
+    _, err = minioClient.PutObject(
+        models.MinIOCtx,
+        BucketName,
+        objectName,
+        file,
+        stat.Size(),
+        minio.PutObjectOptions{
+            ContentType: "text/plain",
+        },
+    )
+    if err != nil {
+        return fmt.Errorf("error uploading file: %w", err)
+    }
+    
+    return nil
+}
+
 func InitRedis() {
 
     err := godotenv.Load()
     if err != nil {
-        log.Printf("Warning: Error loading .env file: %v", err)
+        utils.LogMessage("Warning: Error loading .env file", "red", err)
     }
 
     models.FreshNewsRedisCtx, models.FreshNewsRedisCtxCancel = context.WithCancel(context.Background())
 
-    models.FreshNewsRedis, err = RedisInit(models.FreshNewsRedisCtx, "FRESHNEWS_REDIS_ADDRESS", "FRESHNEWS_REDIS_DB", "FRESHNEWS_REDIS_PASSWORD")
+    models.FreshNewsRedis, err = RedisInit(models.FreshNewsRedisCtx, "FRESHNEWS_REDIS_ADDRESS", "FRESHNEWS_REDIS_DB", "FRESHNEWS_REDIS_PASSWORD", "FREASNEWS_REDIS_CHANNEL")
     if err != nil {
         utils.LogMessage("FRESH NEWS Redis Server Setup Failed!", "red", err)
     }
 }
 
-func InitMinIO() {
-    stores := []string{"user-logs", "news-archive"}
-
-    models.MinIOClient = MinIOInit("MINIOENDPOINT", "MINIOACCESSKEY", "MINIOSECRETKEY", stores)
-}
-
-func RedisInit(redisContext context.Context, redisAddress string, redisDB string, redisPassword string) (*redis.Client, error) {
+func RedisInit(redisContext context.Context, redisAddress, redisDB, redisPassword, redisChannel string) (*redis.Client, error) {
 
     address := os.Getenv(redisAddress)
     if address == "" {
@@ -63,6 +134,12 @@ func RedisInit(redisContext context.Context, redisAddress string, redisDB string
         DB:       db,
     })
 
+    // Enable Redis keyspace notifications
+    err = rdb.ConfigSet(models.FreshNewsRedisCtx, "notify-keyspace-events", "Ex").Err()
+	if err != nil {
+		utils.LogMessage("Failed to enable keyspace notifications", "green", err)
+	}
+
     _, err = rdb.Ping(redisContext).Result()
     if err != nil {
         utils.LogMessage(fmt.Sprintf("Failed to connect to Redis - Address: %s, redisDB: %s", address, dbStr), "red", err)
@@ -74,7 +151,14 @@ func RedisInit(redisContext context.Context, redisAddress string, redisDB string
     return rdb, err
 }
 
+func InitMinIO() {
+    stores := []string{"user-logs", "news-archive", "app-logs"}
+
+    models.MinIOClient = MinIOInit("MINIO_ENDPOINT", "MINIO_ACCESSKEY", "MINIO_SECRETKEY", stores)
+}
+
 func MinIOInit(MinIOEndpoint string, MinIOAccessKey string, MinIOSecretKey string, BucketList []string) *minio.Client {
+    utils.LogMessage("MinIO Init Started ...", "green")
 
     endpoint := os.Getenv(MinIOEndpoint)
     accessKey := os.Getenv(MinIOAccessKey)
@@ -112,36 +196,4 @@ func MinIOInit(MinIOEndpoint string, MinIOAccessKey string, MinIOSecretKey strin
     */
 
     return minioClient
-}
-
-func uploadToMinIO(minioClient *minio.Client, key string, value string, MinIOBucket string) error {
-	
-    payload := map[string]interface{}{
-		"key":   key,
-		"value": value,
-		"time":  time.Now().Format(time.RFC3339),
-	}
-    
-	payloadBytes, err := json.Marshal(payload)
-	if err != nil {
-		return fmt.Errorf("failed to marshal payload: %v", err)
-	}
-
-    reader := bytes.NewReader(payloadBytes)
-
-	objectName := fmt.Sprintf("%s.json", key)
-	_, err = minioClient.PutObject(models.MinIOCtx, 
-        MinIOBucket,                            // Bucket Name 
-        objectName,                             // Object Name
-		reader,                                 // Reader of JSON file 
-        int64(len(payloadBytes)),               // Size of file
-        minio.PutObjectOptions{                 // Metadata
-            ContentType: "application/json",
-    })
-
-    if err != nil {
-        return fmt.Errorf("Error uploading file: %s Error: %v", key, err)
-    }
-
-	return nil
 }

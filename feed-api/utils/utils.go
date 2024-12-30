@@ -20,7 +20,7 @@ func LogMessage(message, color string, errs ...error) {
 
     timestamp := time.Now().Format("2006-01-02 15:04:05")
     
-    log.Printf("[WIPER-LOG] [%s] %s ERROR: %v", timestamp, message, err)
+    log.Printf("[FEED-API-LOG] [%s] %s ERROR: %v", timestamp, message, err)
 
     if color == "red" {
         fmt.Printf("\033[31m [%s] %s \033[0m ERROR: %v\n", timestamp, message, err)
