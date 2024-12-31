@@ -16,7 +16,7 @@ import (
 
 func init() {
     logFile, err := os.OpenFile(models.LogFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-    if err != nil {
+    if err != nil { 
         log.Fatalf("Failed to open log file: %v", err)
     }
 
@@ -25,7 +25,8 @@ func init() {
 
     database.InitRedis()
     database.InitMinIO()
-    go services.BucketStoreMinIOService()
+
+    go services.PushAppLogToMinIO()
 } 
 
 func main() {
@@ -79,6 +80,17 @@ func main() {
             fmt.Println("=========")
         }
 
+        // MinIO Setup
+        err := database.UploadNewsAPIResponseDataToMinIO(models.MinIOClient, categorizedHeadlines, "news-archive")
+        if err != nil {
+            utils.LogMessage("Failed to push News Archive MinIO", "red")
+        }
+
+        err = database.UploadNewsAPIResponseDataToMinIO(models.MinIOClient, categorizedDiscovery, "news-archive")
+        if err != nil {
+            utils.LogMessage("Failed to push News Archive MinIO", "red")
+        }
+
         utils.LogMessage("Feedling AI with all the news", "green")
 
         summarizedHeadlines := summarizer.SummarizeCountryCategorizedHeadlines(categorizedHeadlines)
@@ -99,7 +111,7 @@ func main() {
             }
         }
 
-        err := summarizer.StoreSummarizedRedis("headlines", summarizedHeadlines)
+        err = summarizer.StoreSummarizedRedis("headlines", summarizedHeadlines)
         if err != nil {
             utils.LogMessage("Failed to store headlines news in Redis", "red", err)
         }
@@ -108,6 +120,7 @@ func main() {
         if err != nil {
             utils.LogMessage("Failed to store discover news in Redis", "red", err)
         }
+
 
         currentTime := time.Now()
 

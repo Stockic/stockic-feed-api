@@ -21,12 +21,13 @@ import (
 	"github.com/minio/minio-go/v7/pkg/credentials"
 )
 
-func UploadRedisDataToMinIO(minioClient *minio.Client, key string, value string, MinIOBucket string) error {
+func UploadNewsAPIResponseDataToMinIO(minioClient *minio.Client, jsonNewsData map[string]models.APIResponse, MinIOBucket string) error {
+
+    utils.LogMessage("Started Uploading Archive News to MinIO", "green")
 	
     payload := map[string]interface{}{
-		"key":   key,
-		"value": value,
-		"time":  time.Now().Format(time.RFC3339),
+        "time":  time.Now().Format(time.RFC3339),
+		"news-data": jsonNewsData,
 	}
     
 	payloadBytes, err := json.Marshal(payload)
@@ -36,7 +37,10 @@ func UploadRedisDataToMinIO(minioClient *minio.Client, key string, value string,
 
     reader := bytes.NewReader(payloadBytes)
 
-	objectName := fmt.Sprintf("%s.json", key)
+    currentTime := time.Now()
+    formattedTime := currentTime.Format("2006-01-02T15-04-05")
+
+    objectName := fmt.Sprintf("news-%s.json", formattedTime)
 	_, err = minioClient.PutObject(models.MinIOCtx, 
         MinIOBucket,                            // Bucket Name 
         objectName,                             // Object Name
@@ -47,7 +51,7 @@ func UploadRedisDataToMinIO(minioClient *minio.Client, key string, value string,
     })
 
     if err != nil {
-        return fmt.Errorf("Error uploading file: %s Error: %v", key, err)
+        return fmt.Errorf("Error uploading file: %v", err)
     }
 
 	return nil

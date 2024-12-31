@@ -26,6 +26,7 @@ func ValidateUserAPIKey(apiKey string) (bool, bool) {
 	docSnapshot, err := docRef.Get(config.FirebaseCtx)
 	if err != nil {
 		if status.Code(err) == codes.NotFound {
+            // Remove from cache
             err = CacheUserStatus(config.RedisAPICacheCtx, apiKey, models.UserStatus{Exists: false, Premium: false})
             if err != nil {
                 utils.LogMessage("Failed to Cache", "red", err)
