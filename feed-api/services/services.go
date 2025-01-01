@@ -18,32 +18,58 @@ import (
 )
 
 func ValidateUserAPIKey(apiKey string) (bool, bool) {
+    // Check for Redis Cache -> If error == nil means Cache Hit for User -> Return the Existance and Premium Status
     if cachedStatus, err := GetCachedUserStatus(config.RedisAPICacheCtx, apiKey); err == nil {
         return cachedStatus.Exists, cachedStatus.Premium
     }
 
+    // docRef is reference to the data specified by apiKey 
 	docRef := config.FirebaseClient.Collection("users").Doc(apiKey)
+
+    // docSnapshot is contains data of the user associated with the API Key
 	docSnapshot, err := docRef.Get(config.FirebaseCtx)
+
+    // If an error has been caught, it is now impossible to move forward and false, false is going to be served 
 	if err != nil {
+        // This means API Key is nowhere in the database -> Return false, false
 		if status.Code(err) == codes.NotFound {
-            // Remove from cache
+            utils.LogMessage("User Doesn't Exist in FireStore", "green", err)
+
+            // Update cache for non existence  
             err = CacheUserStatus(config.RedisAPICacheCtx, apiKey, models.UserStatus{Exists: false, Premium: false})
             if err != nil {
                 utils.LogMessage("Failed to Cache", "red", err)
             }
+
 			return false, false
 		}
-		log.Fatalf("Failed to get document: %v", err)
+
+        /* 
+        Not Found was not recieved, it's issue with Firebase connection so log it
+        At this point, we don't know if user exists or not since connection is the issue
+        Log this thing in Logs and we can't return anything specific
+        It's I think better to return false, false for obvious reasons
+        */
+
+		utils.LogMessage("Failed to get document: %v", "red", err)
+        return false, false 
 	}
 
+    /*
+    If we reach here, no error has been returned and we have the docSnapshot
+    Now we check if user exists or not.
+    */
 	if !docSnapshot.Exists() {
+        // User does not exist! -> We update cache to set existence to false -> It would be better if we remove the key from Redis 
         err = CacheUserStatus(config.RedisAPICacheCtx, apiKey, models.UserStatus{Exists: false, Premium: false})
+
         if err != nil {
             utils.LogMessage("Failed to Cache", "red", err)
         }
 		return false, false
 	}
 
+    // Check for premium status 
 	premiumStatus, ok := docSnapshot.Data()["premium-status"].(bool)
 	if !ok {
         err = CacheUserStatus(config.RedisAPICacheCtx, apiKey, models.UserStatus{Exists: true, Premium: false})
@@ -53,6 +79,7 @@ func ValidateUserAPIKey(apiKey string) (bool, bool) {
 		return true, false
 	}
 
+    // If user exists, store it to cache
     err = CacheUserStatus(config.RedisAPICacheCtx, apiKey, models.UserStatus{Exists: true, Premium: premiumStatus})
     if err != nil {
         utils.LogMessage("Failed to Cache", "red", err)
