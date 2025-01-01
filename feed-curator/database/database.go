@@ -186,7 +186,7 @@ func RedisInit(redisContext context.Context, redisAddress, redisDB, redisPasswor
 }
 
 func InitMinIO() {
-    stores := []string{"user-logs", "raw-news-archive", "summarized-news-archive", "app-logs"}
+    stores := []string{"raw-news-archive", "summarized-news-archive", "feed-curator-app-logs"}
 
     models.MinIOClient = MinIOInit("MINIO_ENDPOINT", "MINIO_ACCESSKEY", "MINIO_SECRETKEY", stores)
 }

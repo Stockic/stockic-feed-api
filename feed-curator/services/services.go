@@ -23,7 +23,7 @@ func PushAppLogToMinIO() {
 
     for range ticker.C {
         utils.LogMessage("MinIO Push App Log Procedure started", "green") 
-        err := database.UploadLogDataToMinIO(models.MinIOClient, "app-logs", "summarizer.log")
+        err := database.UploadLogDataToMinIO(models.MinIOClient, "feed-curator-app-logs", models.LogFile)
         if err != nil {
             utils.LogMessage("Error pushing log file to MinIO", "red", err)
         }

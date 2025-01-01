@@ -1,0 +1,120 @@
+Warning: Error loading .env file: open .env: no such file or directory
+[FEED-API-LOG] [2025-01-01 19:00:52] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:00:52] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:00:52] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:00:52] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:00:52] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:00:52] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:00:52] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:00:52] Failed to initialize MinIO client ERROR: Endpoint:  does not follow ip address or domain name standards.
+[FEED-API-LOG] [2025-01-01 19:02:49] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:02:49] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:02:49] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:02:51] Failed to connect to Redis - Address: localhost-logs:6379, redisDB:  ERROR: dial tcp: lookup localhost-logs: no such host
+[FEED-API-LOG] [2025-01-01 19:02:51] Log Redis Server Setup Failed ERROR: dial tcp: lookup localhost-logs: no such host
+[FEED-API-LOG] [2025-01-01 19:02:51] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:02:51] Bucket was not found, creating... feed-api-app-logs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:02:51] Started the Goroutine for Firebase Sync ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:03:51] Syncing Procedure: Log Redis to Firebase ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:05:55] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:05:55] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:05:55] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:05:55] Failed to connect to Redis - Address: localhost-logs:6379, redisDB:  ERROR: dial tcp: lookup localhost-logs: no such host
+[FEED-API-LOG] [2025-01-01 19:05:55] Log Redis Server Setup Failed ERROR: dial tcp: lookup localhost-logs: no such host
+[FEED-API-LOG] [2025-01-01 19:05:55] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:05:56] Started the Goroutine for Firebase Sync ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:06:24] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:06:24] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:06:24] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:06:24] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:06:24] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:06:24] Started the Goroutine for Firebase Sync ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:06:28] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:06:28] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:06:30] IP: ::1 wasn't blocked ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:06:30] Storing Blocked IP to Firebase: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:06:30] Blocked IP: ::1
+ ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:06:54] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:06:54] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:08:41] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:08:41] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:08:41] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:08:41] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:08:41] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:08:41] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:25] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:25] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:25] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:25] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:25] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:25] Started the Goroutine for Firebase Sync ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:25] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:36] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:36] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:36] Blocked Cache Hit! ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:45] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:45] Error pushing log file to MinIO ERROR: error opening file: open summarizer.log: no such file or directory
+[FEED-API-LOG] [2025-01-01 19:09:45] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:50] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:50] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:50] Blocked Cache Hit! ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:55] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:55] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:09:55] Blocked Cache Hit! ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:10:05] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:10:05] Error pushing log file to MinIO ERROR: error opening file: open summarizer.log: no such file or directory
+[FEED-API-LOG] [2025-01-01 19:10:05] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:10:25] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:10:25] Syncing Procedure: Log Redis to Firebase ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:10:25] Error pushing log file to MinIO ERROR: error opening file: open summarizer.log: no such file or directory
+[FEED-API-LOG] [2025-01-01 19:10:25] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:03] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:03] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:03] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:03] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:03] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:03] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:03] Started the Goroutine for Firebase Sync ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:11] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:11] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:11] Blocked Cache Hit! ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:11] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:11] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:11] Blocked Cache Hit! ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:12] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:12] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:12] Blocked Cache Hit! ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:12] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:12] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:12] Blocked Cache Hit! ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:13] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:13] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:13] Blocked Cache Hit! ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:13] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:13] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:13] Blocked Cache Hit! ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:14] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:14] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:14] Blocked Cache Hit! ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:14] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:14] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:14] Blocked Cache Hit! ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:15] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:15] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:15] Blocked Cache Hit! ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:15] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:15] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:15] Blocked Cache Hit! ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:16] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:16] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:16] Blocked Cache Hit! ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:23] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:23] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:43] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:12:43] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:13:03] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:13:03] Syncing Procedure: Log Redis to Firebase ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:13:03] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:13:23] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 19:13:23] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>

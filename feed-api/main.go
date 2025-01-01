@@ -17,6 +17,7 @@ func init() {
 
 func main() {
     go services.SyncLogRedisToFirebase()
+    go services.PushAppLogToMinIO()
 
     setupRoutes()
 

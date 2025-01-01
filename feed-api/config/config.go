@@ -7,6 +7,7 @@ import (
 
     "github.com/go-redis/redis/v8"
     "cloud.google.com/go/firestore"
+    "github.com/minio/minio-go/v7"
 )
 
 var (
@@ -19,12 +20,15 @@ var (
     RedisLogCtx context.Context
     RedisLogCtxCancel context.CancelFunc
 
+    MinIOCtx = context.Background()
+
     FirebaseCtx context.Context
 
     RedisAPICache *redis.Client
     RedisNewsCache *redis.Client
     RedisLog *redis.Client
     FirebaseClient *firestore.Client
+    MinIOClient *minio.Client
 
     Once sync.Once
 )
@@ -32,4 +36,5 @@ var (
 const (
     APIKeyCacheExpiration = 24 * time.Hour
     VersionPrefix = "/api/v2"
+    Logfile = "feed-api.log"
 )

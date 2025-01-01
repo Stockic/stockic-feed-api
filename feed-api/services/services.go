@@ -11,11 +11,27 @@ import (
 	"feed-api/config"
 	"feed-api/models"
 	"feed-api/utils"
+    "feed-api/database"
 
 	"github.com/go-redis/redis/v8"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
+
+func PushAppLogToMinIO() {
+    ticker := time.NewTicker(20 * time.Second) 
+    defer ticker.Stop()
+    utils.LogMessage("Started Log to MinIO Push Service", "green")
+
+    for range ticker.C {
+        utils.LogMessage("MinIO Push App Log Procedure started", "green") 
+        err := database.UploadLogDataToMinIO(config.MinIOClient, "feed-api-app-logs", config.Logfile)
+        if err != nil {
+            utils.LogMessage("Error pushing log file to MinIO", "red", err)
+        }
+        utils.LogMessage("Done Uploading Procedure for App Logs to MinIO", "green")
+    }
+}
 
 func ValidateUserAPIKey(apiKey string) (bool, bool) {
     // Check for Redis Cache -> If error == nil means Cache Hit for User -> Return the Existance and Premium Status
