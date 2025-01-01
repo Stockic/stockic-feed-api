@@ -81,14 +81,14 @@ func main() {
         }
 
         // MinIO Setup
-        err := database.UploadNewsAPIResponseDataToMinIO(models.MinIOClient, categorizedHeadlines, "news-archive")
+        err := database.UploadNewsAPIResponseDataToMinIO(models.MinIOClient, categorizedHeadlines, "raw-news-archive")
         if err != nil {
-            utils.LogMessage("Failed to push News Archive MinIO", "red")
+            utils.LogMessage("Failed to push News Archive MinIO - Raw News Headlines", "red")
         }
 
-        err = database.UploadNewsAPIResponseDataToMinIO(models.MinIOClient, categorizedDiscovery, "news-archive")
+        err = database.UploadNewsAPIResponseDataToMinIO(models.MinIOClient, categorizedDiscovery, "raw-news-archive")
         if err != nil {
-            utils.LogMessage("Failed to push News Archive MinIO", "red")
+            utils.LogMessage("Failed to push News Archive MinIO - Raw News Discover", "red")
         }
 
         utils.LogMessage("Feedling AI with all the news", "green")
@@ -96,6 +96,16 @@ func main() {
         summarizedHeadlines := summarizer.SummarizeCountryCategorizedHeadlines(categorizedHeadlines)
 
         summarizedCategorized := summarizer.SummarizeCategorizedNews(categorizedDiscovery)
+
+        err = database.UploadNewsAPISummarizedDataToMinIO(models.MinIOClient, summarizedHeadlines, "summarized-news-archive")
+        if err != nil {
+            utils.LogMessage("Failed to push News Archive MinIO - Summzarized News Headlines", "red")
+        }
+
+        err = database.UploadNewsAPISummarizedDataToMinIO(models.MinIOClient, summarizedCategorized, "summarized-news-archive")
+        if err != nil {
+            utils.LogMessage("Failed to push News Archive MinIO - Summarized News Discover", "red")
+        }
 
         for category, summarizedResponse := range summarizedHeadlines {
             fmt.Printf("Summarized Headline Category: %s, Total Articles: %d\n", category, summarizedResponse.TotalResults)
@@ -120,7 +130,6 @@ func main() {
         if err != nil {
             utils.LogMessage("Failed to store discover news in Redis", "red", err)
         }
-
 
         currentTime := time.Now()
 

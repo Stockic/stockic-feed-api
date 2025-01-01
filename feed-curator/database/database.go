@@ -40,7 +40,43 @@ func UploadNewsAPIResponseDataToMinIO(minioClient *minio.Client, jsonNewsData ma
     currentTime := time.Now()
     formattedTime := currentTime.Format("2006-01-02T15-04-05")
 
-    objectName := fmt.Sprintf("news-%s.json", formattedTime)
+    objectName := fmt.Sprintf("raw-news-%s.json", formattedTime)
+	_, err = minioClient.PutObject(models.MinIOCtx, 
+        MinIOBucket,                            // Bucket Name 
+        objectName,                             // Object Name
+		reader,                                 // Reader of JSON file 
+        int64(len(payloadBytes)),               // Size of file
+        minio.PutObjectOptions{                 // Metadata
+            ContentType: "application/json",
+    })
+
+    if err != nil {
+        return fmt.Errorf("Error uploading file: %v", err)
+    }
+
+	return nil
+}
+
+func UploadNewsAPISummarizedDataToMinIO(minioClient *minio.Client, jsonNewsData map[string]models.SummarizedResponse, MinIOBucket string) error {
+
+    utils.LogMessage("Started Uploading Archive News to MinIO", "green")
+	
+    payload := map[string]interface{}{
+        "time":  time.Now().Format(time.RFC3339),
+		"news-data": jsonNewsData,
+	}
+    
+	payloadBytes, err := json.Marshal(payload)
+	if err != nil {
+		return fmt.Errorf("failed to marshal payload: %v", err)
+	}
+
+    reader := bytes.NewReader(payloadBytes)
+
+    currentTime := time.Now()
+    formattedTime := currentTime.Format("2006-01-02T15-04-05")
+
+    objectName := fmt.Sprintf("summarized-news-%s.json", formattedTime)
 	_, err = minioClient.PutObject(models.MinIOCtx, 
         MinIOBucket,                            // Bucket Name 
         objectName,                             // Object Name
@@ -110,13 +146,13 @@ func InitRedis() {
 
     models.FreshNewsRedisCtx, models.FreshNewsRedisCtxCancel = context.WithCancel(context.Background())
 
-    models.FreshNewsRedis, err = RedisInit(models.FreshNewsRedisCtx, "FRESHNEWS_REDIS_ADDRESS", "FRESHNEWS_REDIS_DB", "FRESHNEWS_REDIS_PASSWORD", "FREASNEWS_REDIS_CHANNEL")
+    models.FreshNewsRedis, err = RedisInit(models.FreshNewsRedisCtx, "FRESHNEWS_REDIS_ADDRESS", "FRESHNEWS_REDIS_DB", "FRESHNEWS_REDIS_PASSWORD")
     if err != nil {
         utils.LogMessage("FRESH NEWS Redis Server Setup Failed!", "red", err)
     }
 }
 
-func RedisInit(redisContext context.Context, redisAddress, redisDB, redisPassword, redisChannel string) (*redis.Client, error) {
+func RedisInit(redisContext context.Context, redisAddress, redisDB, redisPassword string) (*redis.Client, error) {
 
     address := os.Getenv(redisAddress)
     if address == "" {
@@ -138,12 +174,6 @@ func RedisInit(redisContext context.Context, redisAddress, redisDB, redisPasswor
         DB:       db,
     })
 
-    // Enable Redis keyspace notifications
-    err = rdb.ConfigSet(models.FreshNewsRedisCtx, "notify-keyspace-events", "Ex").Err()
-	if err != nil {
-		utils.LogMessage("Failed to enable keyspace notifications", "green", err)
-	}
-
     _, err = rdb.Ping(redisContext).Result()
     if err != nil {
         utils.LogMessage(fmt.Sprintf("Failed to connect to Redis - Address: %s, redisDB: %s", address, dbStr), "red", err)
@@ -156,7 +186,7 @@ func RedisInit(redisContext context.Context, redisAddress, redisDB, redisPasswor
 }
 
 func InitMinIO() {
-    stores := []string{"user-logs", "news-archive", "app-logs"}
+    stores := []string{"user-logs", "raw-news-archive", "summarized-news-archive", "app-logs"}
 
     models.MinIOClient = MinIOInit("MINIO_ENDPOINT", "MINIO_ACCESSKEY", "MINIO_SECRETKEY", stores)
 }
