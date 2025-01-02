@@ -7,6 +7,7 @@ import (
 	"log"
 	"strings"
 	"time"
+    "bytes"
 
 	"feed-api/config"
 	"feed-api/models"
@@ -16,6 +17,7 @@ import (
 	"github.com/go-redis/redis/v8"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+    "github.com/minio/minio-go/v7"
 )
 
 func PushAppLogToMinIO() {
@@ -204,6 +206,89 @@ func SyncLogRedisToFirebase() {
 			}
 		}
 	}
+}
+
+func SyncLogRedisToMinIO() {
+    ticker := time.NewTicker(30 * time.Second) // Sync every 1 minute
+    defer ticker.Stop()
+    utils.LogMessage("Started the Goroutine for MinIO Sync", "green")
+
+    for range ticker.C {
+        utils.LogMessage("Syncing Procedure: Log Redis to MinIO", "green")
+
+        if _, err := config.RedisLog.Ping(config.RedisLogCtx).Result(); err != nil {
+            utils.LogMessage("RedisLog connection failed - Cannot Sync to MinIO", "red", err)
+            continue
+        }
+
+        keys, err := config.RedisLog.Keys(config.RedisLogCtx, "endpoint:/detail/news:*").Result()
+        if err != nil {
+            log.Printf("Error fetching Redis keys: %v", err)
+            continue
+        }
+
+        for _, key := range keys {
+            fmt.Println(key)
+        }
+
+        // Map to group logs by apiKey
+        groupedLogs := make(map[string][]map[string]interface{})
+
+        for _, key := range keys {
+            parts := strings.Split(key, "/")
+            if len(parts) < 4 {
+                log.Printf("Invalid key format: %s", key)
+                continue
+            }
+            newsID := strings.TrimPrefix(parts[2], "news:")
+            apiKey := strings.TrimPrefix(parts[3], "user:")
+
+            // Get and reset the count atomically
+            accessCount, err := config.RedisLog.GetDel(config.RedisLogCtx, key).Result()
+            if err != nil {
+                log.Printf("Error fetching and deleting key %s: %v", key, err)
+                continue
+            }
+
+            logData := map[string]interface{}{
+                "newsID":      newsID,
+                "accessCount": accessCount,
+                "lastSynced":  time.Now().UTC().Format(time.RFC3339),
+            }
+
+            groupedLogs[apiKey] = append(groupedLogs[apiKey], logData)
+        }
+
+        // Upload each apiKey's logs to MinIO
+        for apiKey, logs := range groupedLogs {
+            timestamp := time.Now().UTC().Format("2006-01-02T15-04-05")
+            objectName := fmt.Sprintf("%s/detail-log-%s.json", apiKey, timestamp)
+
+            jsonData, err := json.Marshal(logs)
+            if err != nil {
+                log.Printf("Error marshaling JSON for apiKey %s: %v", apiKey, err)
+                continue
+            }
+
+            _, err = config.MinIOClient.PutObject(
+                config.MinIOCtx,
+                "user-logs",
+                objectName,
+                bytes.NewReader(jsonData),
+                int64(len(jsonData)),
+                minio.PutObjectOptions{
+                    ContentType: 
+                    "application/json",
+                },
+            )
+            if err != nil {
+                log.Printf("Error uploading JSON to MinIO for apiKey %s: %v", apiKey, err)
+                continue
+            }
+
+            utils.LogMessage(fmt.Sprintf("Successfully uploaded logs for apiKey %s to MinIO", apiKey), "green")
+        }
+    }
 }
 
 func FindArticleByID(id, headlinesData, discoverData string) *models.SummarizedArticle {

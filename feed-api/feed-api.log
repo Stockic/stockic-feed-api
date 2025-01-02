@@ -118,3 +118,120 @@ Warning: Error loading .env file: open .env: no such file or directory
 [FEED-API-LOG] [2025-01-01 19:13:03] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
 [FEED-API-LOG] [2025-01-01 19:13:23] MinIO Push App Log Procedure started ERROR: <nil>
 [FEED-API-LOG] [2025-01-01 19:13:23] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:53:33] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:53:33] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:53:33] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:53:33] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:53:33] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:53:33] Started the Goroutine for Firebase Sync ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:53:33] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:53:50] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:53:50] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:53:53] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:53:53] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:53:53] Blocked Cache Hit! ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:53:53] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:53:53] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:54:09] Intrusion IP detected: ::1 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:54:09] isBlocked() checking for blocked IPs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:54:09] Blocked Cache Hit! ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:54:13] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:54:13] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+Redis ping response: PONG
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 22:54:22] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:54:22] Request to /api/v2/ping took 928.928833ms ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:54:33] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:54:33] Syncing Procedure: Log Redis to Firebase ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:54:33] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 22:54:42] Request to /api/v2/headlines/1 took 697.791µs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:54:53] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:54:53] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 22:55:11] Request to /api/v2/headlines/1 took 567.542µs ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 22:55:13] Request to /api/v2/headlines/1 took 448.791µs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:55:13] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:55:13] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 22:55:15] Request to /api/v2/headlines/1 took 485.166µs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:55:33] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:55:33] Syncing Procedure: Log Redis to Firebase ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 22:55:33] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:17:44] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:17:44] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:17:44] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:17:44] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:17:44] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:17:44] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:17:44] Started the Goroutine for MinIO Sync ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 23:17:54] Request to /api/v2/headlines/1 took 4.7995ms ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 23:17:55] Request to /api/v2/headlines/1 took 554.75µs ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 23:17:56] Request to /api/v2/headlines/1 took 382.375µs ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 23:17:56] Request to /api/v2/headlines/1 took 1.538125ms ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 23:17:57] Request to /api/v2/headlines/1 took 537.083µs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:18:04] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:18:04] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 23:18:09] Request to /api/v2/headlines/12 took 4.015375ms ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 23:18:10] Request to /api/v2/headlines/12 took 461.75µs ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 23:18:11] Request to /api/v2/headlines/12 took 582.041µs ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 23:18:12] Request to /api/v2/headlines/12 took 370.459µs ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 23:18:14] Request to /api/v2/headlines/12 took 3.875625ms ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:18:14] Syncing Procedure: Log Redis to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:18:24] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:18:24] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:18:44] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:18:44] Syncing Procedure: Log Redis to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:18:44] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:19:04] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:19:04] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:19:14] Syncing Procedure: Log Redis to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:19:24] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:19:24] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:19:44] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:19:44] Syncing Procedure: Log Redis to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:19:44] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:20:04] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:20:04] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:20:14] Syncing Procedure: Log Redis to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:20:24] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:20:25] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:20:44] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:20:44] Syncing Procedure: Log Redis to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:20:44] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:21:55] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:21:55] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:21:55] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:21:55] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:21:55] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:21:55] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:21:55] Started the Goroutine for MinIO Sync ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 23:22:00] Request to /api/v2/headlines/12 took 4.211875ms ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 23:22:01] Request to /api/v2/headlines/12 took 1.464166ms ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 23:22:13] Request to /api/v2/headlines/12 took 2.927208ms ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 23:22:14] Request to /api/v2/headlines/12 took 572.875µs ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:22:15] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:22:15] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+Redis ping response: PONG
+[FEED-API-LOG] [2025-01-01 23:22:17] Request to /api/v2/headlines/12 took 1.720209ms ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:22:25] Syncing Procedure: Log Redis to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:22:35] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:22:35] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:22:55] Syncing Procedure: Log Redis to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:22:55] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-01-01 23:22:55] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>

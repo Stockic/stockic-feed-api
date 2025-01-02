@@ -1,16 +1,17 @@
 package handlers
 
 import (
-    "fmt"
-    "encoding/json"
-    "net/http"
-    "strconv"
-    "strings"
+	"context"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"strconv"
+	"strings"
 
-    "feed-api/models"
-    "feed-api/utils"
-    "feed-api/services"
-    "feed-api/config"
+	"feed-api/config"
+	"feed-api/models"
+	"feed-api/services"
+	"feed-api/utils"
 )
 
 func Ping(httpHandler http.ResponseWriter, request *http.Request) {
@@ -212,6 +213,21 @@ func DetailHandler(httpHandler http.ResponseWriter, request *http.Request) {
     if err != nil {
         utils.LogMessage("JSON Encoder in detailHandler() Failed", "red", err)
     }
+
+    // Log Request
+    utils.LogMessage("Started logging detail request", "green")
+    apiKey := request.Header.Get("X-API-Key")
+    redisKey := "endpoint:/detail/news:" + newsID + "/user:" + apiKey 
+    utils.LogMessage(fmt.Sprintf("Redis Key:%s", redisKey), "green")
+
+    go func() {
+        err := config.RedisLog.Incr(context.Background(), redisKey).Err()
+        if err != nil {
+            utils.LogMessage(fmt.Sprintf("Failed to increment Redis key %s: %v", redisKey, err), "red")
+        } else {
+            utils.LogMessage(fmt.Sprintf("Successfully incremented Redis Key %s", redisKey), "green")
+        }
+    }()
 
     /*
     Write a goroutine function to add XPs to Firebase in 

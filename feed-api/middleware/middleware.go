@@ -1,13 +1,10 @@
 package middleware
 
 import (
-	"context"
 	"fmt"
 	"net/http"
-	"strings"
 	"time"
 
-	"feed-api/config"
 	"feed-api/services"
 	"feed-api/utils"
 )
@@ -36,31 +33,6 @@ func RequestMiddleware(next http.HandlerFunc) http.HandlerFunc {
 
         PLEASE DO NOT REMOVE PREMIUM STATUS CHECKS
         */
-
-        // Check if /detail/ is being accessed and store the newsID async to redis
-
-        // Move this to discover endpoint
-
-        urlPath := request.URL.Path
-        if strings.HasPrefix(urlPath, fmt.Sprintf("%s/detail", config.VersionPrefix)) {
-            utils.LogMessage("Started logging detail request", "green")
-            parts := strings.Split(urlPath, "/")
-            if len(parts) >= 5 {
-                newsID := parts[4]
-
-                redisKey := "endpoint:/detail/news:" + newsID + "/user:" + apiKey
-                utils.LogMessage(fmt.Sprintf("Redis Key: %s", redisKey), "green")
-
-                go func() {
-                    err := config.RedisLog.Incr(context.Background(), redisKey).Err()
-                    if err != nil {
-                        utils.LogMessage(fmt.Sprintf("Failed to increment Redis key %s: %v", redisKey, err), "red")
-                    } else {
-                        utils.LogMessage(fmt.Sprintf("Successfully incremented Redis key %s", redisKey), "green")
-                    }
-                }()
-            }
-        }
 
         next.ServeHTTP(httpHandler, request)
         duration := time.Since(startTime)
