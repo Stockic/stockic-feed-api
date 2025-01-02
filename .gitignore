@@ -2,6 +2,8 @@
 /build/.env
 /build/*
 
+/data
+
 /feed-api/app.log
 /feed-curator/summarizer.log
 
