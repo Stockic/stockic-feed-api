@@ -12,3 +12,6 @@
 
 /actions/actions
 /actions/.env
+
+/performance-tests/myenv
+/performance-tests/__pycache__

@@ -1,7 +1,6 @@
 package main
 
 // User actions backend logics are handled by this service
-
 import (
 	"fmt"
 	"net/http"

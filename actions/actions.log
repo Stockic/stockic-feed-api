@@ -1,0 +1,5 @@
+[FEED-API-LOG] [2025-02-02 20:35:07] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-02 20:35:07] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-02 20:35:07] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-02 20:35:27] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-02 20:35:27] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
