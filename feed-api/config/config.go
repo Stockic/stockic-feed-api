@@ -37,4 +37,5 @@ const (
     APIKeyCacheExpiration = 24 * time.Hour
     VersionPrefix = "/api/v2"
     Logfile = "feed-api.log"
+    FirebaseConfigFile = "./secrets/stockic-b6c89-firebase-adminsdk-wr64l-a8e3bdf5e7.json"
 )

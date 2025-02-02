@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
 	"strings"
 	"time"
     "bytes"
@@ -109,9 +108,9 @@ func ValidateUserAPIKey(apiKey string) (bool, bool) {
 func GetCachedUserStatus(ctx context.Context, apiKey string) (*models.UserStatus, error) {
     pong, err := config.RedisAPICache.Ping(ctx).Result()
     if err != nil {
-        log.Printf("Redis connection error: %v", err)
+        utils.LogMessage("Redis connection error", "red", err)
     } else {
-        log.Printf("Redis ping response: %s", pong)
+        utils.LogMessage(fmt.Sprintf("Redis ping response: %s", pong), "green", nil)
     }
 
     val, err := config.RedisAPICache.Get(ctx, fmt.Sprintf("apikey:%s", apiKey)).Result()
@@ -132,10 +131,8 @@ func GetCachedUserStatus(ctx context.Context, apiKey string) (*models.UserStatus
 func CacheUserStatus(ctx context.Context, apiKey string, status models.UserStatus) error {
     pong, err := config.RedisAPICache.Ping(ctx).Result()
     if err != nil {
-        log.Printf("Redis connection error: %v", err)
         utils.LogMessage("Redis connection error", "red", err)
     } else {
-        log.Printf("Redis ping response: %s", pong)
         utils.LogMessage(fmt.Sprintf("Redis ping response: %s", pong), "green")
     }
 
@@ -170,14 +167,14 @@ func SyncLogRedisToFirebase() {
 
 		keys, err := config.RedisLog.Keys(config.RedisLogCtx, "endpoint:/detail/news:*").Result()
 		if err != nil {
-			log.Printf("Error fetching Redis keys: %v", err)
+			utils.LogMessage("Error fetching Redis keys: %v", "red", err)
 			continue
 		}
 
 		for _, key := range keys {
 			parts := strings.Split(key, "/")
 			if len(parts) < 4 {
-				log.Printf("Invalid key format: %s", key)
+				utils.LogMessage(fmt.Sprintf("Invalid key format: %s", key), "red", nil)
 				continue
 			}
 			newsID := strings.TrimPrefix(parts[2], "news:")
@@ -187,7 +184,7 @@ func SyncLogRedisToFirebase() {
 			// Get and reset the count atomically
 			accessCount, err := config.RedisLog.GetDel(config.RedisLogCtx, key).Result()
 			if err != nil {
-				log.Printf("Error fetching and deleting key %s: %v", key, err)
+				utils.LogMessage(fmt.Sprintf("Error fetching and deleting key %s", key), "red", err)
 				continue
 			}
 
@@ -223,7 +220,7 @@ func SyncLogRedisToMinIO() {
 
         keys, err := config.RedisLog.Keys(config.RedisLogCtx, "endpoint:/detail/news:*").Result()
         if err != nil {
-            log.Printf("Error fetching Redis keys: %v", err)
+            utils.LogMessage("Error fetching Redis keys", "red", err)
             continue
         }
 
@@ -237,7 +234,7 @@ func SyncLogRedisToMinIO() {
         for _, key := range keys {
             parts := strings.Split(key, "/")
             if len(parts) < 4 {
-                log.Printf("Invalid key format: %s", key)
+                utils.LogMessage(fmt.Sprintf("Invalid key format: %s", key), "red", nil)
                 continue
             }
             newsID := strings.TrimPrefix(parts[2], "news:")
@@ -246,7 +243,7 @@ func SyncLogRedisToMinIO() {
             // Get and reset the count atomically
             accessCount, err := config.RedisLog.GetDel(config.RedisLogCtx, key).Result()
             if err != nil {
-                log.Printf("Error fetching and deleting key %s: %v", key, err)
+                utils.LogMessage(fmt.Sprintf("Error fetching and deleting key %s", key), "red", err)
                 continue
             }
 
@@ -266,7 +263,7 @@ func SyncLogRedisToMinIO() {
 
             jsonData, err := json.Marshal(logs)
             if err != nil {
-                log.Printf("Error marshaling JSON for apiKey %s: %v", apiKey, err)
+                utils.LogMessage(fmt.Sprintf("Error marshaling JSON for apiKey %s", apiKey), "red", err)
                 continue
             }
 
@@ -282,7 +279,7 @@ func SyncLogRedisToMinIO() {
                 },
             )
             if err != nil {
-                log.Printf("Error uploading JSON to MinIO for apiKey %s: %v", apiKey, err)
+                utils.LogMessage(fmt.Sprintf("Error uploading JSON to MinIO for apiKey %s", apiKey), "red", err)
                 continue
             }
 

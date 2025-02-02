@@ -20,6 +20,10 @@ func main() {
     go services.SyncLogRedisToMinIO()
     go services.PushAppLogToMinIO()
 
+    defer config.RedisAPICacheCtxCancel()
+    defer config.RedisNewsCacheCtxCancel()
+    defer config.RedisLogCtxCancel()
+
     setupRoutes()
 
     port := ":8080"
@@ -28,13 +32,8 @@ func main() {
     if err != nil {
         fmt.Printf("\033[31m Could not start server: %s \033[0m \n", err)
     }
-
-    defer config.RedisAPICacheCtxCancel()
-    defer config.RedisNewsCacheCtxCancel()
-    defer config.RedisLogCtxCancel()
 }
 
-// Setting up API endpoints
 func setupRoutes() {
     http.HandleFunc(config.VersionPrefix + "/ping", middleware.RequestMiddleware(handlers.Ping))
     http.HandleFunc(config.VersionPrefix + "/headlines/", middleware.RequestMiddleware(handlers.HeadlinesHandler))

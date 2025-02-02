@@ -94,7 +94,7 @@ func initRedisClients() {
 func initFirebase() {
     config.FirebaseClient = InitializeFirebase(
         config.FirebaseCtx,
-        "./secrets/stockic-b6c89-firebase-adminsdk-wr64l-a8e3bdf5e7.json",
+        config.FirebaseConfigFile,
         &config.Once,
     )
 
