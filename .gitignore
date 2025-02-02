@@ -9,3 +9,6 @@
 
 /feed-api/secrets/id_rsa_stockic.pub
 /feed-api/secrets/id_rsa_stockic
+
+/actions/actions
+/actions/.env
