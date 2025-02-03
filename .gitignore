@@ -1,4 +1,3 @@
-/secrets/
 /build/.env
 /build/*
 
@@ -6,12 +5,21 @@
 
 /feed-api/app.log
 /feed-curator/summarizer.log
+/actions/actions.log
 
 /feed-api/secrets/id_rsa_stockic.pub
 /feed-api/secrets/id_rsa_stockic
 
+/feed-api/feed-api
+/feed-curator/feed-curator
 /actions/actions
+
+/feed-api/.env
+/feed-curator/.env
 /actions/.env
 
 /performance-tests/myenv
 /performance-tests/__pycache__
+
+/ai-prompt-service/myenv
+/ai-prompt-service/__pycache__

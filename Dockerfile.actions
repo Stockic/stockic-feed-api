@@ -1,0 +1,15 @@
+FROM golang:1.23
+
+WORKDIR /app
+
+COPY ./actions/go.mod ./actions/go.sum ./
+
+RUN go mod download
+
+COPY ./actions/ .
+
+RUN go build -o actions .
+
+EXPOSE 9090
+
+CMD ["./actions"]
