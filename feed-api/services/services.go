@@ -151,60 +151,6 @@ func CacheUserStatus(ctx context.Context, apiKey string, status models.UserStatu
     return err
 }
 
-func SyncLogRedisToFirebase() {
-    ticker := time.NewTicker(1 * time.Minute) // Sync every 1 minutes
-	defer ticker.Stop()
-    utils.LogMessage("Started the Goroutine for Firebase Sync", "green")
-
-	for range ticker.C {
-
-        utils.LogMessage("Syncing Procedure: Log Redis to Firebase", "green")
-        
-        if _, err := config.RedisLog.Ping(config.RedisLogCtx).Result(); err != nil {
-            utils.LogMessage("RedisLog connection failed - Cannot Sync to Firebase", "red", err)
-            continue
-        }
-
-		keys, err := config.RedisLog.Keys(config.RedisLogCtx, "endpoint:/detail/news:*").Result()
-		if err != nil {
-			utils.LogMessage("Error fetching Redis keys: %v", "red", err)
-			continue
-		}
-
-		for _, key := range keys {
-			parts := strings.Split(key, "/")
-			if len(parts) < 4 {
-				utils.LogMessage(fmt.Sprintf("Invalid key format: %s", key), "red", nil)
-				continue
-			}
-			newsID := strings.TrimPrefix(parts[2], "news:")
-			apiKey := strings.TrimPrefix(parts[3], "user:")
-            utils.LogMessage(fmt.Sprintf("Pushing Redis Keys to Firebase: News ID: %s, API Key: %s", newsID, apiKey), "green")
-
-			// Get and reset the count atomically
-			accessCount, err := config.RedisLog.GetDel(config.RedisLogCtx, key).Result()
-			if err != nil {
-				utils.LogMessage(fmt.Sprintf("Error fetching and deleting key %s", key), "red", err)
-				continue
-			}
-
-			// Create the log data for Firestore
-			logData := map[string]interface{}{
-				"accessCount": accessCount,
-				"lastSynced":  time.Now().UTC().Format(time.RFC3339),
-			}
-
-			// Push log to Firestore under the user's API Key
-			_, err = config.FirebaseClient.Collection("users").Doc(apiKey).Collection("logs").Doc(newsID).Set(config.FirebaseCtx, logData)
-			if err != nil {
-				utils.LogMessage(fmt.Sprintf("Error writing to Firestore for key %s", key), "red", err)
-				config.RedisLog.Set(config.RedisLogCtx, key, accessCount, 0)
-				continue
-			}
-		}
-	}
-}
-
 func SyncLogRedisToMinIO() {
     ticker := time.NewTicker(30 * time.Second) // Sync every 1 minute
     defer ticker.Stop()

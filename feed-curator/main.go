@@ -36,12 +36,13 @@ func main() {
     for {
         // Define country codes for each region (North America, Europe, Asia, Australia)
         northAmerica := []string{"us"}
-        // europe := []string{"gb", "de", "fr", "it", "es", "pl", "nl"}
+        europe := []string{"gb", "de", "fr", "it", "es", "pl", "nl"}
         // asia := []string{"cn", "in", "jp", "kr", "sg", "hk"}
         // australia := []string{"au", "nz"}
 
         // Combine all countries into one list
         allCountries := append(northAmerica)
+        allCountries = append(allCountries, europe...)
 
         // Fetch headlines from all countries (passing "20" articles per page)
         categorizedHeadlines := fetcher.FetchHeadlinesByCountry(allCountries, "20")

@@ -16,7 +16,6 @@ func init() {
 }
 
 func main() {
-    // go services.SyncLogRedisToFirebase()
     go services.SyncLogRedisToMinIO()
     go services.PushAppLogToMinIO()
 
