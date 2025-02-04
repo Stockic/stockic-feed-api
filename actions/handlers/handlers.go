@@ -179,9 +179,20 @@ func FallbackHandler(w http.ResponseWriter, r *http.Request) {
 func sendResponse(w http.ResponseWriter, response models.BookmarkResponse, statusCode int) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
-	json.NewEncoder(w).Encode(response)
+    if err := json.NewEncoder(w).Encode(response); err != nil {
+        utils.LogMessage("Failed sending response", "red", err)
+    }
 }
 
+/*
+This endpoint creates a sign in session for the user to proceed with oauth. 
+We set a random number for the state which is the session id for login.
+The session id (state) is stored in redis in format "session id": "X-API-Key". 
+The session id has a timeout of 15 mins. 
+If the user allows access, we move ahead and Callback function gets the state. 
+We get the session id and find the X-API-Key from Redis and store it into firebase for the user.
+Incase data is not found in Redis, we pop up the page "Session Timeout, please try again."
+*/
 func OauthNotionURL(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Content-Type", "application/json")
     var jsonResponse models.OauthNotionResponse
@@ -214,7 +225,12 @@ func OauthNotionCallback(w http.ResponseWriter, r *http.Request) {
         utils.LogMessage("No Notion Auth Code in Callback", "red")
     }
 
-    utils.LogMessage(fmt.Sprintf("Notion Auth Code: %s", NotionAuthcode), "green")
+    NotionAuthState := params.Get("state") 
+    if NotionAuthcode == "" {
+        utils.LogMessage("No Notion Auth Code in Callback", "red")
+    }
+
+    utils.LogMessage(fmt.Sprintf("Notion Auth Code: %s, Notion Auth State: %s", NotionAuthcode, NotionAuthState), "green")
     
     clientID := os.Getenv("NOTION_CLIENT_ID")
     clientSecret := os.Getenv("NOTION_CLIENT_SECRET")
@@ -243,7 +259,7 @@ func OauthNotionCallback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-    req.Header.Set("Authorization", "Basic "+encodedCredentials)
+    req.Header.Set("Authorization", "Basic " + encodedCredentials)
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Notion-Version", "2022-06-28")
 
