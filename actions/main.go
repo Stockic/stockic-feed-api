@@ -35,5 +35,7 @@ func setupRoutes() {
     http.HandleFunc(config.VersionPrefix + "/bookmarks-add", middleware.RequestMiddleware(handlers.AddBookmarksHandlers))
     http.HandleFunc(config.VersionPrefix + "/bookmarks-remove", middleware.RequestMiddleware(handlers.RemoveBookmarks))
     http.HandleFunc(config.VersionPrefix + "/bookmarks-list", middleware.RequestMiddleware(handlers.ListBookmarks))
+    http.HandleFunc(config.VersionPrefix + "/notion/oauth/link", middleware.RequestMiddleware(handlers.OauthNotionURL))
+    http.HandleFunc(config.VersionPrefix + "/notion/oauth/callback", handlers.OauthNotionCallback)
     http.HandleFunc("/", handlers.FallbackHandler)
 }

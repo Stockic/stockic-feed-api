@@ -1,20 +1,16 @@
 package handlers
 
 import (
-	// "context"
 	"encoding/json"
 	"fmt"
-	// "fmt"
 	"net/http"
-	// "strconv"
-	// "strings"
+	"os"
+    "encoding/base64"
+    "bytes"
 
 	"actions/config"
 	"actions/models"
 	"actions/utils"
-
-	// "actions/services"
-	// "actions/utils"
 
 	"cloud.google.com/go/firestore"
 )
@@ -77,30 +73,25 @@ func Ping(w http.ResponseWriter, r *http.Request) {
 }
 
 func RemoveBookmarks(w http.ResponseWriter, r *http.Request) {
-	// Only allow DELETE requests
 	if r.Method != http.MethodDelete {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
-	// Get user ID from header
 	userID := r.Header.Get("X-API-Key")
 	if userID == "" {
 		http.Error(w, "Missing X-API-Key header", http.StatusBadRequest)
 		return
 	}
 
-	// Decode request body
 	var req models.BookmarkRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
 		return
 	}
 
-	// Reference to user document
 	userRef := config.FirebaseClient.Collection("users").Doc(userID)
 
-	// Remove newsID from bookmarks array
 	_, err := userRef.Update(config.FirebaseCtx, []firestore.Update{
 		{
 			Path:  "bookmarks",
@@ -113,7 +104,6 @@ func RemoveBookmarks(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Send success response
 	w.WriteHeader(http.StatusOK)
 	if err = json.NewEncoder(w).Encode(map[string]string{
 		"message": "Bookmark deleted successfully",
@@ -125,7 +115,7 @@ func RemoveBookmarks(w http.ResponseWriter, r *http.Request) {
 
 func ListBookmarks(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
-		sendResponse(w, models.Response{
+		sendResponse(w, models.BookmarkResponse{
 			Success: false,
 			Message: "Method not allowed",
 		}, http.StatusMethodNotAllowed)
@@ -134,7 +124,7 @@ func ListBookmarks(w http.ResponseWriter, r *http.Request) {
 
 	apiKey := r.Header.Get("X-API-Key")
 	if apiKey == "" {
-		sendResponse(w, models.Response{
+		sendResponse(w, models.BookmarkResponse{
 			Success: false,
 			Message: "Missing API key",
 		}, http.StatusUnauthorized)
@@ -145,7 +135,7 @@ func ListBookmarks(w http.ResponseWriter, r *http.Request) {
 	doc, err := docRef.Get(config.FirebaseCtx)
 	if err != nil {
 		utils.LogMessage("Failed to get user document", "red", err)
-		sendResponse(w, models.Response{
+		sendResponse(w, models.BookmarkResponse{
 			Success: false,
 			Message: "User not found",
 		}, http.StatusNotFound)
@@ -160,7 +150,7 @@ func ListBookmarks(w http.ResponseWriter, r *http.Request) {
 		bookmarksInterface, ok := bookmarksData.([]interface{})
 		if !ok {
 			utils.LogMessage("Failed to convert bookmarks data: invalid format", "red")
-			sendResponse(w, models.Response{
+			sendResponse(w, models.BookmarkResponse{
 				Success: false,
 				Message: "Internal server error",
 			}, http.StatusInternalServerError)
@@ -174,7 +164,7 @@ func ListBookmarks(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	sendResponse(w, models.Response{
+	sendResponse(w, models.BookmarkResponse{
 		Success:   true,
 		Message:   "Bookmarks retrieved successfully",
 		Bookmarks: bookmarks,
@@ -186,8 +176,91 @@ func FallbackHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Fallback Handler")
 }
 
-func sendResponse(w http.ResponseWriter, response models.Response, statusCode int) {
+func sendResponse(w http.ResponseWriter, response models.BookmarkResponse, statusCode int) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
 	json.NewEncoder(w).Encode(response)
+}
+
+func OauthNotionURL(w http.ResponseWriter, r *http.Request) {
+    w.Header().Set("Content-Type", "application/json")
+    var jsonResponse models.OauthNotionResponse
+    if jsonResponse.OauthURL = os.Getenv("NOTION_OAUTH_URL"); jsonResponse.OauthURL != "" {
+        jsonResponse.Success = true
+        w.WriteHeader(http.StatusOK)
+        if err := json.NewEncoder(w).Encode(jsonResponse); err != nil {
+            utils.LogMessage("Faild to send Notion Oauth URL : URL Found but Not Delivered", "red", err) 
+            w.WriteHeader(http.StatusNotFound)
+            fmt.Fprintln(w, "No Notion Oauth URL set in backend")
+        }
+    } else {
+        jsonResponse.Success = false 
+        jsonResponse.OauthURL = "URL not found"
+        utils.LogMessage("No Notion Oauth URL Found", "red")
+        w.WriteHeader(http.StatusNotFound)
+        if err := json.NewEncoder(w).Encode(jsonResponse); err != nil {
+            utils.LogMessage("No Notion Oauth URL Found and Error sending response about failure", "red", err)
+        }
+    }
+}
+
+func OauthNotionCallback(w http.ResponseWriter, r *http.Request) {
+    utils.LogMessage("Recieved callback", "green")
+    w.Header().Set("Content-Type", "application/json")
+    params := r.URL.Query()
+
+	NotionAuthcode := params.Get("code") 
+    if NotionAuthcode == "" {
+        utils.LogMessage("No Notion Auth Code in Callback", "red")
+    }
+
+    utils.LogMessage(fmt.Sprintf("Notion Auth Code: %s", NotionAuthcode), "green")
+    
+    clientID := os.Getenv("NOTION_CLIENT_ID")
+    clientSecret := os.Getenv("NOTION_CLIENT_SECRET")
+    RedirectURI := os.Getenv("NOTION_REDIRECT_URI")
+
+    credentials := clientID + ":" + clientSecret
+
+    encodedCredentials := base64.StdEncoding.EncodeToString([]byte(credentials))
+    
+	payload := map[string]string{
+		"grant_type":    "authorization_code",
+		"code":          NotionAuthcode,
+		"redirect_uri":  RedirectURI,
+	}
+
+    jsonData, err := json.Marshal(payload)
+	if err != nil {
+		fmt.Println("Error encoding JSON:", err)
+		return
+	}
+
+    url := "https://api.notion.com/v1/oauth/token"
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	if err != nil {
+		fmt.Println("Error creating request:", err)
+		return
+	}
+
+    req.Header.Set("Authorization", "Basic "+encodedCredentials)
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Notion-Version", "2022-06-28")
+
+    client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error making request:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+    fmt.Println("Response Status:", resp.Status)
+
+	var result map[string]interface{}
+	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		fmt.Println("Error decoding response:", err)
+		return
+	}
+	fmt.Println("Response Body:", result)
 }

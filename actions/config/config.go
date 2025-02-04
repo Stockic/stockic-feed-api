@@ -27,7 +27,7 @@ var (
 
 const (
     APIKeyCacheExpiration = 24 * time.Hour 
-    VersionPrefix = "/api/actions/v2"
+    VersionPrefix = "/api/v2/actions"
     Logfile = "actions.log"
     FirebaseConfigFile = "./secrets/stockic-b6c89-firebase-adminsdk-wr64l-a8e3bdf5e7.json"
 )

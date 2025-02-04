@@ -3,3 +3,123 @@
 [FEED-API-LOG] [2025-02-02 20:35:07] Started Log to MinIO Push Service ERROR: <nil>
 [FEED-API-LOG] [2025-02-02 20:35:27] MinIO Push App Log Procedure started ERROR: <nil>
 [FEED-API-LOG] [2025-02-02 20:35:27] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:03:49] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:03:49] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:03:49] Error checking bucket existence: actions-app-logs ERROR: Get "http://localhost:9000/actions-app-logs/?location=": dial tcp [::1]:9000: connect: connection refused
+[FEED-API-LOG] [2025-02-04 12:03:49] Bucket was not found, creating... actions-app-logs ERROR: <nil>
+Failed to create bucket: Put "http://localhost:9000/actions-app-logs/": dial tcp [::1]:9000: connect: connection refused
+[FEED-API-LOG] [2025-02-04 12:04:27] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:04:27] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:04:27] Bucket was not found, creating... actions-app-logs ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:04:27] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:04:47] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:04:47] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:05:07] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:05:07] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:05:27] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:05:27] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:05:47] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:05:47] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:06:07] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:06:07] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:06:27] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:06:27] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:06:37] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:06:39] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:06:39] No Notion Oauth URL Found ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:06:39] Request to /api/actions/v2/notion/oauth/link took 1.123760458s ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:06:44] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:06:44] No Notion Oauth URL Found ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:06:44] Request to /api/actions/v2/notion/oauth/link took 1.63225ms ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:06:47] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:06:47] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:10:50] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:10:50] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:10:50] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:10:52] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:10:52] No Notion Oauth URL Found ERROR: <nil>
+http: superfluous response.WriteHeader call from actions/handlers.OauthNotion (handlers.go:204)
+[FEED-API-LOG] [2025-02-04 12:10:52] Request to /api/actions/v2/notion/oauth/link took 924.667µs ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:11:32] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:11:32] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:11:32] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:11:34] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:11:34] Request to /api/actions/v2/notion/oauth/link took 376.333µs ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:11:36] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:11:36] Request to /api/actions/v2/notion/oauth/link took 337.042µs ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:11:41] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:11:41] Request to /api/actions/v2/notion/oauth/link took 508.125µs ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:11:52] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:11:52] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:12:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:12:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:12:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:12:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:12:52] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:12:52] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:13:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:13:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:13:26] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:13:26] Request to /api/actions/v2/notion/oauth/link took 1.028958ms ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:13:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:13:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:13:52] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:13:52] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:14:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:14:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:14:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:14:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:14:52] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:14:52] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:15:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:15:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:15:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:15:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:15:52] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:15:52] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:22:11] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:22:11] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:22:11] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:22:25] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:22:25] Request to /api/v2/actions/notion/oauth/link took 3.349209ms ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:22:31] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:22:31] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:22:51] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:22:51] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:23:11] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:23:11] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:23:31] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:23:31] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:23:51] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:23:51] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:23:56] Recieved callback ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:24:00] Recieved callback ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:25:21] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:25:21] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:25:21] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:25:24] Recieved callback ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:25:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:25:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:26:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:26:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:26:20] Recieved callback ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:26:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 12:26:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:01:02] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:01:02] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:01:02] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:01:06] Recieved callback ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:01:06] Notion Auth Code: test ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:02:31] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:02:31] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:02:31] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:02:51] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:02:51] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:03:11] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:03:11] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:03:18] Recieved callback ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:03:18] Notion Auth Code: 03361a51-afba-490a-93b4-cc9e566a6734 ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:03:31] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:03:31] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:03:51] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-04 13:03:51] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>

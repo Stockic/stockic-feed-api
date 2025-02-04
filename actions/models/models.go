@@ -13,8 +13,13 @@ type BookmarkRequest struct {
     NewsID string `json:"NewsId"`
 }
 
-type Response struct {
+type BookmarkResponse struct {
     Success   bool     `json:"success"`
     Message   string   `json:"message"`
     Bookmarks []string `json:"bookmarks,omitempty"`
+}
+
+type OauthNotionResponse struct {
+    Success   bool  `json:"success"`
+    OauthURL  string  `json:"OauthURL"`
 }
