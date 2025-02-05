@@ -23,7 +23,6 @@ import (
 )
 
 func Initialize() {
-    // Setup Logging files and configurations
     logFile, err := os.OpenFile(config.Logfile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
     if err != nil {
         log.Fatalf("Failed to open log file: %v", err)
@@ -32,30 +31,25 @@ func Initialize() {
     log.SetOutput(logFile)
     log.SetFlags(0)
 
-    // Load Environment Variables with .env file
     err = godotenv.Load()
     if err != nil {
         log.Printf("Warning: Error loading .env file: %v", err)
     }
 
-    // Initialize contexts
     config.RedisAPICacheCtx, config.RedisAPICacheCtxCancel = context.WithCancel(context.Background())
+    config.RedisSessionCacheCtx, config.RedisSessionCacheCtxCancel = context.WithCancel(context.Background())
     config.FirebaseCtx = context.Background()
 
-    // Initialize Redis clients
     initRedisClients()
 
-    // Initialize Firebase
     initFirebase()
     
-    // Initialize MinIO
-    InitMinIO()
+    initMinIO()
 }
 
 func initRedisClients() {
     var err error
     
-    // User API Caching Redis Server
     config.RedisAPICache, err = RedisInit(
         config.RedisAPICacheCtx,
         "USERAPI_CACHING_ADDRESS",
@@ -66,8 +60,14 @@ func initRedisClients() {
         utils.LogMessage("API Cache Server Setup Failed!", "red", err)
     }
 
+    config.RedisSessionCache, err = RedisInit(
+        config.RedisSessionCacheCtx,
+        "NOTION_SESSION_REDIS_ADDRESS",
+        "NOTION_SESSION_REDIS_DB",
+        "NOTION_SESSION_REDIS_PASSWORD",
+    )
     if err != nil {
-        utils.LogMessage("Log Redis Server Setup Failed", "red", err)
+        utils.LogMessage("Session Redis Server Setup Failed!", "red", err)
     }
 }
 
@@ -84,7 +84,7 @@ func initFirebase() {
     }()
 }
 
-func InitMinIO() {
+func initMinIO() {
     stores := []string{"actions-app-logs"}
 
     config.MinIOClient = MinIOInit("MINIO_ENDPOINT", "MINIO_ACCESSKEY", "MINIO_SECRETKEY", stores)

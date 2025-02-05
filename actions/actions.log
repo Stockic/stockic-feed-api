@@ -1315,3 +1315,1122 @@ http: superfluous response.WriteHeader call from actions/handlers.OauthNotion (h
 [FEED-API-LOG] [2025-02-04 23:10:36] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
 [FEED-API-LOG] [2025-02-04 23:10:56] MinIO Push App Log Procedure started ERROR: <nil>
 [FEED-API-LOG] [2025-02-04 23:10:56] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:35:21] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:35:21] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:35:21] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:35:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:35:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:36:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:36:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:36:10] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:36:11] User Doesn't Exist in FireStore ERROR: rpc error: code = NotFound desc = "projects/stockic-b6c89/databases/(default)/documents/users/raw-tesing" not found
+[FEED-API-LOG] [2025-02-05 11:36:11] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:36:11] User with no registeration tried to access ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:36:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:36:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:36:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:36:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:36:58] Redis ping response: PONG ERROR: <nil>
+http: panic serving 127.0.0.1:40080: invalid argument to Intn
+goroutine 54 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0xc6aae0?, 0xf5a710?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+math/rand.(*Rand).Intn(0xc00019e240?, 0xc000027880?)
+	/usr/lib/go/src/math/rand/rand.go:180 +0x4c
+math/rand.Intn(0xfffffffffffffc7d)
+	/usr/lib/go/src/math/rand/rand.go:453 +0x25
+actions/handlers.OauthNotionURL({0xf67f90, 0xc00021aee0}, 0x4e2f8f?)
+	/home/maverick/Projects/stockic-feed-api/actions/handlers/handlers.go:217 +0x271
+net/http.HandlerFunc.ServeHTTP(0xc0002e24e0?, {0xf67f90?, 0xc00021aee0?}, 0x46bb3d?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.RequestMiddleware.func5({0xf67f90, 0xc00021aee0}, 0xc00035c000)
+	/home/maverick/Projects/stockic-feed-api/actions/middleware/middleware.go:30 +0xaa
+net/http.HandlerFunc.ServeHTTP(0x15c1740?, {0xf67f90?, 0xc00021aee0?}, 0x702136?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a839?, {0xf67f90, 0xc00021aee0}, 0xc00035c000)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001941b0?}, {0xf67f90?, 0xc00021aee0?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000c0120, {0xf69b90, 0xc0000b31a0})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[FEED-API-LOG] [2025-02-05 11:37:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:37:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:37:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:37:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:37:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:37:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:37:44] Redis ping response: PONG ERROR: <nil>
+http: panic serving 127.0.0.1:42532: invalid argument to Intn
+goroutine 58 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0xc6aae0?, 0xf5a710?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+math/rand.(*Rand).Intn(0xc00019e1c0?, 0xc000165880?)
+	/usr/lib/go/src/math/rand/rand.go:180 +0x4c
+math/rand.Intn(0xfffffffffffffc7d)
+	/usr/lib/go/src/math/rand/rand.go:453 +0x25
+actions/handlers.OauthNotionURL({0xf67f90, 0xc0001841c0}, 0x4e2f8f?)
+	/home/maverick/Projects/stockic-feed-api/actions/handlers/handlers.go:217 +0x271
+net/http.HandlerFunc.ServeHTTP(0xc000182350?, {0xf67f90?, 0xc0001841c0?}, 0x46bb3d?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.RequestMiddleware.func5({0xf67f90, 0xc0001841c0}, 0xc00021c3c0)
+	/home/maverick/Projects/stockic-feed-api/actions/middleware/middleware.go:30 +0xaa
+net/http.HandlerFunc.ServeHTTP(0x15c1740?, {0xf67f90?, 0xc0001841c0?}, 0x702136?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a839?, {0xf67f90, 0xc0001841c0}, 0xc00021c3c0)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000194210?}, {0xf67f90?, 0xc0001841c0?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0001aa7e0, {0xf69b90, 0xc0000b31a0})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[FEED-API-LOG] [2025-02-05 11:38:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:38:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:38:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:38:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:38:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:38:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:38:52] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:38:52] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:38:52] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:38:54] Redis ping response: PONG ERROR: <nil>
+http: panic serving 127.0.0.1:44724: invalid argument to Intn
+goroutine 36 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0xc6aae0?, 0xf5a710?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+math/rand.(*Rand).Intn(0xc000129910?, 0x77dd7e?)
+	/usr/lib/go/src/math/rand/rand.go:180 +0x4c
+math/rand.Intn(0xfffffffffffffc7d)
+	/usr/lib/go/src/math/rand/rand.go:453 +0x25
+actions/handlers.OauthNotionURL({0xf67f90, 0xc000158000}, 0x4e2f8f?)
+	/home/maverick/Projects/stockic-feed-api/actions/handlers/handlers.go:198 +0x39
+net/http.HandlerFunc.ServeHTTP(0xc00011c090?, {0xf67f90?, 0xc000158000?}, 0x46bb3d?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.RequestMiddleware.func5({0xf67f90, 0xc000158000}, 0xc000146140)
+	/home/maverick/Projects/stockic-feed-api/actions/middleware/middleware.go:30 +0xaa
+net/http.HandlerFunc.ServeHTTP(0x15c1740?, {0xf67f90?, 0xc000158000?}, 0x702136?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a839?, {0xf67f90, 0xc000158000}, 0xc000146140)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00012e2a0?}, {0xf67f90?, 0xc000158000?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000144120, {0xf69b90, 0xc0003947e0})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[FEED-API-LOG] [2025-02-05 11:39:03] Redis ping response: PONG ERROR: <nil>
+http: panic serving 127.0.0.1:47898: invalid argument to Intn
+goroutine 43 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0xc6aae0?, 0xf5a710?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+math/rand.(*Rand).Intn(0xc000125910?, 0x77dd7e?)
+	/usr/lib/go/src/math/rand/rand.go:180 +0x4c
+math/rand.Intn(0xfffffffffffffc7d)
+	/usr/lib/go/src/math/rand/rand.go:453 +0x25
+actions/handlers.OauthNotionURL({0xf67f90, 0xc0003cc1c0}, 0x4e2f8f?)
+	/home/maverick/Projects/stockic-feed-api/actions/handlers/handlers.go:198 +0x39
+net/http.HandlerFunc.ServeHTTP(0xc0002bf3b0?, {0xf67f90?, 0xc0003cc1c0?}, 0x46bb3d?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.RequestMiddleware.func5({0xf67f90, 0xc0003cc1c0}, 0xc0002a6f00)
+	/home/maverick/Projects/stockic-feed-api/actions/middleware/middleware.go:30 +0xaa
+net/http.HandlerFunc.ServeHTTP(0x15c1740?, {0xf67f90?, 0xc0003cc1c0?}, 0x702136?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a839?, {0xf67f90, 0xc0003cc1c0}, 0xc0002a6f00)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0003d2240?}, {0xf67f90?, 0xc0003cc1c0?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00034e000, {0xf69b90, 0xc0003947e0})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[FEED-API-LOG] [2025-02-05 11:39:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:39:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:39:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:39:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:39:42] Redis ping response: PONG ERROR: <nil>
+http: panic serving 127.0.0.1:38602: invalid argument to Intn
+goroutine 33 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0xc6aae0?, 0xf5a710?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+math/rand.(*Rand).Intn(0xc000159910?, 0x77dd7e?)
+	/usr/lib/go/src/math/rand/rand.go:180 +0x4c
+math/rand.Intn(0xfffffffffffffc7d)
+	/usr/lib/go/src/math/rand/rand.go:453 +0x25
+actions/handlers.OauthNotionURL({0xf67f90, 0xc00019cd20}, 0x4e2f8f?)
+	/home/maverick/Projects/stockic-feed-api/actions/handlers/handlers.go:198 +0x39
+net/http.HandlerFunc.ServeHTTP(0xc0002be120?, {0xf67f90?, 0xc00019cd20?}, 0x46bb3d?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.RequestMiddleware.func5({0xf67f90, 0xc00019cd20}, 0xc0002a6000)
+	/home/maverick/Projects/stockic-feed-api/actions/middleware/middleware.go:30 +0xaa
+net/http.HandlerFunc.ServeHTTP(0x15c1740?, {0xf67f90?, 0xc00019cd20?}, 0x702136?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a839?, {0xf67f90, 0xc00019cd20}, 0xc0002a6000)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00058a150?}, {0xf67f90?, 0xc00019cd20?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0002e2240, {0xf69b90, 0xc0003947e0})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[FEED-API-LOG] [2025-02-05 11:39:52] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:39:52] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:40:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:40:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:40:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:40:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:40:52] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:40:52] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:41:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:41:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:41:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:41:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:41:43] Redis ping response: PONG ERROR: <nil>
+http: panic serving 127.0.0.1:32884: invalid argument to Intn
+goroutine 49 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0xc6aae0?, 0xf5a710?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+math/rand.(*Rand).Intn(0xc000129910?, 0x77dd7e?)
+	/usr/lib/go/src/math/rand/rand.go:180 +0x4c
+math/rand.Intn(0xfffffffffffffc7d)
+	/usr/lib/go/src/math/rand/rand.go:453 +0x25
+actions/handlers.OauthNotionURL({0xf67f90, 0xc0003cc1c0}, 0x4e2f8f?)
+	/home/maverick/Projects/stockic-feed-api/actions/handlers/handlers.go:198 +0x39
+net/http.HandlerFunc.ServeHTTP(0xc0002be290?, {0xf67f90?, 0xc0003cc1c0?}, 0x46bb3d?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.RequestMiddleware.func5({0xf67f90, 0xc0003cc1c0}, 0xc0002a6000)
+	/home/maverick/Projects/stockic-feed-api/actions/middleware/middleware.go:30 +0xaa
+net/http.HandlerFunc.ServeHTTP(0x15c1740?, {0xf67f90?, 0xc0003cc1c0?}, 0x702136?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a839?, {0xf67f90, 0xc0003cc1c0}, 0xc0002a6000)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00058a0c0?}, {0xf67f90?, 0xc0003cc1c0?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0002e2090, {0xf69b90, 0xc0003947e0})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[FEED-API-LOG] [2025-02-05 11:41:52] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:41:52] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:42:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:42:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:42:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:42:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 11:42:37] Redis ping response: PONG ERROR: <nil>
+http: panic serving 127.0.0.1:53612: invalid argument to Intn
+goroutine 86 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0xc6aae0?, 0xf5a710?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+math/rand.(*Rand).Intn(0xc000547910?, 0x77dd7e?)
+	/usr/lib/go/src/math/rand/rand.go:180 +0x4c
+math/rand.Intn(0xfffffffffffffc7d)
+	/usr/lib/go/src/math/rand/rand.go:453 +0x25
+actions/handlers.OauthNotionURL({0xf67f90, 0xc0002a2000}, 0x4e2f8f?)
+	/home/maverick/Projects/stockic-feed-api/actions/handlers/handlers.go:198 +0x39
+net/http.HandlerFunc.ServeHTTP(0xc00011c050?, {0xf67f90?, 0xc0002a2000?}, 0x46bb3d?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.RequestMiddleware.func5({0xf67f90, 0xc0002a2000}, 0xc00019edc0)
+	/home/maverick/Projects/stockic-feed-api/actions/middleware/middleware.go:30 +0xaa
+net/http.HandlerFunc.ServeHTTP(0x15c1740?, {0xf67f90?, 0xc0002a2000?}, 0x702136?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a839?, {0xf67f90, 0xc0002a2000}, 0xc00019edc0)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0003d26f0?}, {0xf67f90?, 0xc0002a2000?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0001d0090, {0xf69b90, 0xc0003947e0})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[FEED-API-LOG] [2025-02-05 11:42:38] Redis ping response: PONG ERROR: <nil>
+http: panic serving 127.0.0.1:53624: invalid argument to Intn
+goroutine 87 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0xc6aae0?, 0xf5a710?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+math/rand.(*Rand).Intn(0xc000159910?, 0x77dd7e?)
+	/usr/lib/go/src/math/rand/rand.go:180 +0x4c
+math/rand.Intn(0xfffffffffffffc7d)
+	/usr/lib/go/src/math/rand/rand.go:453 +0x25
+actions/handlers.OauthNotionURL({0xf67f90, 0xc00019cd20}, 0x4e2f8f?)
+	/home/maverick/Projects/stockic-feed-api/actions/handlers/handlers.go:198 +0x39
+net/http.HandlerFunc.ServeHTTP(0xc00060e050?, {0xf67f90?, 0xc00019cd20?}, 0x46bb3d?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.RequestMiddleware.func5({0xf67f90, 0xc00019cd20}, 0xc00019e3c0)
+	/home/maverick/Projects/stockic-feed-api/actions/middleware/middleware.go:30 +0xaa
+net/http.HandlerFunc.ServeHTTP(0x15c1740?, {0xf67f90?, 0xc00019cd20?}, 0x702136?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a839?, {0xf67f90, 0xc00019cd20}, 0xc00019e3c0)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0003d2240?}, {0xf67f90?, 0xc00019cd20?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0001d0120, {0xf69b90, 0xc0003947e0})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[FEED-API-LOG] [2025-02-05 12:10:44] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:10:44] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:10:44] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:10:45] Redis ping response: PONG ERROR: <nil>
+http: panic serving 127.0.0.1:48150: invalid argument to Intn
+goroutine 11 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0xc6aae0?, 0xf5a710?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+math/rand.(*Rand).Intn(0xc0000e7910?, 0x77dd7e?)
+	/usr/lib/go/src/math/rand/rand.go:180 +0x4c
+math/rand.Intn(0xfffffffffffffc7d)
+	/usr/lib/go/src/math/rand/rand.go:453 +0x25
+actions/handlers.OauthNotionURL({0xf67f90, 0xc0002d7340}, 0x4e2f8f?)
+	/home/maverick/Projects/stockic-feed-api/actions/handlers/handlers.go:198 +0x39
+net/http.HandlerFunc.ServeHTTP(0xc00070df10?, {0xf67f90?, 0xc0002d7340?}, 0x46bb3d?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.RequestMiddleware.func5({0xf67f90, 0xc0002d7340}, 0xc000217400)
+	/home/maverick/Projects/stockic-feed-api/actions/middleware/middleware.go:30 +0xaa
+net/http.HandlerFunc.ServeHTTP(0x15c1740?, {0xf67f90?, 0xc0002d7340?}, 0x702136?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a839?, {0xf67f90, 0xc0002d7340}, 0xc000217400)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00035f3b0?}, {0xf67f90?, 0xc0002d7340?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000320000, {0xf69b90, 0xc000306f60})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[FEED-API-LOG] [2025-02-05 12:16:08] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:16:08] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:16:08] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:16:11] Redis ping response: PONG ERROR: <nil>
+http: panic serving 127.0.0.1:41016: invalid argument to Intn
+goroutine 41 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0xc6aae0?, 0xf5a710?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+math/rand.(*Rand).Intn(0xc000385910?, 0x77dd7e?)
+	/usr/lib/go/src/math/rand/rand.go:180 +0x4c
+math/rand.Intn(0xfffffffffffffc7d)
+	/usr/lib/go/src/math/rand/rand.go:453 +0x25
+actions/handlers.OauthNotionURL({0xf67f90, 0xc0003a8000}, 0x4e2f8f?)
+	/home/maverick/Projects/stockic-feed-api/actions/handlers/handlers.go:198 +0x39
+net/http.HandlerFunc.ServeHTTP(0xc00031a0f0?, {0xf67f90?, 0xc0003a8000?}, 0x46bb3d?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.RequestMiddleware.func5({0xf67f90, 0xc0003a8000}, 0xc00037e280)
+	/home/maverick/Projects/stockic-feed-api/actions/middleware/middleware.go:30 +0xaa
+net/http.HandlerFunc.ServeHTTP(0x15c1740?, {0xf67f90?, 0xc0003a8000?}, 0x702136?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a839?, {0xf67f90, 0xc0003a8000}, 0xc00037e280)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00030e270?}, {0xf67f90?, 0xc0003a8000?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000338000, {0xf69b90, 0xc0004309c0})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[FEED-API-LOG] [2025-02-05 12:16:26] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:16:26] Request to /api/v2/actions/ping took 438.763µs ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:16:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:16:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:16:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:16:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:16:52] Redis ping response: PONG ERROR: <nil>
+http: panic serving 127.0.0.1:39868: invalid argument to Intn
+goroutine 71 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go/src/net/http/server.go:1947 +0xbe
+panic({0xc6aae0?, 0xf5a710?})
+	/usr/lib/go/src/runtime/panic.go:785 +0x132
+math/rand.(*Rand).Intn(0xc000387910?, 0x77dd7e?)
+	/usr/lib/go/src/math/rand/rand.go:180 +0x4c
+math/rand.Intn(0xfffffffffffffc7d)
+	/usr/lib/go/src/math/rand/rand.go:453 +0x25
+actions/handlers.OauthNotionURL({0xf67f90, 0xc000528000}, 0x4e2f8f?)
+	/home/maverick/Projects/stockic-feed-api/actions/handlers/handlers.go:198 +0x39
+net/http.HandlerFunc.ServeHTTP(0xc00031a0f0?, {0xf67f90?, 0xc000528000?}, 0x46bb3d?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+main.setupRoutes.RequestMiddleware.func5({0xf67f90, 0xc000528000}, 0xc0000da140)
+	/home/maverick/Projects/stockic-feed-api/actions/middleware/middleware.go:30 +0xaa
+net/http.HandlerFunc.ServeHTTP(0x15c1740?, {0xf67f90?, 0xc000528000?}, 0x702136?)
+	/usr/lib/go/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46a839?, {0xf67f90, 0xc000528000}, 0xc0000da140)
+	/usr/lib/go/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00030e270?}, {0xf67f90?, 0xc000528000?}, 0x6?)
+	/usr/lib/go/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000338000, {0xf69b90, 0xc0004309c0})
+	/usr/lib/go/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go/src/net/http/server.go:3360 +0x485
+[FEED-API-LOG] [2025-02-05 12:17:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:17:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:17:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:17:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:17:41] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:17:41] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:17:41] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:17:44] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:17:44] Request to /api/v2/actions/notion/oauth/link took 511.37µs ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:18:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:18:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:18:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:18:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:18:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:18:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:19:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:19:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:19:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:19:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:19:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:19:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:20:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:20:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:20:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:20:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:20:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:20:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:21:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:21:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:21:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:21:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:21:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:21:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:22:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:22:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:22:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:22:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:22:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:22:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:23:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:23:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:23:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:23:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:23:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:23:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:24:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:24:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:24:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:24:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:24:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:24:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:25:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:25:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:25:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:25:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:25:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:25:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:26:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:26:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:26:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:26:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:26:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:26:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:27:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:27:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:27:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:27:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:27:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:27:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:28:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:28:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:28:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:28:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:28:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:28:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:29:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:29:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:29:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:29:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:29:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:29:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:30:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:30:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:30:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:30:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:30:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:30:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:31:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:31:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:31:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:31:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:31:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:31:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:32:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:32:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:32:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:32:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:32:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:32:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:33:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:33:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:33:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:33:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:33:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:33:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:34:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:34:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:34:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:34:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:34:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:34:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:35:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:35:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:35:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:35:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:35:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:35:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:36:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:36:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:36:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:36:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:36:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:36:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:37:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:37:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:37:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:37:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:37:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:37:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:38:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:38:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:38:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:38:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:38:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:38:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:39:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:39:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:39:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:39:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:39:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:39:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:40:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:40:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:40:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:40:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:40:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:40:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:41:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:41:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:41:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:41:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:41:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:41:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:42:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:42:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:42:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:42:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:42:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:42:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:43:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:43:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:43:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:43:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:43:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:43:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:44:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:44:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:44:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:44:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:44:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:44:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:45:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:45:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:45:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:45:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:45:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:45:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:46:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:46:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:46:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:46:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:46:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:46:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:47:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:47:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:47:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:47:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:47:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:47:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:48:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:48:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:48:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:48:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:48:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:48:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:49:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:49:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:49:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:49:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:49:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:49:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:50:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:50:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:50:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:50:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:50:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:50:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:51:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:51:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:51:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:51:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:51:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:51:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:52:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:52:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:52:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:52:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:52:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:52:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:53:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:53:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:53:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:53:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:53:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:53:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:54:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:54:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:54:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:54:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:54:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:54:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:55:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:55:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:55:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:55:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:55:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:55:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:56:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:56:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:56:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:56:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:56:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:56:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:57:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:57:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:57:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:57:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:57:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:57:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:58:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:58:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:58:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:58:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:58:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:58:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:59:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:59:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:59:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:59:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:59:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 12:59:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 13:00:01] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 13:00:01] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 13:00:21] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 13:00:21] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 13:00:41] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 13:00:41] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 13:05:14] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 13:05:14] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 13:05:25] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 13:05:25] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 15:41:13] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 15:41:13] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 15:43:51] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 15:43:51] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 15:45:05] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 15:45:05] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 15:47:42] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 15:47:42] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 15:48:46] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 15:48:46] Warning: Invalid REDIS_DB value, using default: 0 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 15:49:19] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 15:51:37] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 15:52:13] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 15:52:47] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 15:53:07] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:05:16] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:05:16] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:05:16] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:05:16] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:05:36] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:05:36] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:05:56] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:05:56] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:06:09] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:06:09] Request to /api/v2/actions/notion/oauth/auth-session took 711.454µs ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:06:42] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:06:42] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:06:42] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:06:42] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:07:17] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:07:17] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:07:17] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:07:17] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:07:17] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:07:17] Request to /api/v2/actions/notion/oauth/auth-session took 563.437µs ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:07:32] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:07:32] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:07:32] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:07:32] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:07:34] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:07:34] Request to /api/v2/actions/notion/oauth/auth-session took 582.031µs ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:07:52] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:07:52] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:08:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:08:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:08:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:08:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:08:52] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:08:52] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:09:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:09:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:09:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:09:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:09:52] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:09:52] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:09:52] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:09:52] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:09:53] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:09:53] Request to /api/v2/actions/notion/oauth/auth-session took 629.551µs ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:10:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:10:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:10:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:10:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:10:52] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:10:52] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:11:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:11:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:11:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:11:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:11:52] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:11:52] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:12:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:12:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:12:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:12:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:12:52] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:12:52] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:13:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:13:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:13:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:13:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:13:34] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:13:34] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:13:34] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:13:34] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:13:36] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:13:36] Request to /api/v2/actions/notion/oauth/auth-session took 639.149µs ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:13:54] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:13:54] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:14:14] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:14:14] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:14:28] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:14:28] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:14:28] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:14:28] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:14:29] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:14:29] Request to /api/v2/actions/notion/oauth/auth-session took 580.439µs ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:14:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:14:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:15:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:15:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:15:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:15:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:15:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:15:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:16:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:16:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:16:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:16:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:16:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:16:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:17:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:17:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:17:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:17:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:17:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:17:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:18:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:18:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:18:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:18:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:18:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:18:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:19:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:19:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:19:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:19:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:19:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:19:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:20:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:20:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:20:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:20:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:20:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:20:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:21:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:21:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:21:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:21:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:21:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:21:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:22:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:22:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:22:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:22:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:22:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:22:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:23:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:23:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:23:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:23:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:23:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:23:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:24:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:24:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:24:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:24:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:24:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:24:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:25:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:25:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:25:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:25:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:25:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:25:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:26:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:26:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:26:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:26:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:26:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:26:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:27:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:27:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:27:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:27:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:27:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:27:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:28:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:28:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:28:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:28:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:28:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:28:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:29:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:29:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:29:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:29:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:29:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:29:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:30:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:30:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:30:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:30:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:30:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:30:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:31:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:31:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:31:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:31:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:31:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:31:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:32:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:32:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:32:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:32:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:32:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:32:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:33:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:33:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:33:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:33:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:33:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:33:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:34:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:34:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:34:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:34:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:34:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:34:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:35:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:35:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:35:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:35:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:35:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:35:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:36:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:36:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:36:15] Recieved callback ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:36:15] No Notion Auth Code in Callback ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:36:15] No Notion Auth Code in Callback ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:36:15] Notion Auth Code: , Notion Auth State:  ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:36:24] Recieved callback ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:36:24] Notion Auth Code: 03416ef3-fe78-4ca1-b124-ae55597e93ca, Notion Auth State:  ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:36:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:36:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:36:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:36:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:37:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:37:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:37:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:37:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:37:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:37:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:38:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:38:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:38:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:38:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:38:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:38:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:39:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:39:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:39:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:39:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:39:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:39:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:40:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:40:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:40:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:40:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:40:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:40:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:41:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:41:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:41:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:41:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:41:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:41:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:42:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:42:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:42:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:42:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:42:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:42:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:43:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:43:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:43:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:43:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:43:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:43:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:44:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:44:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:44:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:44:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:44:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:44:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:45:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:45:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:45:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:45:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:45:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:45:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:46:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:46:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:46:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:46:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:46:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:46:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:47:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:47:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:47:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:47:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:47:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:47:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:48:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:48:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:48:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:48:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:48:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:48:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:49:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:49:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:49:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:49:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:49:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:49:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:50:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:50:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:50:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:50:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:50:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:50:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:51:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:51:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:51:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:51:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:51:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:51:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:52:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:52:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:52:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:52:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:52:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:52:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:53:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:53:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:53:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:53:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:53:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:53:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:54:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:54:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:54:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:54:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:54:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:54:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:55:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:55:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:55:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:55:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:55:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:55:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:56:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:56:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:56:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:56:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:56:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:56:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:57:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:57:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:57:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:57:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:57:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:57:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:58:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:58:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:58:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:58:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:58:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:58:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:59:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:59:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:59:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:59:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:59:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 16:59:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:00:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:00:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:00:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:00:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:00:48] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:00:48] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:01:08] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:01:08] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:01:28] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:01:28] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:01:47] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:01:47] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:01:47] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:01:47] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:02:07] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:02:07] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:02:17] Recieved callback ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:02:17] Notion Auth Code: 032bce6f-140c-4e4b-8eb4-6023ba144068, Notion Auth State:  ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:02:22] Could not get key. Session might went expired ERROR: redis: nil
+[FEED-API-LOG] [2025-02-05 17:02:23] Failed to store data in Firestore ERROR: rpc error: code = InvalidArgument desc = Document name "projects/stockic-b6c89/databases/(default)/documents/users/" has invalid trailing "/".
+[FEED-API-LOG] [2025-02-05 17:02:27] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:02:27] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:02:47] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:02:47] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:03:07] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:03:07] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:03:27] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:03:27] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:03:47] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:03:47] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:04:07] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:04:07] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:04:27] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:04:27] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:04:47] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:04:47] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:05:07] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:05:07] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:05:27] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:05:27] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:05:47] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:05:47] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:06:07] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:06:07] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:06:27] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:06:27] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:06:47] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:06:47] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:06:52] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:06:52] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:06:52] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:06:52] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:06:54] Recieved callback ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:06:54] Notion Auth Code: 032bce6f-140c-4e4b-8eb4-6023ba144068, Notion Auth State:  ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:07:05] Could not get key. Session might went expired ERROR: redis: nil
+[FEED-API-LOG] [2025-02-05 17:07:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:07:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:07:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:07:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:07:46] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:07:46] Request to /api/v2/actions/notion/oauth/auth-session took 542.348µs ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:07:52] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:07:52] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:08:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:08:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:08:23] Recieved callback ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:08:23] Notion Auth Code: 037e036e-1a92-4710-acc4-98a936de849b, Notion Auth State:  ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:08:24] Could not get key. Session might went expired ERROR: redis: nil
+[FEED-API-LOG] [2025-02-05 17:08:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:08:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:08:44] Recieved callback ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:08:44] Notion Auth Code: 037e036e-1a92-4710-acc4-98a936de849b, Notion Auth State:  ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:08:45] Could not get key. Session might went expired ERROR: redis: nil
+[FEED-API-LOG] [2025-02-05 17:08:52] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:08:52] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:09:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:09:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:09:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:09:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:09:52] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:09:52] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:10:12] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:10:12] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:10:17] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:10:17] Request to /api/v2/actions/notion/oauth/auth-session took 735.61µs ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:10:32] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:10:32] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:10:47] Recieved callback ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:10:47] Notion Auth Code: 0306f59e-ee5b-4969-a47e-cf6cbae1788e, Notion Auth State:  ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:10:52] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:10:52] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:10:53] Could not get key. Session might went expired ERROR: redis: nil
+[FEED-API-LOG] [2025-02-05 17:11:03] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:11:03] Successfully initialized Redis: localhost:6379 ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:11:03] MinIO Init Started ... ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:11:03] Started Log to MinIO Push Service ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:11:07] Redis ping response: PONG ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:11:07] Request to /api/v2/actions/notion/oauth/auth-session took 592.141µs ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:11:23] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:11:23] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:11:43] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:11:43] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:12:03] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:12:03] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:12:13] Recieved callback ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:12:13] Notion Auth Code: 034411ca-38de-4937-8ca6-598c63ea88e1, Notion Auth State: gUaSIKhwwemo4OGFTz06uDMP4Ot15dNZ ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:12:23] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:12:23] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:12:43] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:12:43] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:13:03] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-05 17:13:03] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>

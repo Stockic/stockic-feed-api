@@ -23,7 +23,6 @@ import (
 )
 
 func Initialize() {
-    // Setup Logging files and configurations
     logFile, err := os.OpenFile(config.Logfile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
     if err != nil {
         log.Fatalf("Failed to open log file: %v", err)
@@ -32,32 +31,26 @@ func Initialize() {
     log.SetOutput(logFile)
     log.SetFlags(0)
 
-    // Load Environment Variables with .env file
     err = godotenv.Load()
     if err != nil {
         log.Printf("Warning: Error loading .env file: %v", err)
     }
 
-    // Initialize contexts
     config.RedisAPICacheCtx, config.RedisAPICacheCtxCancel = context.WithCancel(context.Background())
     config.RedisNewsCacheCtx, config.RedisNewsCacheCtxCancel = context.WithCancel(context.Background())
     config.RedisLogCtx, config.RedisLogCtxCancel = context.WithCancel(context.Background())
     config.FirebaseCtx = context.Background()
 
-    // Initialize Redis clients
     initRedisClients()
 
-    // Initialize Firebase
     initFirebase()
     
-    // Initialize MinIO
-    InitMinIO()
+    initMinIO()
 }
 
 func initRedisClients() {
     var err error
     
-    // User API Caching Redis Server
     config.RedisAPICache, err = RedisInit(
         config.RedisAPICacheCtx,
         "USERAPI_CACHING_ADDRESS",
@@ -68,7 +61,6 @@ func initRedisClients() {
         utils.LogMessage("API Cache Server Setup Failed!", "red", err)
     }
 
-    // Fresh News Caching Redis Server
     config.RedisNewsCache, err = RedisInit(
         config.RedisNewsCacheCtx,
         "NEWS_CACHING_ADDRESS",
@@ -79,7 +71,6 @@ func initRedisClients() {
         utils.LogMessage("News Cache Server Setup Failed", "red", err)
     }
 
-    // Log Redis Server
     config.RedisLog, err = RedisInit(
         config.RedisLogCtx,
         "LOGREDIS_ADDRESS",
@@ -104,7 +95,7 @@ func initFirebase() {
     }()
 }
 
-func InitMinIO() {
+func initMinIO() {
     stores := []string{"user-logs", "feed-api-app-logs"}
 
     config.MinIOClient = MinIOInit("MINIO_ENDPOINT", "MINIO_ACCESSKEY", "MINIO_SECRETKEY", stores)
@@ -204,14 +195,12 @@ func MinIOInit(MinIOEndpoint string, MinIOAccessKey string, MinIOSecretKey strin
 
 func UploadLogDataToMinIO(minioClient *minio.Client, BucketName, localFilePath string) error {
 
-    // Open the log file
     file, err := os.Open(localFilePath)
     if err != nil {
         return fmt.Errorf("error opening file: %w", err)
     }
     defer file.Close()
 
-    // Get file stats
     stat, err := file.Stat()
     if err != nil {
         return fmt.Errorf("error getting file stats: %w", err)
@@ -228,7 +217,6 @@ func UploadLogDataToMinIO(minioClient *minio.Client, BucketName, localFilePath s
         fileExt,
     )
 
-    // Upload the file
     _, err = minioClient.PutObject(
         config.MinIOCtx,
         BucketName,

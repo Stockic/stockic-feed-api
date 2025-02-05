@@ -1,11 +1,13 @@
 package utils
 
 import (
-    "fmt"
-    "log"
-    "net/http"
-    "time"
-    "encoding/json"
+	"crypto/rand"
+	"encoding/json"
+	"fmt"
+	"log"
+	"math/big"
+	"net/http"
+	"time"
 )
 
 func LogMessage(message, color string, errs ...error) {
@@ -41,4 +43,16 @@ func DeliverJsonError(httpHandler http.ResponseWriter, message string, statusCod
         LogMessage("jsonError: Failed to encode JSON response: %v" + err.Error(), "red")
         http.Error(httpHandler, `{"error": "internal server error"}`, http.StatusInternalServerError)
     }
+}
+
+func GenerateSessionKey(length int, charset string) (string, error) {
+	key := make([]byte, length)
+	for i := range key {
+		randomInt, err := rand.Int(rand.Reader, big.NewInt(int64(len(charset))))
+		if err != nil {
+			return "", err
+		}
+		key[i] = charset[randomInt.Int64()]
+	}
+	return string(key), nil
 }

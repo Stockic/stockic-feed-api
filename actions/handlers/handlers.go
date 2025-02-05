@@ -188,16 +188,41 @@ func sendResponse(w http.ResponseWriter, response models.BookmarkResponse, statu
 This endpoint creates a sign in session for the user to proceed with oauth. 
 We set a random number for the state which is the session id for login.
 The session id (state) is stored in redis in format "session id": "X-API-Key". 
-The session id has a timeout of 15 mins. 
+The session id has a timeout specified in config module. 
 If the user allows access, we move ahead and Callback function gets the state. 
 We get the session id and find the X-API-Key from Redis and store it into firebase for the user.
 Incase data is not found in Redis, we pop up the page "Session Timeout, please try again."
 */
-func OauthNotionURL(w http.ResponseWriter, r *http.Request) {
+func OauthNotionCreateAuthSession(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Content-Type", "application/json")
     var jsonResponse models.OauthNotionResponse
+
     if jsonResponse.OauthURL = os.Getenv("NOTION_OAUTH_URL"); jsonResponse.OauthURL != "" {
+        
+        /* Create a Session ID Token */
+        sessionToken, err := utils.GenerateSessionKey(config.NotionSessionKeyLength, config.NotionSessionCharset)
+        if err != nil {
+            utils.LogMessage("Failed to create Notion Session Token", "red", err)
+            jsonResponse.Success = false 
+            jsonResponse.OauthURL = "nil"
+            w.WriteHeader(http.StatusNotFound)
+            if err := json.NewEncoder(w).Encode(jsonResponse); err != nil {
+                utils.LogMessage("Failed to create Notion Session Token and Error sending response about failure", "red", err)
+            }
+        }
+
         jsonResponse.Success = true
+        jsonResponse.OauthURL = jsonResponse.OauthURL + fmt.Sprintf("&state=%s", sessionToken)
+
+        apiKey := r.Header.Get("X-API-Key")
+        fmt.Println(sessionToken)
+
+        // Session stored in Redis -> sessionKey: apiKey
+        err = config.RedisSessionCache.Set(config.RedisAPICacheCtx, sessionToken, apiKey, config.NotionSessionExpiration).Err()
+        if err != nil {
+            utils.LogMessage("Error storing session information into session redis", "red", err)
+        }
+
         w.WriteHeader(http.StatusOK)
         if err := json.NewEncoder(w).Encode(jsonResponse); err != nil {
             utils.LogMessage("Faild to send Notion Oauth URL : URL Found but Not Delivered", "red", err) 
@@ -248,14 +273,14 @@ func OauthNotionCallback(w http.ResponseWriter, r *http.Request) {
 
     jsonData, err := json.Marshal(payload)
 	if err != nil {
-		fmt.Println("Error encoding JSON:", err)
+		utils.LogMessage("Error encoding JSON", "red", err)
 		return
 	}
 
     url := "https://api.notion.com/v1/oauth/token"
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
 	if err != nil {
-		fmt.Println("Error creating request:", err)
+		utils.LogMessage("Error creating request:", "red", err)
 		return
 	}
 
@@ -266,17 +291,33 @@ func OauthNotionCallback(w http.ResponseWriter, r *http.Request) {
     client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Println("Error making request:", err)
+		utils.LogMessage("Error making request", "red", err)
+        http.Error(w, "Error making request to Notion", http.StatusInternalServerError)
 		return
 	}
 	defer resp.Body.Close()
 
-    fmt.Println("Response Status:", resp.Status)
-
-	var result map[string]interface{}
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		fmt.Println("Error decoding response:", err)
+	var authResult map[string]interface{}
+	if err := json.NewDecoder(resp.Body).Decode(&authResult); err != nil {
+		utils.LogMessage("Error decoding response", "red", err)
+        http.Error(w, "Error Decoding Notion Response" + err.Error(), http.StatusUnauthorized)
 		return
 	}
-	fmt.Println("Response Body:", result)
+	fmt.Println("Response Body:", authResult)
+
+    apiKey, err := config.RedisSessionCache.Get(config.RedisSessionCacheCtx, NotionAuthState).Result()
+	if err != nil {
+		utils.LogMessage("Could not get key. Session might went expired", "red", err)
+        http.Error(w, "Session expired or invalid: "+err.Error(), http.StatusUnauthorized)
+        return
+	}
+
+    docRef := config.FirebaseClient.Collection("users").Doc(apiKey)
+
+	_, err = docRef.Set(config.FirebaseCtx, map[string]interface{}{
+		"NotionCredentials": authResult,
+	})
+	if err != nil {
+		utils.LogMessage("Failed to store data in Firestore", "red", err)
+	}
 }

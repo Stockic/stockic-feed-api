@@ -20,6 +20,6 @@ type BookmarkResponse struct {
 }
 
 type OauthNotionResponse struct {
-    Success   bool  `json:"success"`
+    Success   bool    `json:"success"`
     OauthURL  string  `json:"OauthURL"`
 }
