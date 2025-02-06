@@ -17,10 +17,8 @@ import (
     "google.golang.org/api/option"
 )
 
-func Summarizer(modelName string, title string, text string) (*genai.GenerateContentResponse, error) {
-    
+func summarizer(modelName string, title string, text string) (*genai.GenerateContentResponse, error) {
     geminiCtx := context.Background()
-    // Access your API key as an environment variable (see "Set up your API key" above)
     client, err := genai.NewClient(geminiCtx, option.WithAPIKey(os.Getenv("GEMINI_API_KEY")))
     if err != nil {
         return nil, err
@@ -38,20 +36,55 @@ func Summarizer(modelName string, title string, text string) (*genai.GenerateCon
     return response, err
 }
 
+func articleTagger(modelName string, title string, text string) (*genai.GenerateContentResponse, error) {
+    geminiCtx := context.Background()
+    client, err := genai.NewClient(geminiCtx, option.WithAPIKey(os.Getenv("GEMINI_API_KEY")))
+    if err != nil {
+        return nil, err 
+    }
+    defer client.Close() 
+
+    model := client.GenerativeModel(modelName)
+
+    promptInput := fmt.Sprintf("Extract important works like names of companies in JSON format ['{companies: []}']: Title: %s Content: %s", title, text)
+    response, err := model.GenerateContent(geminiCtx, genai.Text(promptInput))
+    if err != nil {
+        return nil, err
+    }
+
+    return response, err
+}
+
 func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models.APIResponse) map[string]models.SummarizedResponse {
     summarizedResponses := make(map[string]models.SummarizedResponse)
 
     for category, apiResponse := range categorizedHeadlines {
         var summarizedArticles []models.SummarizedArticle
-
+        var tagsString string = ""
         for _, article := range apiResponse.Articles {
-            summaryResp, err := Summarizer("gemini-1.5-flash", article.Title, article.Content)
+
+            utils.LogMessage("Feeding AI with 1 news", "green")
+            summaryResp, err := summarizer("gemini-1.5-flash", article.Title, article.Content)
             if err != nil {
                utils.LogMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
                continue
             }
             time.Sleep(30 * time.Second)
-            utils.LogMessage("Feeding AI with 1 news", "green")
+
+            companiesTags, err := articleTagger("gemini-1.5-flash", article.Title, article.Content)
+            if err == nil {
+                for _,candidate := range companiesTags.Candidates {
+                    if candidate.Content != nil {
+                        for _, part := range candidate.Content.Parts {
+                            tagsString = fmt.Sprintf("%s%s", tagsString, part)
+                        }
+                    }
+                }
+                utils.LogMessage(tagsString, "green")
+            } else {
+                utils.LogMessage(fmt.Sprintf("AI Tagging Failed: %s", article.Title), "red", err)
+            }
+            time.Sleep(30 * time.Second)
 
             var contentString string = ""
             for _, candidate := range summaryResp.Candidates {
@@ -61,7 +94,12 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
                     }
                 }
             }
-            
+
+            var companiesTagsDeserialized models.CompaniesTags
+            if err = json.Unmarshal([]byte(tagsString), &companiesTagsDeserialized); err != nil {
+                utils.LogMessage("Faied to deserialize companies json tags", "red", err)
+            }
+           
             // contentString := article.Content
 
             utils.LogMessage("===== AI NEWS! ====", "green")
@@ -98,6 +136,7 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
                 URLToImage:         article.URLToImage,
                 PublishedAt:        article.PublishedAt,
                 SummarizedContent:  contentString,
+                CompaniesTags:      companiesTagsDeserialized,
             }
 
             // Concatenate fields to generate StockicID
@@ -136,29 +175,29 @@ func SummarizeCategorizedNews(categorizedNews map[string]models.APIResponse) map
         var summarizedArticles []models.SummarizedArticle
 
         for _, article := range apiResponse.Articles {
-            // summaryResp, err := summarizer("gemini_model_name", article.Title, article.Content)
-            // if err != nil {
-            //      utils.LogMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
-            //      continue
-            // }
-            // time.Sleep(20 * time.Second)
+            summaryResp, err := summarizer("gemini_model_name", article.Title, article.Content)
+            if err != nil {
+                 utils.LogMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
+                 continue
+            }
+            time.Sleep(30 * time.Second)
 
-            // utils.LogMessage("Feeding AI with 1 news", "green")
+            utils.LogMessage("Feeding AI with 1 news", "green")
 
-            // var contentString string = ""
-            // for _, candidate := range summaryResp.Candidates {
-            //     if candidate.Content != nil {
-            //         for _, part := range candidate.Content.Parts {
-            //             contentString = fmt.Sprintf("%s%s", contentString, part) 
-            //         }
-            //     }
-            // }
+            var contentString string = ""
+            for _, candidate := range summaryResp.Candidates {
+                if candidate.Content != nil {
+                    for _, part := range candidate.Content.Parts {
+                        contentString = fmt.Sprintf("%s%s", contentString, part) 
+                    }
+                }
+            }
 
-            contentString := article.Content
+            // contentString := article.Content
 
-            // utils.LogMessage("===== AI NEWS! ====", "green")
+            utils.LogMessage("===== AI NEWS! ====", "green")
             fmt.Println(contentString)
-            // utils.LogMessage("===================", "green")
+            utils.LogMessage("===================", "green")
 
             if article.URLToImage == "" {
                 utils.LogMessage(fmt.Sprintf("Skipping article without image: %s", article.Title), "yellow")

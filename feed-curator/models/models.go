@@ -45,15 +45,20 @@ type APIResponse struct {
 }
 
 type SummarizedArticle struct {
-    StockicID           string `json:"stockicID"`
-    Source              string `json:"source"`
-	Author              string `json:"author"`
-	Title               string `json:"title"`
+    StockicID           string          `json:"stockicID"`
+    Source              string          `json:"source"`
+	Author              string          `json:"author"`
+	Title               string          `json:"title"`
 	// Description string `json:"description"`
-	URL                 string `json:"url"`
-	URLToImage          string `json:"urlToImage"`
-	PublishedAt         string `json:"publishedAt"`
-	SummarizedContent   string `json:"content"`
+	URL                 string          `json:"url"`
+	URLToImage          string          `json:"urlToImage"`
+	PublishedAt         string          `json:"publishedAt"`
+	SummarizedContent   string          `json:"content"`
+    CompaniesTags       CompaniesTags   `json:"companies-tags"`
+}
+
+type CompaniesTags struct {
+    CompaniesTags []string `json:"companies"`
 }
 
 type SummarizedResponse struct {
