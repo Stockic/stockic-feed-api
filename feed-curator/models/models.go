@@ -66,3 +66,11 @@ type SummarizedResponse struct {
 	TotalResults int                    `json:"totalResults"`
 	Articles     []SummarizedArticle    `json:"articles"`
 }
+
+type TaggerAIEntity struct {
+	Entity      string  `json:"entity_group"`
+	Score       float64 `json:"score"`
+	Word        string  `json:"word"`
+	Start       int     `json:"start"`
+	End         int     `json:"end"`
+}

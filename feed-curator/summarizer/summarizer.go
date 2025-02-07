@@ -9,7 +9,9 @@ import (
     "encoding/hex"
     "encoding/json"
     "crypto/sha256"
-    "strings"
+    "io"
+    "net/http"
+    "bytes"
 
     "feed-curator/models"
     "feed-curator/utils"
@@ -37,23 +39,43 @@ func summarizer(modelName string, title string, text string) (*genai.GenerateCon
     return response, err
 }
 
-func articleTagger(modelName string, title string, text string) (*genai.GenerateContentResponse, error) {
-    geminiCtx := context.Background()
-    client, err := genai.NewClient(geminiCtx, option.WithAPIKey(os.Getenv("GEMINI_API_KEY")))
-    if err != nil {
-        return nil, err 
-    }
-    defer client.Close() 
+func CompaniesTagger(text string) {
 
-    model := client.GenerativeModel(modelName)
+    hfAPIURL := "https://api-inference.huggingface.co/models/dbmdz/bert-large-cased-finetuned-conll03-english"
+	requestBody, _ := json.Marshal(map[string]string{
+		"inputs": text,
+	})
 
-    promptInput := fmt.Sprintf("Extract important works like names of companies in JSON format ['{companies: []}']: Title: %s Content: %s", title, text)
-    response, err := model.GenerateContent(geminiCtx, genai.Text(promptInput))
-    if err != nil {
-        return nil, err
-    }
+	req, err := http.NewRequest("POST", hfAPIURL, bytes.NewBuffer(requestBody))
+	if err != nil {
+		fmt.Println("Error creating request:", err)
+		return
+	}
 
-    return response, err
+	req.Header.Set("Authorization", "Bearer " + os.Getenv("TAGGER_HUGGINGFACE_API_KEY"))
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error sending request:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	body, _ := io.ReadAll(resp.Body)
+
+	var entities []models.TaggerAIEntity
+	if err := json.Unmarshal(body, &entities); err != nil {
+		fmt.Println("Error decoding response:", err, string(body))
+		return
+	}
+
+	for _, entity := range entities {
+		if entity.Entity == "ORG" {
+			fmt.Println("Company:", entity.Word)
+		}
+	}
 }
 
 func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models.APIResponse) map[string]models.SummarizedResponse {
@@ -72,21 +94,6 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
             }
             time.Sleep(30 * time.Second)
 
-            companiesTags, err := articleTagger("gemini-1.5-flash", article.Title, article.Content)
-            if err == nil {
-                for _,candidate := range companiesTags.Candidates {
-                    if candidate.Content != nil {
-                        for _, part := range candidate.Content.Parts {
-                            tagsString = fmt.Sprintf("%s%s", tagsString, part)
-                        }
-                    }
-                }
-                utils.LogMessage(tagsString, "green")
-            } else {
-                utils.LogMessage(fmt.Sprintf("AI Tagging Failed: %s", article.Title), "red", err)
-            }
-            time.Sleep(30 * time.Second)
-
             var contentString string = ""
             for _, candidate := range summaryResp.Candidates {
                 if candidate.Content != nil {
@@ -98,19 +105,8 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
 
             utils.LogMessage("String of Tags JSON" + tagsString, "green") 
 
-	        cleaned := strings.TrimPrefix(tagsString, "```json\n")
-            cleanedtagsString := strings.TrimSuffix(cleaned, "```")
+            CompaniesTagger(contentString)
 
-            var companiesTagsDeserialized models.CompaniesTags
-            if err = json.Unmarshal([]byte(cleanedtagsString), &companiesTagsDeserialized); err != nil {
-                utils.LogMessage("Faied to deserialize companies json tags", "red", err)
-            }
-
-            utils.LogMessage("Done 1 tags", "green")
-            for _, tag := range companiesTagsDeserialized.CompaniesTags {
-                utils.LogMessage(tag, "green")
-            }
-           
             // contentString := article.Content
 
             utils.LogMessage("===== AI NEWS! ====", "green")
@@ -147,7 +143,7 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
                 URLToImage:         article.URLToImage,
                 PublishedAt:        article.PublishedAt,
                 SummarizedContent:  contentString,
-                CompaniesTags:      companiesTagsDeserialized,
+                // CompaniesTags:      companiesTagsDeserialized,
             }
 
             // Concatenate fields to generate StockicID
