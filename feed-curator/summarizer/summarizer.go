@@ -9,6 +9,7 @@ import (
     "encoding/hex"
     "encoding/json"
     "crypto/sha256"
+    "strings"
 
     "feed-curator/models"
     "feed-curator/utils"
@@ -95,9 +96,19 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
                 }
             }
 
+            utils.LogMessage("String of Tags JSON" + tagsString, "green") 
+
+	        cleaned := strings.TrimPrefix(tagsString, "```json\n")
+            cleanedtagsString := strings.TrimSuffix(cleaned, "```")
+
             var companiesTagsDeserialized models.CompaniesTags
-            if err = json.Unmarshal([]byte(tagsString), &companiesTagsDeserialized); err != nil {
+            if err = json.Unmarshal([]byte(cleanedtagsString), &companiesTagsDeserialized); err != nil {
                 utils.LogMessage("Faied to deserialize companies json tags", "red", err)
+            }
+
+            utils.LogMessage("Done 1 tags", "green")
+            for _, tag := range companiesTagsDeserialized.CompaniesTags {
+                utils.LogMessage(tag, "green")
             }
            
             // contentString := article.Content

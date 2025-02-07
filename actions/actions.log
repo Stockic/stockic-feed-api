@@ -8901,3 +8901,5 @@ created by net/http.(*Server).Serve in goroutine 1
 [FEED-API-LOG] [2025-02-06 23:40:56] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
 [FEED-API-LOG] [2025-02-06 23:41:16] MinIO Push App Log Procedure started ERROR: <nil>
 [FEED-API-LOG] [2025-02-06 23:41:16] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
+[FEED-API-LOG] [2025-02-06 23:41:36] MinIO Push App Log Procedure started ERROR: <nil>
+[FEED-API-LOG] [2025-02-06 23:41:36] Done Uploading Procedure for App Logs to MinIO ERROR: <nil>
