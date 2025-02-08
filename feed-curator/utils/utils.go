@@ -84,3 +84,17 @@ func RemoveHashPrefix(input []string) ([]string, error) {
     
     return result, nil
 }
+
+func ExtractPoints(input string) []string {
+	var points []string
+	lines := strings.Split(input, "\n")
+
+	for _, line := range lines {
+		trimmed := strings.TrimSpace(line)
+		if strings.HasPrefix(trimmed, "*") {
+			points = append(points, strings.TrimSpace(trimmed[1:]))
+		}
+	}
+
+	return points
+}

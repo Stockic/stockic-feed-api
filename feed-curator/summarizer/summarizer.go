@@ -39,6 +39,26 @@ func summarizer(modelName string, title string, text string) (*genai.GenerateCon
     return response, err
 }
 
+
+func highlighter(modelName string, text string) (*genai.GenerateContentResponse, error) {
+    geminiCtx := context.Background()
+    client, err := genai.NewClient(geminiCtx, option.WithAPIKey(os.Getenv("GEMINI_API_KEY")))
+    if err != nil {
+        return nil, err
+    }
+    defer client.Close()
+
+    model := client.GenerativeModel(modelName)
+
+    promptInput := fmt.Sprintf("Extract the financially important and impactful lines/metrics from given news content (only lines/words): %s", text)
+    response, err := model.GenerateContent(geminiCtx, genai.Text(promptInput))
+    if err != nil {
+        return nil, err
+    }
+
+    return response, err
+}
+
 func CompaniesTagger(text string) []models.TaggerAIEntity {
 
 	var entities []models.TaggerAIEntity
@@ -83,6 +103,7 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
             summarizedArticles []models.SummarizedArticle
             taggerOutput []models.TaggerAIEntity
             taggerCompanies []string 
+            highlights []string
         )
 
         for _, article := range apiResponse.Articles {
@@ -106,6 +127,28 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
             }
 
             contentString = "As the world embraces accelerated digital transformation, NVIDIA’s stock price isn’t merely enjoying the ride—it’s leading it. This technology juggernaut’s remarkable rise in value is more than just a reflection of past successes; it’s a herald of future technological advancements. With a focus that extends beyond traditional graphics processing units, NVIDIA is positioning itself at the helm of the artificial intelligence revolution. AI and Autonomous Systems: Central to NVIDIA’s growth strategy is its deep engagement with AI. The demand for AI-driven systems in diverse fields such as healthcare, automotive, and finance continues to skyrocket. NVIDIA’s GPUs power many of these systems, making them indispensable in today’s tech ecosystem. Metaverse and Beyond: NVIDIA’s contributions to the metaverse—a virtual-reality space—promise to unlock new revenue streams. By enabling more realistic and immersive virtual experiences, NVIDIA plays a crucial role in shaping the future of online interaction and commerce. Sustainability Efforts: In addition to AI and the metaverse, NVIDIA’s commitment to sustainability has caught the eye of environmentally conscious investors. Sustainable energy practices are ingrained in their product manufacturing and operational approaches, making NVIDIA an attractive option for those looking to invest in green technologies. As NVIDIA continues to innovate and expand its reach, its stock price tells a compelling story of how cutting-edge technology can not only adapt to the times but define them. Investors and tech enthusiasts alike are paying close attention, eagerly anticipating NVIDIA’s next groundbreaking move."
+    
+            time.Sleep(30 * time.Second)
+            highlightResp, err := highlighter(os.Getenv("HIGHLIGHTS_AI_MODEL"), contentString)
+            if err != nil {
+               utils.LogMessage(fmt.Sprintf("AI Failed to process highlights: %s", article.Title), "red", err)
+            }
+
+            var highlightInput string 
+            for _, candidate := range highlightResp.Candidates {
+                if candidate.Content != nil {
+                    for _, part := range candidate.Content.Parts {
+                        highlightInput = fmt.Sprintf("%s%s", highlightInput, part) 
+                    }
+                }
+            }
+            
+            highlights = utils.ExtractPoints(highlightInput)
+
+            fmt.Println("---------- Printing HighLights ----------")
+            for _, highlight := range highlights {
+                fmt.Println("->" + highlight)
+            }
 
             taggerOutput = CompaniesTagger(contentString)
 
@@ -133,9 +176,9 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
 
             // contentString := article.Content
 
-            utils.LogMessage("===== AI NEWS! ====", "green")
-            fmt.Println(contentString)
-            utils.LogMessage("===================", "green")
+            // utils.LogMessage("===== AI NEWS! ====", "green")
+            // fmt.Println(contentString)
+            // utils.LogMessage("===================", "green")
 
             if article.URLToImage == "" {
                 utils.LogMessage(fmt.Sprintf("Skipping article without image: %s", article.Title), "yellow")
@@ -168,6 +211,7 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
                 PublishedAt:        article.PublishedAt,
                 SummarizedContent:  contentString,
                 CompaniesTags:      taggerCompanies,
+                NewsHighlights:     highlights,
             }
 
             // Concatenate fields to generate StockicID
@@ -210,6 +254,7 @@ func SummarizeCategorizedNews(categorizedNews map[string]models.APIResponse) map
                 summarizedArticles []models.SummarizedArticle
                 taggerOutput []models.TaggerAIEntity
                 taggerCompanies []string 
+                highlights []string
             )
 
             summaryResp, err := summarizer(os.Getenv("SUMMARIZATION_AI_MODEL"), article.Title, article.Content)
@@ -229,6 +274,28 @@ func SummarizeCategorizedNews(categorizedNews map[string]models.APIResponse) map
                         contentString = fmt.Sprintf("%s%s", contentString, part) 
                     }
                 }
+            }
+
+            time.Sleep(30 * time.Second)
+            highlightResp, err := highlighter(os.Getenv("HIGHLIGHTS_AI_MODEL"), contentString)
+            if err != nil {
+               utils.LogMessage(fmt.Sprintf("AI Failed to process highlights: %s", article.Title), "red", err)
+            }
+
+            var highlightInput string 
+            for _, candidate := range highlightResp.Candidates {
+                if candidate.Content != nil {
+                    for _, part := range candidate.Content.Parts {
+                        highlightInput = fmt.Sprintf("%s%s", highlightInput, part) 
+                    }
+                }
+            }
+            
+            highlights = utils.ExtractPoints(highlightInput)
+
+            fmt.Println("---------- Printing HighLights ----------")
+            for _, highlight := range highlights {
+                fmt.Println("->" + highlight)
             }
 
             taggerOutput = CompaniesTagger(contentString)
@@ -287,6 +354,7 @@ func SummarizeCategorizedNews(categorizedNews map[string]models.APIResponse) map
                 PublishedAt:        article.PublishedAt,
                 SummarizedContent:  contentString,
                 CompaniesTags:      taggerCompanies,
+                NewsHighlights:     highlights,
             }
 
             concatenatedFields := fmt.Sprintf("%s%s%s%s%s%s%s",
