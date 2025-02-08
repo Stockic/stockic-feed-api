@@ -1,11 +1,13 @@
 /build/.env
 /build/*
 
+*.log
+
 /data
 
 /feed-api/app.log
 /feed-curator/summarizer.log
-/actions/actions.log
+actions/actions.log
 /log-redis-pusher/log-redis-pusher.log
 
 /feed-api/secrets/id_rsa_stockic.pub
