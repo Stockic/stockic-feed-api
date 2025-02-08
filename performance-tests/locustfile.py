@@ -10,7 +10,7 @@ class UserBehavior(TaskSet):
     @task
     def get_resource(self):
         # Pass headers in the request
-        self.client.get("/api/v1/headlines/1/1", headers=self.headers)
+        self.client.get("http://localhost:9090/api/v2/actions/notion/oauth/auth-session", headers=self.headers)
 
 class WebsiteUser(HttpUser):
     tasks = [UserBehavior]

@@ -4,6 +4,7 @@ import (
     "fmt"
     "time"
     "log"
+    "strings"
 
     "github.com/google/generative-ai-go/genai"
 )
@@ -41,16 +42,45 @@ func PrintResponse(resp *genai.GenerateContentResponse) {
 	}
 }
 
-func RemoveDuplicates(input []string) []string {
-    uniqueMap := make(map[string]struct{})
-    var result []string
-
-    for _, item := range input {
-        if _, exists := uniqueMap[item]; !exists {
-            uniqueMap[item] = struct{}{}
-            result = append(result, item)
+func RemoveDuplicates(input []string) ([]string, error) {
+    if input == nil {
+        return nil, nil
+    }
+    
+    // Use map to track seen elements
+    seen := make(map[string]struct{})
+    
+    // Create result slice with initial capacity matching input
+    result := make([]string, 0, len(input))
+    
+    // Iterate through input preserving order
+    for _, str := range input {
+        // If string hasn't been seen before, add it to result
+        if _, exists := seen[str]; !exists {
+            seen[str] = struct{}{}
+            result = append(result, str)
         }
     }
+    
+    return result, nil
+}
 
-    return result
+func RemoveHashPrefix(input []string) ([]string, error) {
+    if input == nil {
+        return nil, nil
+    }
+    
+    // Create result slice (capacity will be adjusted as needed)
+    result := make([]string, 0, len(input))
+    
+    // Keep only strings that don't start with "##"
+    for _, str := range input {
+        // Trim leading whitespace for checking prefix
+        trimmed := strings.TrimSpace(str)
+        if !strings.HasPrefix(trimmed, "##") {
+            result = append(result, str)
+        }
+    }
+    
+    return result, nil
 }

@@ -54,11 +54,8 @@ type SummarizedArticle struct {
 	URLToImage          string          `json:"urlToImage"`
 	PublishedAt         string          `json:"publishedAt"`
 	SummarizedContent   string          `json:"content"`
-    CompaniesTags       CompaniesTags   `json:"companies-tags"`
-}
-
-type CompaniesTags struct {
-    CompaniesTags []string `json:"companies"`
+    CompaniesTags       []string        `json:"companyTags"`
+    NewsHighlights      []string        `json:"highlights"`
 }
 
 type SummarizedResponse struct {

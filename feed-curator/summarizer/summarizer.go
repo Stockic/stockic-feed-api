@@ -72,12 +72,6 @@ func CompaniesTagger(text string) []models.TaggerAIEntity {
 		return entities
 	}
 
-	for _, entity := range entities {
-		if entity.Entity == "ORG" {
-			fmt.Println("Company:", entity.Word)
-		}
-	}
-
     return entities
 }
 
@@ -88,13 +82,13 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
         var ( 
             summarizedArticles []models.SummarizedArticle
             taggerOutput []models.TaggerAIEntity
-            taggerCompanies models.CompaniesTags 
+            taggerCompanies []string 
         )
 
         for _, article := range apiResponse.Articles {
 
             utils.LogMessage("Feeding AI with 1 news", "green")
-            summaryResp, err := summarizer("gemini-1.5-flash", article.Title, article.Content)
+            summaryResp, err := summarizer(os.Getenv("SUMMARIZATION_AI_MODEL"), article.Title, article.Content)
             if err != nil {
                utils.LogMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
                continue
@@ -111,16 +105,29 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
                 }
             }
 
+            contentString = "As the world embraces accelerated digital transformation, NVIDIA’s stock price isn’t merely enjoying the ride—it’s leading it. This technology juggernaut’s remarkable rise in value is more than just a reflection of past successes; it’s a herald of future technological advancements. With a focus that extends beyond traditional graphics processing units, NVIDIA is positioning itself at the helm of the artificial intelligence revolution. AI and Autonomous Systems: Central to NVIDIA’s growth strategy is its deep engagement with AI. The demand for AI-driven systems in diverse fields such as healthcare, automotive, and finance continues to skyrocket. NVIDIA’s GPUs power many of these systems, making them indispensable in today’s tech ecosystem. Metaverse and Beyond: NVIDIA’s contributions to the metaverse—a virtual-reality space—promise to unlock new revenue streams. By enabling more realistic and immersive virtual experiences, NVIDIA plays a crucial role in shaping the future of online interaction and commerce. Sustainability Efforts: In addition to AI and the metaverse, NVIDIA’s commitment to sustainability has caught the eye of environmentally conscious investors. Sustainable energy practices are ingrained in their product manufacturing and operational approaches, making NVIDIA an attractive option for those looking to invest in green technologies. As NVIDIA continues to innovate and expand its reach, its stock price tells a compelling story of how cutting-edge technology can not only adapt to the times but define them. Investors and tech enthusiasts alike are paying close attention, eagerly anticipating NVIDIA’s next groundbreaking move."
+
             taggerOutput = CompaniesTagger(contentString)
 
             for _, entity := range taggerOutput {
                 if entity.Entity == "ORG" {
-                    fmt.Println("Company:", entity.Word)
-                    taggerCompanies.CompaniesTags = append(taggerCompanies.CompaniesTags, entity.Word)
+                    taggerCompanies = append(taggerCompanies, entity.Word)
                 }
             }
 
-            utils.RemoveDuplicates(taggerCompanies.CompaniesTags)
+            taggerCompanies, err = utils.RemoveHashPrefix(taggerCompanies)
+            if err != nil {
+                utils.LogMessage("Failed to remove prepending #", "red", err)
+            }
+
+            taggerCompanies, err = utils.RemoveDuplicates(taggerCompanies)
+            if err != nil {
+                utils.LogMessage("Failed to remove duplicates", "red", err)
+            }
+
+            for _, tag := range taggerCompanies {
+                utils.LogMessage(tag, "green")
+            }
 
             time.Sleep(30 * time.Second)
 
@@ -202,10 +209,10 @@ func SummarizeCategorizedNews(categorizedNews map[string]models.APIResponse) map
             var ( 
                 summarizedArticles []models.SummarizedArticle
                 taggerOutput []models.TaggerAIEntity
-                taggerCompanies models.CompaniesTags 
+                taggerCompanies []string 
             )
 
-            summaryResp, err := summarizer("gemini_model_name", article.Title, article.Content)
+            summaryResp, err := summarizer(os.Getenv("SUMMARIZATION_AI_MODEL"), article.Title, article.Content)
             if err != nil {
                  utils.LogMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
                  continue
@@ -228,13 +235,21 @@ func SummarizeCategorizedNews(categorizedNews map[string]models.APIResponse) map
 
             for _, entity := range taggerOutput {
                 if entity.Entity == "ORG" {
-                    fmt.Println("Company:", entity.Word)
-                    taggerCompanies.CompaniesTags = append(taggerCompanies.CompaniesTags, entity.Word)
+                    // fmt.Println("Company:", entity.Word)
+                    taggerCompanies = append(taggerCompanies, entity.Word)
                 }
             }
 
-            utils.RemoveDuplicates(taggerCompanies.CompaniesTags)
+            taggerCompanies, err = utils.RemoveHashPrefix(taggerCompanies)
+            if err != nil {
+                utils.LogMessage("Failed to remove prepending #", "red", err)
+            }
 
+            taggerCompanies, err = utils.RemoveDuplicates(taggerCompanies)
+            if err != nil {
+                utils.LogMessage("Failed to remove duplicates", "red", err)
+            }
+    
             time.Sleep(30 * time.Second)
 
             // contentString := article.Content
