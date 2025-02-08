@@ -39,7 +39,9 @@ func summarizer(modelName string, title string, text string) (*genai.GenerateCon
     return response, err
 }
 
-func CompaniesTagger(text string) {
+func CompaniesTagger(text string) []models.TaggerAIEntity {
+
+	var entities []models.TaggerAIEntity
 
     hfAPIURL := "https://api-inference.huggingface.co/models/dbmdz/bert-large-cased-finetuned-conll03-english"
 	requestBody, _ := json.Marshal(map[string]string{
@@ -49,7 +51,7 @@ func CompaniesTagger(text string) {
 	req, err := http.NewRequest("POST", hfAPIURL, bytes.NewBuffer(requestBody))
 	if err != nil {
 		fmt.Println("Error creating request:", err)
-		return
+		return entities
 	}
 
 	req.Header.Set("Authorization", "Bearer " + os.Getenv("TAGGER_HUGGINGFACE_API_KEY"))
@@ -59,16 +61,15 @@ func CompaniesTagger(text string) {
 	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Println("Error sending request:", err)
-		return
+		return entities
 	}
 	defer resp.Body.Close()
 
 	body, _ := io.ReadAll(resp.Body)
 
-	var entities []models.TaggerAIEntity
 	if err := json.Unmarshal(body, &entities); err != nil {
 		fmt.Println("Error decoding response:", err, string(body))
-		return
+		return entities
 	}
 
 	for _, entity := range entities {
@@ -76,14 +77,20 @@ func CompaniesTagger(text string) {
 			fmt.Println("Company:", entity.Word)
 		}
 	}
+
+    return entities
 }
 
 func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models.APIResponse) map[string]models.SummarizedResponse {
     summarizedResponses := make(map[string]models.SummarizedResponse)
 
     for category, apiResponse := range categorizedHeadlines {
-        var summarizedArticles []models.SummarizedArticle
-        var tagsString string = ""
+        var ( 
+            summarizedArticles []models.SummarizedArticle
+            taggerOutput []models.TaggerAIEntity
+            taggerCompanies models.CompaniesTags 
+        )
+
         for _, article := range apiResponse.Articles {
 
             utils.LogMessage("Feeding AI with 1 news", "green")
@@ -92,6 +99,7 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
                utils.LogMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
                continue
             }
+
             time.Sleep(30 * time.Second)
 
             var contentString string = ""
@@ -103,9 +111,18 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
                 }
             }
 
-            utils.LogMessage("String of Tags JSON" + tagsString, "green") 
+            taggerOutput = CompaniesTagger(contentString)
 
-            CompaniesTagger(contentString)
+            for _, entity := range taggerOutput {
+                if entity.Entity == "ORG" {
+                    fmt.Println("Company:", entity.Word)
+                    taggerCompanies.CompaniesTags = append(taggerCompanies.CompaniesTags, entity.Word)
+                }
+            }
+
+            utils.RemoveDuplicates(taggerCompanies.CompaniesTags)
+
+            time.Sleep(30 * time.Second)
 
             // contentString := article.Content
 
@@ -143,7 +160,7 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
                 URLToImage:         article.URLToImage,
                 PublishedAt:        article.PublishedAt,
                 SummarizedContent:  contentString,
-                // CompaniesTags:      companiesTagsDeserialized,
+                CompaniesTags:      taggerCompanies,
             }
 
             // Concatenate fields to generate StockicID
@@ -182,11 +199,18 @@ func SummarizeCategorizedNews(categorizedNews map[string]models.APIResponse) map
         var summarizedArticles []models.SummarizedArticle
 
         for _, article := range apiResponse.Articles {
+            var ( 
+                summarizedArticles []models.SummarizedArticle
+                taggerOutput []models.TaggerAIEntity
+                taggerCompanies models.CompaniesTags 
+            )
+
             summaryResp, err := summarizer("gemini_model_name", article.Title, article.Content)
             if err != nil {
                  utils.LogMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
                  continue
             }
+
             time.Sleep(30 * time.Second)
 
             utils.LogMessage("Feeding AI with 1 news", "green")
@@ -199,6 +223,19 @@ func SummarizeCategorizedNews(categorizedNews map[string]models.APIResponse) map
                     }
                 }
             }
+
+            taggerOutput = CompaniesTagger(contentString)
+
+            for _, entity := range taggerOutput {
+                if entity.Entity == "ORG" {
+                    fmt.Println("Company:", entity.Word)
+                    taggerCompanies.CompaniesTags = append(taggerCompanies.CompaniesTags, entity.Word)
+                }
+            }
+
+            utils.RemoveDuplicates(taggerCompanies.CompaniesTags)
+
+            time.Sleep(30 * time.Second)
 
             // contentString := article.Content
 
@@ -234,6 +271,7 @@ func SummarizeCategorizedNews(categorizedNews map[string]models.APIResponse) map
                 URLToImage:         article.URLToImage,
                 PublishedAt:        article.PublishedAt,
                 SummarizedContent:  contentString,
+                CompaniesTags:      taggerCompanies,
             }
 
             concatenatedFields := fmt.Sprintf("%s%s%s%s%s%s%s",

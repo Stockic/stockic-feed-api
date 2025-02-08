@@ -40,3 +40,17 @@ func PrintResponse(resp *genai.GenerateContentResponse) {
 		}
 	}
 }
+
+func RemoveDuplicates(input []string) []string {
+    uniqueMap := make(map[string]struct{})
+    var result []string
+
+    for _, item := range input {
+        if _, exists := uniqueMap[item]; !exists {
+            uniqueMap[item] = struct{}{}
+            result = append(result, item)
+        }
+    }
+
+    return result
+}
