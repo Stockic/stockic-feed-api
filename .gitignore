@@ -1,30 +1,25 @@
-/build/.env
-/build/*
+build/.env
+build/*
 
 *.log
 
-/data
+data
 
-/feed-api/app.log
-/feed-curator/summarizer.log
-actions/actions.log
-/log-redis-pusher/log-redis-pusher.log
+feed-api/secrets/id_rsa_stockic.pub
+feed-api/secrets/id_rsa_stockic
 
-/feed-api/secrets/id_rsa_stockic.pub
-/feed-api/secrets/id_rsa_stockic
+feed-api/feed-api
+feed-curator/feed-curator
+actions/actions
+log-redis-pusher/log-redis-pusher
 
-/feed-api/feed-api
-/feed-curator/feed-curator
-/actions/actions
-/log-redis-pusher/log-redis-pusher
+feed-api/.env
+feed-curator/.env
+actions/.env
+log-redis-pusher/.env
 
-/feed-api/.env
-/feed-curator/.env
-/actions/.env
-/log-redis-pusher/.env
+performance-tests/myenv
+performance-tests/__pycache__
 
-/performance-tests/myenv
-/performance-tests/__pycache__
-
-/ai-prompt-service/myenv
-/ai-prompt-service/__pycache__
+ai-prompt-service/myenv
+ai-prompt-service/__pycache__
