@@ -98,3 +98,22 @@ func ExtractPoints(input string) []string {
 
 	return points
 }
+
+func FindHighlightIndexes(content string, highlights []string) [][]int {
+	var result [][]int
+
+	for _, highlight := range highlights {
+		start := 0
+		for start < len(content) {
+			start = strings.Index(content[start:], highlight)
+			if start == -1 {
+				break
+			}
+			start += len(result) // Adjust start position by previous offset
+			end := start + len(highlight)
+			result = append(result, []int{start, end})
+			start = end // Move the cursor forward
+		}
+	}
+	return result
+}

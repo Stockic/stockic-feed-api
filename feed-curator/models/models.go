@@ -55,7 +55,7 @@ type SummarizedArticle struct {
 	PublishedAt         string          `json:"publishedAt"`
 	SummarizedContent   string          `json:"content"`
     CompaniesTags       []string        `json:"companyTags"`
-    NewsHighlights      []string        `json:"highlights"`
+    NewsHighlights      [][]int         `json:"highlightsIndex"`
 }
 
 type SummarizedResponse struct {

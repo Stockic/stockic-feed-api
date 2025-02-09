@@ -104,6 +104,7 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
             taggerOutput []models.TaggerAIEntity
             taggerCompanies []string 
             highlights []string
+            highlightsIndex [][]int 
         )
 
         for _, article := range apiResponse.Articles {
@@ -144,11 +145,15 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
             }
             
             highlights = utils.ExtractPoints(highlightInput)
+            
+            highlightsIndex = utils.FindHighlightIndexes(contentString, highlights) 
 
             fmt.Println("---------- Printing HighLights ----------")
             for _, highlight := range highlights {
                 fmt.Println("->" + highlight)
             }
+
+            fmt.Println(highlightsIndex)
 
             taggerOutput = CompaniesTagger(contentString)
 
@@ -211,7 +216,7 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
                 PublishedAt:        article.PublishedAt,
                 SummarizedContent:  contentString,
                 CompaniesTags:      taggerCompanies,
-                NewsHighlights:     highlights,
+                NewsHighlights:     highlightsIndex,
             }
 
             // Concatenate fields to generate StockicID
@@ -255,6 +260,7 @@ func SummarizeCategorizedNews(categorizedNews map[string]models.APIResponse) map
                 taggerOutput []models.TaggerAIEntity
                 taggerCompanies []string 
                 highlights []string
+                highlightsIndex [][]int 
             )
 
             summaryResp, err := summarizer(os.Getenv("SUMMARIZATION_AI_MODEL"), article.Title, article.Content)
@@ -292,6 +298,8 @@ func SummarizeCategorizedNews(categorizedNews map[string]models.APIResponse) map
             }
             
             highlights = utils.ExtractPoints(highlightInput)
+
+            highlightsIndex = utils.FindHighlightIndexes(contentString, highlights) 
 
             fmt.Println("---------- Printing HighLights ----------")
             for _, highlight := range highlights {
@@ -354,7 +362,7 @@ func SummarizeCategorizedNews(categorizedNews map[string]models.APIResponse) map
                 PublishedAt:        article.PublishedAt,
                 SummarizedContent:  contentString,
                 CompaniesTags:      taggerCompanies,
-                NewsHighlights:     highlights,
+                NewsHighlights:     highlightsIndex,
             }
 
             concatenatedFields := fmt.Sprintf("%s%s%s%s%s%s%s",
