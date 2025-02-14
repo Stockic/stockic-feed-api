@@ -1,0 +1,82 @@
+services:
+  redis-news-cache:
+    image: redis:latest
+    container_name: redis-news-cache
+    networks:
+      - internal-network
+
+  redis-api-cache:
+    image: redis:latest
+    container_name: redis-api-cache
+    networks:
+      - internal-network
+
+  redis-logs:
+    image: redis:latest
+    container_name: redis-logs
+    networks:
+      - internal-network
+
+  feed-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.feed-api
+    container_name: feed-api
+    env_file:
+      - ./docker-internals/api-cache.env
+    depends_on:
+      - redis-news-cache
+      - redis-api-cache
+      - minio
+    expose:
+      - "8080"
+    networks:
+      - internal-network
+
+  feed-curator:
+    build:
+      context: .
+      dockerfile: Dockerfile.feed-curator
+    container_name: feed-curator
+    env_file:
+      - ./docker-internals/news-cache.env
+    depends_on:
+      - redis-news-cache
+      - minio
+    networks:
+      - internal-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker-internals/nginx-feed-api.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - feed-api
+    networks:
+      - internal-network
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    expose:
+      - "9000"
+    ports:
+      - "9090:9090" # MinIO Console port
+    environment:
+      MINIO_ROOT_USER: minioadmin # Set your MinIO root username
+      MINIO_ROOT_PASSWORD: minioadmin # Set your MinIO root password
+    command: server /data --console-address ":9090"
+    volumes:
+      - ./data:/data
+    networks:
+      - internal-network
+
+networks:
+  internal-network:
+    driver: bridge
+
+    #volumes:
+  #  minio_data:

@@ -1,0 +1,36 @@
+services:
+  redis-api-cache:
+    image: redis:latest
+    container_name: redis-api-cache
+    networks:
+      - internal-network
+
+  actions:
+    build:
+      context: .
+      dockerfile: Dockerfile.actions
+    container_name: actions
+    env_file:
+      - ./docker-internals/actions.env
+    depends_on:
+      - redis-api-cache
+    expose:
+      - "9090"
+    networks:
+      - internal-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker-internals/nginx-actions.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - "actions"
+    networks:
+      - internal-network
+
+networks:
+  internal-network:
+    driver: bridge
