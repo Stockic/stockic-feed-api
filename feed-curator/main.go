@@ -37,12 +37,14 @@ func main() {
         // Define country codes for each region (North America, Europe, Asia, Australia)
         northAmerica := []string{"us"}
         europe := []string{"gb", "de", "fr", "it", "es", "pl", "nl"}
-        // asia := []string{"cn", "in", "jp", "kr", "sg", "hk"}
-        // australia := []string{"au", "nz"}
+        asia := []string{"cn", "in", "jp", "kr", "sg", "hk"}
+        australia := []string{"au", "nz"}
 
         // Combine all countries into one list
         allCountries := append(northAmerica)
         allCountries = append(allCountries, europe...)
+        allCountries = append(allCountries, asia...)
+        allCountries = append(allCountries, australia...)
 
         // Fetch headlines from all countries (passing "20" articles per page)
         categorizedHeadlines := fetcher.FetchHeadlinesByCountry(allCountries, "20")
@@ -62,8 +64,11 @@ func main() {
             }
             fmt.Println("=========")
         }
+
+        today := time.Now().Format("2006-01-02")
+	    yesterday := time.Now().AddDate(0, 0, -1).Format("2006-01-02")
         
-        categorizedDiscovery := fetcher.NewsDiscoveryByCategory("en", "publishedAt", "2024-12-28", "2024-12-29")
+        categorizedDiscovery := fetcher.NewsDiscoveryByCategory("en", "publishedAt", yesterday, today)
 
         for category, response := range categorizedDiscovery {
             fmt.Printf("Category: %s\n", category)

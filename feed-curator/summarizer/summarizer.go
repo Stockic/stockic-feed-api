@@ -174,7 +174,7 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
             }
 
             for _, tag := range taggerCompanies {
-                utils.LogMessage(tag, "green")
+                fmt.Println("tag ->" + tag)
             }
 
             time.Sleep(30 * time.Second)
@@ -238,7 +238,6 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
             summarizedArticles = append(summarizedArticles, summarizedArticle)
         }
         summarizedResponses[category] = models.SummarizedResponse{
-
             Status:       "ok",
             TotalResults: len(summarizedArticles),
             Articles:     summarizedArticles,
@@ -252,17 +251,18 @@ func SummarizeCategorizedNews(categorizedNews map[string]models.APIResponse) map
     summarizedResponses := make(map[string]models.SummarizedResponse)
 
     for category, apiResponse := range categorizedNews {
-        var summarizedArticles []models.SummarizedArticle
+        var ( 
+            summarizedArticles []models.SummarizedArticle
+            taggerOutput []models.TaggerAIEntity
+            taggerCompanies []string 
+            highlights []string
+            highlightsIndex [][]int 
+        )
+
 
         for _, article := range apiResponse.Articles {
-            var ( 
-                summarizedArticles []models.SummarizedArticle
-                taggerOutput []models.TaggerAIEntity
-                taggerCompanies []string 
-                highlights []string
-                highlightsIndex [][]int 
-            )
 
+            utils.LogMessage("Feeding AI with 1 news", "green")
             summaryResp, err := summarizer(os.Getenv("SUMMARIZATION_AI_MODEL"), article.Title, article.Content)
             if err != nil {
                  utils.LogMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
@@ -323,6 +323,10 @@ func SummarizeCategorizedNews(categorizedNews map[string]models.APIResponse) map
             taggerCompanies, err = utils.RemoveDuplicates(taggerCompanies)
             if err != nil {
                 utils.LogMessage("Failed to remove duplicates", "red", err)
+            }
+
+            for _, tag := range taggerCompanies {
+                fmt.Println("tag ->" + tag)
             }
     
             time.Sleep(30 * time.Second)
