@@ -99,15 +99,17 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
     summarizedResponses := make(map[string]models.SummarizedResponse)
 
     for category, apiResponse := range categorizedHeadlines {
-        var ( 
-            summarizedArticles []models.SummarizedArticle
-            taggerOutput []models.TaggerAIEntity
-            taggerCompanies []string 
-            highlights []string
-            highlightsIndex [][]int 
-        )
+
+        var summarizedArticles []models.SummarizedArticle
 
         for _, article := range apiResponse.Articles {
+
+            var ( 
+                taggerOutput []models.TaggerAIEntity
+                taggerCompanies []string 
+                highlights []string
+                highlightsIndex [][]int 
+            )
 
             utils.LogMessage("Feeding AI with 1 news", "green")
             summaryResp, err := summarizer(os.Getenv("SUMMARIZATION_AI_MODEL"), article.Title, article.Content)
@@ -250,9 +252,10 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
 func SummarizeCategorizedNews(categorizedNews map[string]models.APIResponse) map[string]models.SummarizedResponse {
     summarizedResponses := make(map[string]models.SummarizedResponse)
 
+    var summarizedArticles []models.SummarizedArticle
+
     for category, apiResponse := range categorizedNews {
         var ( 
-            summarizedArticles []models.SummarizedArticle
             taggerOutput []models.TaggerAIEntity
             taggerCompanies []string 
             highlights []string
