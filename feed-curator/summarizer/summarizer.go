@@ -30,7 +30,7 @@ func summarizer(modelName string, title string, text string) (*genai.GenerateCon
 
     model := client.GenerativeModel(modelName)
 
-    promptInput := fmt.Sprintf("Focus on content, main financial points and not on source/author. Summarize given news only called %s in the url: %s", title, text)
+    promptInput := fmt.Sprintf("Focus on content, main points and not on source/author. Summarize given news only called %s in the url: %s", title, text)
     response, err := model.GenerateContent(geminiCtx, genai.Text(promptInput))
     if err != nil {
         return nil, err
@@ -50,7 +50,7 @@ func highlighter(modelName string, text string) (*genai.GenerateContentResponse,
 
     model := client.GenerativeModel(modelName)
 
-    promptInput := fmt.Sprintf("Extract the financially important and impactful lines/metrics from given news content (only lines/words): %s", text)
+    promptInput := fmt.Sprintf("Extract the important and impactful lines/metrics from given news content (only lines/words): %s", text)
     response, err := model.GenerateContent(geminiCtx, genai.Text(promptInput))
     if err != nil {
         return nil, err
