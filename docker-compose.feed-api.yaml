@@ -66,8 +66,8 @@ services:
     ports:
       - "9090:9090" # MinIO Console port
     environment:
-      MINIO_ROOT_USER: minioadmin # Set your MinIO root username
-      MINIO_ROOT_PASSWORD: minioadmin # Set your MinIO root password
+      MINIO_ROOT_USER: maverick # Set your MinIO root username
+      MINIO_ROOT_PASSWORD: NoRulesRulesNetflix # Set your MinIO root password
     command: server /data --console-address ":9090"
     volumes:
       - ./data:/data
