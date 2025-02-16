@@ -15,7 +15,7 @@ services:
     depends_on:
       - redis-api-cache
     expose:
-      - "9090"
+      - "4040"
     networks:
       - internal-network
 
@@ -27,7 +27,7 @@ services:
     volumes:
       - ./docker-internals/nginx-actions.conf:/etc/nginx/nginx.conf:ro
     depends_on:
-      - "actions"
+      - actions
     networks:
       - internal-network
 

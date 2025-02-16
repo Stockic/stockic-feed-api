@@ -49,6 +49,7 @@ func main() {
         // Fetch headlines from all countries (passing "20" articles per page)
         categorizedHeadlines := fetcher.FetchHeadlinesByCountry(allCountries, "20")
 
+        numberofarticles := 0
         for country, response := range categorizedHeadlines {
             fmt.Printf("Headlines for country: %s\n", country)
             fmt.Printf("Total Results: %d\n\n", response.TotalResults)
@@ -61,15 +62,19 @@ func main() {
                 fmt.Printf("Description: %s\n", article.Description)
                 fmt.Printf("Content: %s\n", article.Content)
                 fmt.Println("---")
+                numberofarticles += 1
             }
             fmt.Println("=========")
         }
+
+        utils.LogMessage(fmt.Sprintf("Number of Headlines: %d", numberofarticles), "green")
 
         today := time.Now().Format("2006-01-02")
 	    yesterday := time.Now().AddDate(0, 0, -1).Format("2006-01-02")
         
         categorizedDiscovery := fetcher.NewsDiscoveryByCategory("en", "publishedAt", yesterday, today)
 
+        numberofarticles = 0
         for category, response := range categorizedDiscovery {
             fmt.Printf("Category: %s\n", category)
             fmt.Printf("Total Results: %d\n\n", response.TotalResults)
@@ -82,9 +87,12 @@ func main() {
                 fmt.Printf("Description: %s\n", article.Description)
                 fmt.Printf("Content: %s\n", article.Content)
                 fmt.Println("---")
+                numberofarticles += 1
             }
             fmt.Println("=========")
         }
+
+        utils.LogMessage(fmt.Sprintf("Number of Discovery: %d", numberofarticles), "green")
 
         // MinIO Setup
         err := database.UploadNewsAPIResponseDataToMinIO(models.MinIOClient, categorizedHeadlines, "raw-news-archive")

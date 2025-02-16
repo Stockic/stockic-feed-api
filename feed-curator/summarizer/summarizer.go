@@ -118,7 +118,7 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
                continue
             }
 
-            time.Sleep(30 * time.Second)
+            time.Sleep(5 * time.Second)
 
             var contentString string = ""
             for _, candidate := range summaryResp.Candidates {
@@ -129,9 +129,7 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
                 }
             }
 
-            // contentString = "As the world embraces accelerated digital transformation, NVIDIA’s stock price isn’t merely enjoying the ride—it’s leading it. This technology juggernaut’s remarkable rise in value is more than just a reflection of past successes; it’s a herald of future technological advancements. With a focus that extends beyond traditional graphics processing units, NVIDIA is positioning itself at the helm of the artificial intelligence revolution. AI and Autonomous Systems: Central to NVIDIA’s growth strategy is its deep engagement with AI. The demand for AI-driven systems in diverse fields such as healthcare, automotive, and finance continues to skyrocket. NVIDIA’s GPUs power many of these systems, making them indispensable in today’s tech ecosystem. Metaverse and Beyond: NVIDIA’s contributions to the metaverse—a virtual-reality space—promise to unlock new revenue streams. By enabling more realistic and immersive virtual experiences, NVIDIA plays a crucial role in shaping the future of online interaction and commerce. Sustainability Efforts: In addition to AI and the metaverse, NVIDIA’s commitment to sustainability has caught the eye of environmentally conscious investors. Sustainable energy practices are ingrained in their product manufacturing and operational approaches, making NVIDIA an attractive option for those looking to invest in green technologies. As NVIDIA continues to innovate and expand its reach, its stock price tells a compelling story of how cutting-edge technology can not only adapt to the times but define them. Investors and tech enthusiasts alike are paying close attention, eagerly anticipating NVIDIA’s next groundbreaking move."
-    
-            time.Sleep(30 * time.Second)
+            time.Sleep(5 * time.Second)
             highlightResp, err := highlighter(os.Getenv("HIGHLIGHTS_AI_MODEL"), contentString)
             if err != nil {
                utils.LogMessage(fmt.Sprintf("AI Failed to process highlights: %s", article.Title), "red", err)
@@ -150,9 +148,8 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
             
             highlightsIndex = utils.FindHighlightIndexes(contentString, highlights) 
 
-            fmt.Println("---------- Printing HighLights ----------")
             for _, highlight := range highlights {
-                fmt.Println("->" + highlight)
+                fmt.Println("highlight ->" + highlight)
             }
 
             fmt.Println(highlightsIndex)
@@ -179,7 +176,7 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
                 fmt.Println("tag ->" + tag)
             }
 
-            time.Sleep(30 * time.Second)
+            time.Sleep(5 * time.Second)
 
             // contentString := article.Content
 
@@ -304,9 +301,8 @@ func SummarizeCategorizedNews(categorizedNews map[string]models.APIResponse) map
 
             highlightsIndex = utils.FindHighlightIndexes(contentString, highlights) 
 
-            fmt.Println("---------- Printing HighLights ----------")
             for _, highlight := range highlights {
-                fmt.Println("->" + highlight)
+                fmt.Println("highlight ->" + highlight)
             }
 
             taggerOutput = CompaniesTagger(contentString)
