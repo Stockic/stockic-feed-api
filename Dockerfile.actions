@@ -10,6 +10,6 @@ COPY ./actions/ .
 
 RUN go build -o actions .
 
-EXPOSE 9090
+EXPOSE 4040
 
 CMD ["./actions"]
