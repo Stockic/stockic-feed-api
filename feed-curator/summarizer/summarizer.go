@@ -5,7 +5,7 @@ import (
     "context"
     "os"
     "log"
-    "time"
+    // "time"
     "encoding/hex"
     "encoding/json"
     "crypto/sha256"
@@ -105,78 +105,83 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
         for _, article := range apiResponse.Articles {
 
             var ( 
-                taggerOutput []models.TaggerAIEntity
+                // taggerOutput []models.TaggerAIEntity
                 taggerCompanies []string 
-                highlights []string
+                // highlights []string
                 highlightsIndex [][]int 
             )
 
-            utils.LogMessage("Feeding AI with 1 news", "green")
-            summaryResp, err := summarizer(os.Getenv("SUMMARIZATION_AI_MODEL"), article.Title, article.Content)
-            if err != nil {
-               utils.LogMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
-               continue
-            }
+            // utils.LogMessage("Feeding AI with 1 news", "green")
+            // summaryResp, err := summarizer(os.Getenv("SUMMARIZATION_AI_MODEL"), article.Title, article.Content)
+            // if err != nil {
+            //    utils.LogMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
+            //    continue
+            // }
 
-            time.Sleep(30 * time.Second)
+            // time.Sleep(30 * time.Second)
 
             var contentString string = ""
-            for _, candidate := range summaryResp.Candidates {
-                if candidate.Content != nil {
-                    for _, part := range candidate.Content.Parts {
-                        contentString = fmt.Sprintf("%s%s", contentString, part) 
-                    }
-                }
-            }
+            // for _, candidate := range summaryResp.Candidates {
+            //     if candidate.Content != nil {
+            //         for _, part := range candidate.Content.Parts {
+            //             contentString = fmt.Sprintf("%s%s", contentString, part) 
+            //         }
+            //     }
+            // }
 
-            time.Sleep(30 * time.Second)
-            highlightResp, err := highlighter(os.Getenv("HIGHLIGHTS_AI_MODEL"), contentString)
-            if err != nil {
-               utils.LogMessage(fmt.Sprintf("AI Failed to process highlights: %s", article.Title), "red", err)
-            }
+            contentString = article.Content
 
-            var highlightInput string 
-            for _, candidate := range highlightResp.Candidates {
-                if candidate.Content != nil {
-                    for _, part := range candidate.Content.Parts {
-                        highlightInput = fmt.Sprintf("%s%s", highlightInput, part) 
-                    }
-                }
-            }
+            // highlightResp, err := highlighter(os.Getenv("HIGHLIGHTS_AI_MODEL"), contentString)
+            // if err != nil {
+            //   utils.LogMessage(fmt.Sprintf("AI Failed to process highlights: %s", article.Title), "red", err)
+            // }
+
+            // var highlightInput string 
+            // for _, candidate := range highlightResp.Candidates {
+            //     if candidate.Content != nil {
+            //        for _, part := range candidate.Content.Parts {
+            //            highlightInput = fmt.Sprintf("%s%s", highlightInput, part) 
+            //        }
+            //    }
+            // }
             
-            highlights = utils.ExtractPoints(highlightInput)
-            
-            highlightsIndex = utils.FindHighlightIndexes(contentString, highlights) 
+            // highlights = utils.ExtractPoints(highlightInput)
 
-            for _, highlight := range highlights {
-                fmt.Println("highlight ->" + highlight)
-            }
+            // highlightsIndex = utils.FindHighlightIndexes(contentString, highlights) 
+
+            highlightsIndex = [][]int{{1,5}, {7,10}}
+
+            // for _, highlight := range highlights {
+            //     fmt.Println("highlight ->" + highlight)
+            // }
 
             fmt.Println(highlightsIndex)
 
-            taggerOutput = CompaniesTagger(contentString)
+            // taggerOutput = CompaniesTagger(contentString)
 
-            for _, entity := range taggerOutput {
-                if entity.Entity == "ORG" {
-                    taggerCompanies = append(taggerCompanies, entity.Word)
-                }
-            }
+            // for _, entity := range taggerOutput {
+            //     if entity.Entity == "ORG" {
+            //         taggerCompanies = append(taggerCompanies, entity.Word)
+            //     }
+            // }
 
-            taggerCompanies, err = utils.RemoveHashPrefix(taggerCompanies)
-            if err != nil {
-                utils.LogMessage("Failed to remove prepending #", "red", err)
-            }
+            taggerCompanies = []string{"Nvidia", "Google"}
 
-            taggerCompanies, err = utils.RemoveDuplicates(taggerCompanies)
-            if err != nil {
-                utils.LogMessage("Failed to remove duplicates", "red", err)
-            }
+            // taggerCompanies, err = utils.RemoveHashPrefix(taggerCompanies)
+            // if err != nil {
+            //     utils.LogMessage("Failed to remove prepending #", "red", err)
+            // }
+
+            // taggerCompanies, err = utils.RemoveDuplicates(taggerCompanies)
+            // if err != nil {
+            //     utils.LogMessage("Failed to remove duplicates", "red", err)
+            // }
 
             for _, tag := range taggerCompanies {
                 fmt.Println("tag ->" + tag)
             }
 
-            time.Sleep(30 * time.Second)
+            // time.Sleep(30 * time.Second)
 
             // contentString := article.Content
 
@@ -203,7 +208,6 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
                 utils.LogMessage("The Washington Post News, changing URL", "red")
                 article.URLToImage = "https://theintercept.com/wp-content/uploads/2017/01/the-washington-post-newspaper-2-1484771977.jpg"
             }
-
 
             // Create summarized article
             summarizedArticle := models.SummarizedArticle{
@@ -253,88 +257,92 @@ func SummarizeCategorizedNews(categorizedNews map[string]models.APIResponse) map
 
     for category, apiResponse := range categorizedNews {
         var ( 
-            taggerOutput []models.TaggerAIEntity
+            // taggerOutput []models.TaggerAIEntity
             taggerCompanies []string 
-            highlights []string
+            // highlights []string
             highlightsIndex [][]int 
         )
 
 
         for _, article := range apiResponse.Articles {
 
-            utils.LogMessage("Feeding AI with 1 news", "green")
-            summaryResp, err := summarizer(os.Getenv("SUMMARIZATION_AI_MODEL"), article.Title, article.Content)
-            if err != nil {
-                 utils.LogMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
-                 continue
-            }
+            // utils.LogMessage("Feeding AI with 1 news", "green")
+            // summaryResp, err := summarizer(os.Getenv("SUMMARIZATION_AI_MODEL"), article.Title, article.Content)
+            // if err != nil {
+            //    utils.LogMessage(fmt.Sprintf("AI Failed to process: %s", article.Title), "red", err)
+            //    continue
+            // }
 
-            time.Sleep(30 * time.Second)
-
-            utils.LogMessage("Feeding AI with 1 news", "green")
+            // time.Sleep(30 * time.Second)
 
             var contentString string = ""
-            for _, candidate := range summaryResp.Candidates {
-                if candidate.Content != nil {
-                    for _, part := range candidate.Content.Parts {
-                        contentString = fmt.Sprintf("%s%s", contentString, part) 
-                    }
-                }
-            }
+            // for _, candidate := range summaryResp.Candidates {
+            //     if candidate.Content != nil {
+            //         for _, part := range candidate.Content.Parts {
+            //             contentString = fmt.Sprintf("%s%s", contentString, part) 
+            //         }
+            //     }
+            // }
 
-            time.Sleep(30 * time.Second)
-            highlightResp, err := highlighter(os.Getenv("HIGHLIGHTS_AI_MODEL"), contentString)
-            if err != nil {
-               utils.LogMessage(fmt.Sprintf("AI Failed to process highlights: %s", article.Title), "red", err)
-            }
+            contentString = article.Content
 
-            var highlightInput string 
-            for _, candidate := range highlightResp.Candidates {
-                if candidate.Content != nil {
-                    for _, part := range candidate.Content.Parts {
-                        highlightInput = fmt.Sprintf("%s%s", highlightInput, part) 
-                    }
-                }
-            }
+            // highlightResp, err := highlighter(os.Getenv("HIGHLIGHTS_AI_MODEL"), contentString)
+            // if err != nil {
+            //   utils.LogMessage(fmt.Sprintf("AI Failed to process highlights: %s", article.Title), "red", err)
+            // }
+
+            // var highlightInput string 
+            // for _, candidate := range highlightResp.Candidates {
+            //     if candidate.Content != nil {
+            //        for _, part := range candidate.Content.Parts {
+            //            highlightInput = fmt.Sprintf("%s%s", highlightInput, part) 
+            //        }
+            //    }
+            // }
             
-            highlights = utils.ExtractPoints(highlightInput)
+            // highlights = utils.ExtractPoints(highlightInput)
 
-            highlightsIndex = utils.FindHighlightIndexes(contentString, highlights) 
+            // highlightsIndex = utils.FindHighlightIndexes(contentString, highlights) 
 
-            for _, highlight := range highlights {
-                fmt.Println("highlight ->" + highlight)
-            }
+            highlightsIndex = [][]int{{1,5}, {7,10}}
 
-            taggerOutput = CompaniesTagger(contentString)
+            // for _, highlight := range highlights {
+            //     fmt.Println("highlight ->" + highlight)
+            // }
 
-            for _, entity := range taggerOutput {
-                if entity.Entity == "ORG" {
-                    // fmt.Println("Company:", entity.Word)
-                    taggerCompanies = append(taggerCompanies, entity.Word)
-                }
-            }
+            fmt.Println(highlightsIndex)
 
-            taggerCompanies, err = utils.RemoveHashPrefix(taggerCompanies)
-            if err != nil {
-                utils.LogMessage("Failed to remove prepending #", "red", err)
-            }
+            // taggerOutput = CompaniesTagger(contentString)
 
-            taggerCompanies, err = utils.RemoveDuplicates(taggerCompanies)
-            if err != nil {
-                utils.LogMessage("Failed to remove duplicates", "red", err)
-            }
+            // for _, entity := range taggerOutput {
+            //     if entity.Entity == "ORG" {
+            //         taggerCompanies = append(taggerCompanies, entity.Word)
+            //     }
+            // }
+
+            taggerCompanies = []string{"Nvidia", "Google"}
+
+            // taggerCompanies, err = utils.RemoveHashPrefix(taggerCompanies)
+            // if err != nil {
+            //     utils.LogMessage("Failed to remove prepending #", "red", err)
+            // }
+
+            // taggerCompanies, err = utils.RemoveDuplicates(taggerCompanies)
+            // if err != nil {
+            //     utils.LogMessage("Failed to remove duplicates", "red", err)
+            // }
 
             for _, tag := range taggerCompanies {
                 fmt.Println("tag ->" + tag)
             }
-    
-            time.Sleep(30 * time.Second)
+
+            // time.Sleep(30 * time.Second)
 
             // contentString := article.Content
 
-            utils.LogMessage("===== AI NEWS! ====", "green")
-            fmt.Println(contentString)
-            utils.LogMessage("===================", "green")
+            // utils.LogMessage("===== AI NEWS! ====", "green")
+            // fmt.Println(contentString)
+            // utils.LogMessage("===================", "green")
 
             if article.URLToImage == "" {
                 utils.LogMessage(fmt.Sprintf("Skipping article without image: %s", article.Title), "yellow")
