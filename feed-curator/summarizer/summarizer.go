@@ -118,7 +118,7 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
                continue
             }
 
-            time.Sleep(5 * time.Second)
+            time.Sleep(30 * time.Second)
 
             var contentString string = ""
             for _, candidate := range summaryResp.Candidates {
@@ -129,7 +129,7 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
                 }
             }
 
-            time.Sleep(5 * time.Second)
+            time.Sleep(30 * time.Second)
             highlightResp, err := highlighter(os.Getenv("HIGHLIGHTS_AI_MODEL"), contentString)
             if err != nil {
                utils.LogMessage(fmt.Sprintf("AI Failed to process highlights: %s", article.Title), "red", err)
@@ -176,7 +176,7 @@ func SummarizeCountryCategorizedHeadlines(categorizedHeadlines map[string]models
                 fmt.Println("tag ->" + tag)
             }
 
-            time.Sleep(5 * time.Second)
+            time.Sleep(30 * time.Second)
 
             // contentString := article.Content
 

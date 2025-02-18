@@ -63,6 +63,7 @@ services:
     container_name: minio
     expose:
       - "9000"
+      - ""
     ports:
       - "9090:9090" # MinIO Console port
       - "9000:9000"
