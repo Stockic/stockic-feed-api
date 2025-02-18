@@ -9,6 +9,8 @@ type SummarizedArticle struct {
     URLToImage          string `json:"urlToImage"`
     PublishedAt         string `json:"publishedAt"`
     SummarizedContent   string `json:"content"`
+    CompaniesTags       []string        `json:"companyTags"`
+    NewsHighlights      [][]int         `json:"highlightsIndex"`
 }
 
 type SummarizedResponse struct {
