@@ -1,7 +1,7 @@
 # Stockic Newsfeed API System
 
-## Finalised Design for the Android and IOS App
-<img width="1006" alt="Screenshot 2024-11-06 at 11 59 59" src="https://github.com/user-attachments/assets/0ce4f3ac-85ee-48ea-84d6-c54662566c0c">
+## App Architecture In Services
+![image](https://github.com/user-attachments/assets/691f554a-31f4-47de-bb88-9e7e284a1902)
 
 ## Introduction to Stockic Newsfeed System
 This is the Stockic API Server, which provides API for Android and iOS apps. It has two components which combine to create a fully functional newsfeed API curated with AI:

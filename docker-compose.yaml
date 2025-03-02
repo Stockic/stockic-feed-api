@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   redis-news-cache:
     image: redis:latest
@@ -29,6 +27,7 @@ services:
     depends_on:
       - redis-news-cache
       - redis-api-cache
+      - minio
     expose:
       - "8080"
     networks:
@@ -43,6 +42,7 @@ services:
       - ./docker-internals/news-cache.env
     depends_on:
       - redis-news-cache
+      - minio
     networks:
       - internal-network
 
@@ -58,6 +58,25 @@ services:
     networks:
       - internal-network
 
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    expose:
+      - "9000"
+    ports:
+      - "9090:9090" # MinIO Console port
+    environment:
+      MINIO_ROOT_USER: minioadmin # Set your MinIO root username
+      MINIO_ROOT_PASSWORD: minioadmin # Set your MinIO root password
+    command: server /data --console-address ":9090"
+    volumes:
+      - ./data:/data
+    networks:
+      - internal-network
+
 networks:
   internal-network:
     driver: bridge
+
+    #volumes:
+  #  minio_data:

@@ -1,9 +1,25 @@
-/secrets/
-/build/.env
-/build/*
+build/.env
+build/*
 
-/feed-api/app.log
-/feed-curator/summarizer.log
+*.log
 
-/feed-api/secrets/id_rsa_stockic.pub
-/feed-api/secrets/id_rsa_stockic
+data
+
+feed-api/secrets/id_rsa_stockic.pub
+feed-api/secrets/id_rsa_stockic
+
+feed-api/feed-api
+feed-curator/feed-curator
+actions/actions
+log-redis-pusher/log-redis-pusher
+
+feed-api/.env
+feed-curator/.env
+actions/.env
+log-redis-pusher/.env
+
+performance-tests/myenv
+performance-tests/__pycache__
+
+ai-prompt-service/myenv
+ai-prompt-service/__pycache__
