@@ -23,7 +23,7 @@ func main() {
 
     setupRoutes()
 
-    port := "localhost:4040"
+    port := ":4040"
     fmt.Printf("\033[36m Starting server on port %s...\033[0m \n", port)
     if err := http.ListenAndServe(port, nil); err != nil {
         fmt.Printf("\033[31m Could not start server: %s \033[0m \n", err)
