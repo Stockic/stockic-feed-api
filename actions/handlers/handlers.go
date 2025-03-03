@@ -218,7 +218,7 @@ func OauthNotionCreateAuthSession(w http.ResponseWriter, r *http.Request) {
         fmt.Println(sessionToken)
 
         // Session stored in Redis -> sessionKey: apiKey
-        err = config.RedisSessionCache.Set(config.RedisAPICacheCtx, sessionToken, apiKey, config.NotionSessionExpiration).Err()
+        err = config.RedisSessionCache.Set(config.RedisSessionCacheCtx, sessionToken, apiKey, config.NotionSessionExpiration).Err()
         if err != nil {
             utils.LogMessage("Error storing session information into session redis", "red", err)
         }
